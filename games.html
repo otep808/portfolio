@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Games — Joseph S. Callos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"    onclick="closeMobile()">Home</a>
+  <a href="about.html"    onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a>
+  <a href="skills.html"   onclick="closeMobile()">Skills</a>
+  <a href="games.html"    onclick="closeMobile()">Games</a>
+  <a href="contact.html"  onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div>
+  <span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+
+<nav id="nav">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="page-header">
+  <p class="ph-label">04 — Mini Games</p>
+  <h1 class="ph-title">Take a <em>Break</em></h1>
+  <p class="ph-desc">Five quick games built with pure HTML, CSS &amp; JavaScript. Because the best coders also know when to <strong style="color:var(--gold)">take a break</strong>.</p>
+</header>
+
+<section id="games" style="background:var(--bg);">
+
+  <!-- Tab switcher -->
+  <div class="game-tabs" id="gameTabs">
+    <button class="game-tab-btn active" data-game="snake">🐍 Snake</button>
+    <button class="game-tab-btn" data-game="memory">🃏 Memory Match</button>
+    <button class="game-tab-btn" data-game="typer">⌨️ Type Sprint</button>
+    <button class="game-tab-btn" data-game="mole">🔨 Whack-a-Mole</button>
+    <button class="game-tab-btn" data-game="guess">🔢 Number Guesser</button>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       GAME 1 — SNAKE
+       ════════════════════════════════════════════════════════ -->
+  <div class="game-panel active" id="game-snake">
+    <div class="snake-wrap">
+      <div class="snake-hud">
+        <div class="snake-stat">
+          <div class="snake-stat-num" id="snakeScore">0</div>
+          <div class="snake-stat-label">Score</div>
+        </div>
+        <div class="snake-stat">
+          <div class="snake-stat-num" id="snakeHigh">0</div>
+          <div class="snake-stat-label">Best</div>
+        </div>
+        <div class="snake-stat">
+          <div class="snake-stat-num" id="snakeLevel">1</div>
+          <div class="snake-stat-label">Level</div>
+        </div>
+      </div>
+
+      <canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+      <p class="snake-msg" id="snakeMsg">Press <kbd style="font-family:var(--f-mono);font-size:.75em;border:1px solid var(--border);padding:.1em .35em;">Space</kbd> or tap Start to play</p>
+
+      <div class="snake-controls">
+        <button class="btn btn-primary" id="snakeStart"><span id="snakeStartTxt">Start Game →</span></button>
+      </div>
+
+      <!-- D-pad for mobile -->
+      <div class="dpad" id="dpad">
+        <div></div>
+        <button class="dpad-btn" id="dUp">▲</button>
+        <div></div>
+        <button class="dpad-btn" id="dLeft">◀</button>
+        <div class="dpad-btn dpad-center" style="font-size:.5rem;color:var(--text-faint);">🐍</div>
+        <button class="dpad-btn" id="dRight">▶</button>
+        <div></div>
+        <button class="dpad-btn" id="dDown">▼</button>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       GAME 2 — MEMORY MATCH
+       ════════════════════════════════════════════════════════ -->
+  <div class="game-panel" id="game-memory">
+    <div class="memory-hud">
+      <div class="memory-stat">
+        <div class="memory-stat-num" id="memMoves">0</div>
+        <div class="memory-stat-label">Moves</div>
+      </div>
+      <div class="memory-stat">
+        <div class="memory-stat-num" id="memTime">0</div>
+        <div class="memory-stat-label">Seconds</div>
+      </div>
+      <div class="memory-stat">
+        <div class="memory-stat-num" id="memPairs">0 / 8</div>
+        <div class="memory-stat-label">Pairs</div>
+      </div>
+      <div style="display:flex;align-items:center;margin-left:auto;">
+        <button class="btn btn-outline" id="memRestart" style="font-size:.62rem;">↺ New Game</button>
+      </div>
+    </div>
+    <div class="memory-grid" id="memGrid"></div>
+    <div class="memory-win" id="memWin">
+      <h3>🎉 Nice work!</h3>
+      <p id="memWinMsg">You matched all 8 pairs!</p>
+      <button class="btn btn-primary" id="memWinBtn"><span>Play Again →</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       GAME 3 — TYPE SPRINT
+       ════════════════════════════════════════════════════════ -->
+  <div class="game-panel" id="game-typer">
+    <div class="typer-wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;flex-wrap:wrap;gap:.8rem;">
+        <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">
+          Challenge <span id="typerNum">1</span> of <span id="typerTotal">10</span>
+        </p>
+        <button class="btn btn-outline" id="typerSkip" style="font-size:.6rem;">↷ Skip</button>
+      </div>
+
+      <div class="typer-quote-box" id="typerDisplay" aria-hidden="true"></div>
+
+      <textarea
+        class="typer-input"
+        id="typerInput"
+        rows="3"
+        placeholder="Start typing the phrase above…"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      ></textarea>
+
+      <div class="typer-hud">
+        <div class="typer-stat">
+          <div class="typer-stat-num" id="typerWPM">—</div>
+          <div class="typer-stat-label">WPM</div>
+        </div>
+        <div class="typer-stat">
+          <div class="typer-stat-num" id="typerAcc">—</div>
+          <div class="typer-stat-label">Accuracy</div>
+        </div>
+        <div class="typer-stat">
+          <div class="typer-stat-num" id="typerTime">0s</div>
+          <div class="typer-stat-label">Time</div>
+        </div>
+      </div>
+
+      <div class="typer-result" id="typerResult">
+        <div>
+          <p class="typer-result-title">Done! 🎉</p>
+          <p style="font-size:.78rem;color:var(--text-faint);">Here's how you did:</p>
+        </div>
+        <div class="typer-result-stats" id="typerResultStats"></div>
+        <button class="btn btn-primary" id="typerNext"><span>Next Challenge →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       GAME 4 — WHACK-A-MOLE
+       ════════════════════════════════════════════════════════ -->
+  <div class="game-panel" id="game-mole">
+    <div class="mole-wrap">
+      <div class="mole-hud">
+        <div class="mole-stat">
+          <div class="mole-stat-num" id="moleScore">0</div>
+          <div class="mole-stat-label">Score</div>
+        </div>
+        <div class="mole-stat">
+          <div class="mole-stat-num" id="moleTime">30</div>
+          <div class="mole-stat-label">Time</div>
+        </div>
+        <div class="mole-stat">
+          <div class="mole-stat-num" id="moleHigh">0</div>
+          <div class="mole-stat-label">Best</div>
+        </div>
+      </div>
+
+      <!-- Holes generated by JS -->
+      <div class="mole-grid" id="moleGrid"></div>
+
+      <p class="mole-msg" id="moleMsg">Hit the moles before they hide!</p>
+
+      <div class="mole-controls">
+        <button class="btn btn-primary" id="moleStart"><span id="moleStartTxt">Start Game →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       GAME 5 — NUMBER GUESSER
+       ════════════════════════════════════════════════════════ -->
+  <div class="game-panel" id="game-guess">
+    <div class="guess-wrap">
+      <div class="guess-hud">
+        <div class="guess-stat">
+          <div class="guess-stat-num" id="guessAttempts">0</div>
+          <div class="guess-stat-label">Attempts</div>
+        </div>
+        <div class="guess-stat">
+          <div class="guess-stat-num" id="guessBest">—</div>
+          <div class="guess-stat-label">Best Score</div>
+        </div>
+      </div>
+
+      <p class="guess-range">Pick a number between <strong>1</strong> and <strong>100</strong></p>
+      <p class="guess-hint" id="guessHint">I've chosen a number between 1 and 100. Can you find it?</p>
+
+      <div class="guess-meter">
+        <div class="guess-meter-fill" id="guessMeterFill"></div>
+      </div>
+
+      <div class="guess-input-row">
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess…" class="guess-input"/>
+        <button class="btn btn-primary" id="guessBtn"><span>Guess →</span></button>
+      </div>
+
+      <div class="guess-history" id="guessHistory"></div>
+
+      <div class="guess-win" id="guessWin">
+        <h3>🎯 Got it!</h3>
+        <p id="guessWinMsg">You guessed the number!</p>
+        <button class="btn btn-primary" id="guessNewGame"><span>New Game →</span></button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Tip bar -->
+<div style="background:var(--bg-2);border-top:1px solid var(--border);padding:1.2rem var(--pad-x);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+  <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">Tip</span>
+  <p style="font-size:.78rem;color:var(--text-faint);">Snake: arrow keys / D-pad &nbsp;·&nbsp; Memory: click to flip pairs &nbsp;·&nbsp; Type Sprint: type exactly as shown &nbsp;·&nbsp; Mole: click those pesky hamsters &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
+</div>
+
+<footer>
+  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+  </div>
+</footer>
+
+<script src="javascript/main.js"></script>
+</body>
+</html>

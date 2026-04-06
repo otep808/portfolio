@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Joseph S. Callos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"    onclick="closeMobile()">Home</a>
+  <a href="about.html"    onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a>
+  <a href="skills.html"   onclick="closeMobile()">Skills</a>
+  <a href="games.html"    onclick="closeMobile()">Games</a>
+  <a href="contact.html"  onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div><span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+<nav id="nav">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="page-header">
+  <p class="ph-label">05 — Get In Touch</p>
+  <h1 class="ph-title">Let's <em>Connect</em></h1>
+  <p class="ph-desc">Have a project, a question, or just want to say hello? I'd love to hear from you — preferred contact: email or Facebook.</p>
+</header>
+
+<section id="contact">
+  <div class="contact-grid">
+
+    <!-- Info -->
+    <div class="reveal left">
+      <p class="contact-intro">
+        My inbox is always open — whether it's a <em>collaboration</em>, an academic project, or a creative idea worth exploring.
+      </p>
+
+      <div class="contact-links">
+        <a href="mailto:callosjoseph818@gmail.com" class="c-link">
+          <div class="c-icon">✉</div><span class="__cf_email__" data-cfemail="96f5f7fafaf9e5fcf9e5f3e6feaea7aed6f1fbf7fffab8f5f9fb">[email&#160;protected]</span>
+        </a>
+        <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="c-link">
+          <div class="c-icon">fb</div>facebook.com/joseph.callos.8
+        </a>
+        <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="c-link">
+          <div class="c-icon">in</div>linkedin.com/in/joseph-callos-329b153b8
+        </a>
+        <a href="https://github.com/otep808" target="_blank" class="c-link">
+          <div class="c-icon">GH</div>github.com/otep808
+        </a>
+        <a href="https://discordapp.com/users/1163857497963102219" target="_blank" class="c-link">
+          <div class="c-icon">DC</div>Discord — Otep Codes
+        </a>
+      </div>
+
+      <div class="avail-badge">
+        <span class="avail-dot"></span>
+        <span class="avail-text">Open to Internships &amp; Collaborations</span>
+      </div>
+
+      <!-- Quick Info -->
+      <div style="border:1px solid var(--border);padding:1.4rem;background:var(--bg-card);margin-bottom:1.5rem;transition:background .4s;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <p style="font-family:var(--f-mono);font-size:.56rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:.3rem;">Location</p>
+            <p style="font-size:.82rem;color:var(--text-dim);">Valenzuela City, Metro Manila</p>
+          </div>
+          <div>
+            <p style="font-family:var(--f-mono);font-size:.56rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:.3rem;">Availability</p>
+            <p style="font-size:.82rem;color:var(--text-dim);">Afternoons &amp; Evenings (PHT)</p>
+          </div>
+          <div>
+            <p style="font-family:var(--f-mono);font-size:.56rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:.3rem;">Response Time</p>
+            <p style="font-size:.82rem;color:var(--text-dim);">Within 24 hours</p>
+          </div>
+          <div>
+            <p style="font-family:var(--f-mono);font-size:.56rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:.3rem;">Preferred</p>
+            <p style="font-size:.82rem;color:var(--text-dim);">Email · Facebook</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-placeholder">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width=".9" opacity=".4">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <p>Valenzuela City, Metro Manila, Philippines</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="reveal rd2">
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">Name *</label>
+            <input type="text" id="fname" placeholder="Your name"/>
+            <span class="field-error" id="err-fname">Please enter your name.</span>
+          </div>
+          <div class="form-group">
+            <label for="femail">Email *</label>
+            <input type="email" id="femail" placeholder="your@email.com"/>
+            <span class="field-error" id="err-femail">Please enter a valid email.</span>
+          </div>
+        </div>
+        <div class="form-group full" style="margin-bottom:.9rem;">
+          <label for="fsubject">Subject *</label>
+          <input type="text" id="fsubject" placeholder="What's this about?"/>
+          <span class="field-error" id="err-fsubject">Please enter a subject.</span>
+        </div>
+        <div class="form-group full">
+          <label for="fmsg">Message *</label>
+          <textarea id="fmsg" rows="6" placeholder="Tell me about your project, idea, or question…"></textarea>
+          <span class="field-error" id="err-fmsg">Please write at least 10 characters.</span>
+        </div>
+        <p style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.12em;color:var(--text-faint);text-align:right;margin-top:.4rem;">
+          <span id="charCount">0</span> / 500
+        </p>
+        <div class="form-footer">
+          <p class="form-note">I respond within 24 hours.</p>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span id="btnText">Send Message →</span>
+          </button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <p>✓ Message sent! I'll get back to you within 24 hours.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
+  </ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+  </div>
+</footer>
+
+<script src="javascript/main.js"></script>
+</body>
+</html>

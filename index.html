@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joseph "Otep" Callos — Portfolio</title>
+  <meta name="description" content="Joseph S. Callos — BSIT Student at PLV. Full-Stack Developer, GUI Designer, Problem Solver."/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div id="cursor"></div>
+<div id="page-cover"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"    onclick="closeMobile()">Home</a>
+  <a href="about.html"    onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a>
+  <a href="skills.html"   onclick="closeMobile()">Skills</a>
+  <a href="games.html"    onclick="closeMobile()">Games</a>
+  <a href="contact.html"  onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div>
+  <span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+
+<nav id="nav">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-text">
+    <p class="hero-eyebrow">Portfolio — 2025</p>
+    <h1 class="hero-name">
+      Hi, I'm<br>
+      <em>Joseph</em><br>
+      Callos.
+    </h1>
+    <p class="typewriter-wrap">
+      <span id="typewriter"></span><span class="tw-cursor"></span>
+    </p>
+    <p class="hero-tagline">Wired for problems. Built for solutions.</p>
+    <p class="hero-desc">
+      A BSIT student at PLV who builds things from scratch, by choice —
+      blending systematic thinking with creative design to solve real problems.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num"><span class="count" data-target="17">0</span><span class="stat-suffix">+</span></div>
+        <p class="stat-label">Projects</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="count" data-target="3">0</span></div>
+        <p class="stat-label">Certifications</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="count" data-target="2">0</span></div>
+        <p class="stat-label">Years Studying</p>
+      </div>
+    </div>
+    <div class="btn-group">
+      <a href="projects.html" class="btn btn-primary"><span>View My Work</span></a>
+      <a href="#"             class="btn btn-outline">Download Résumé</a>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-photo-wrap">
+      <div class="photo-placeholder">
+        <img src="images/me2.jpeg" alt="Photo of Joseph Callos"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-highlights reveal">
+    <div class="highlight-box">
+      <span class="highlight-icon">🖥️</span>
+      <p class="highlight-title">Full Stack Developer</p>
+      <p class="highlight-desc">Builds front-end and back-end systems using HTML, CSS, JavaScript, Java, and Python.</p>
+    </div>
+    <div class="highlight-box">
+      <span class="highlight-icon">🎨</span>
+      <p class="highlight-title">GUI Designer</p>
+      <p class="highlight-desc">Designs intuitive, visually appealing interfaces using Figma, Canva, and Photoshop.</p>
+    </div>
+    <div class="highlight-box">
+      <span class="highlight-icon">🔧</span>
+      <p class="highlight-title">Problem Solver</p>
+      <p class="highlight-desc">Approaches challenges systematically — from logic puzzles to network configurations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEMO REEL ──────────────────────────────────────────────── -->
+<section id="demo-reel">
+  <div class="reel-inner">
+    <div class="reel-info reveal left">
+      <p class="reel-tag">Demo Reel 2025</p>
+      <h2 class="reel-title">Watch My <em>Work In Action</em></h2>
+      <p class="reel-desc">
+        A curated showcase of my best projects — EkSpyRy, The Future Times, CineReel,
+        and more. See the thinking, the code, and the design decisions behind each build.
+      </p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary"><span>▶ Watch Reel</span></a>
+        <a href="projects.html" class="btn btn-ghost">All Projects →</a>
+      </div>
+    </div>
+    <div class="reel-player reveal rd2" id="reelPlayer">
+      <div class="play-btn" id="playBtn">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+      <div class="reel-meta">
+        <span class="reel-duration">00:02:20</span>
+        <span class="reel-quality">HD 1080p</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED WORK ───────────────────────────────────────────── -->
+<section id="featured">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Featured <em>Work</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="home-featured-grid">
+
+    <!-- EkSpyRy -->
+    <div class="project-card reveal rd1">
+      <div class="project-thumb type-python">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="p1" width="24" height="24" patternUnits="userSpaceOnUse">
+            <path d="M0 0L24 24M24 0L0 24" stroke="rgba(77,127,230,1)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#p1)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/ekspyry.jpg" alt="EkSpyRy App"/></span>
+      </div>
+      <div class="project-body">
+        <p class="project-cat">Python · Desktop App</p>
+        <h3 class="project-title">EkSpyRy — Food Expiration Monitor</h3>
+        <p class="project-desc">
+          A Python desktop app that tracks food expiry dates, fires alerts before items
+          spoil, and logs everything through a clean Tkinter GUI.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span>
+          <span class="tag">GUI</span><span class="tag">Automation</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/LordDomino/expdatetracker" target="_blank" class="project-link">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Future Times -->
+    <div class="project-card reveal rd2">
+      <div class="project-thumb type-net">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="p2" width="30" height="10" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="5" x2="30" y2="5" stroke="rgba(77,127,230,.6)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#p2)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/theFutureTimes.png" alt="The Future Times"/></span>
+      </div>
+      <div class="project-body">
+        <p class="project-cat">HTML · CSS · Group Project</p>
+        <h3 class="project-title">The Future Times — Privacy &amp; Social Media</h3>
+        <p class="project-desc">
+          An editorial HTML/CSS website raising awareness about privacy in social media,
+          covering data collection, surveillance capitalism, and user rights.
+        </p>
+        <div class="project-tags">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span>
+          <span class="tag">Editorial</span><span class="tag">Privacy</span>
+        </div>
+        <div class="project-links">
+          <a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" class="project-link">↗ Live Site</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CineReel -->
+    <div class="project-card reveal rd3">
+      <div class="project-thumb type-design">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="p3" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="8" cy="8" r="5" fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/>
+            <circle cx="8" cy="8" r="2" fill="rgba(196,154,74,.3)"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#p3)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/cinereel.png" alt="CineReel App"/></span>
+      </div>
+      <div class="project-body">
+        <p class="project-cat">Figma · Mobile App · Group Project</p>
+        <h3 class="project-title">CineReel — Movie Short-Form App</h3>
+        <p class="project-desc">
+          A TikTok-style mobile app built in Figma for movie clips and trailers.
+          Cinematic dark UI, swipe interactions, and curated discovery feed.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Figma</span><span class="tag">Mobile UI</span>
+          <span class="tag">Social Feed</span><span class="tag">Film App</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ Figma Prototype</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-strip reveal">
+    <p>See all <em>17 projects &amp; case studies</em></p>
+    <a href="projects.html" class="btn btn-outline">View All Work →</a>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" class="social-btn" title="GitHub">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn" title="LinkedIn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn" title="Facebook">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn" title="Email">✉</a>
+  </div>
+</footer>
+
+<script src="javascript/main.js"></script>
+</body>
+</html>

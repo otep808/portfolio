@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Joseph S. Callos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"    onclick="closeMobile()">Home</a>
+  <a href="about.html"    onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a>
+  <a href="skills.html"   onclick="closeMobile()">Skills</a>
+  <a href="games.html"    onclick="closeMobile()">Games</a>
+  <a href="contact.html"  onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div><span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+
+<nav id="nav">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="page-header">
+  <p class="ph-label">02 — Portfolio</p>
+  <h1 class="ph-title">My <em>Work</em></h1>
+  <p class="ph-desc">Wired for problems, built for solutions — a collection of Python apps, web projects, UI/UX designs, and branding work.</p>
+</header>
+
+<section id="projects">
+
+  <!-- ── FILTER + COUNT BAR ────────────────────────────────────── -->
+  <div class="proj-filter-bar">
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="python">Python</button>
+      <button class="filter-btn" data-filter="web">Web Dev</button>
+      <button class="filter-btn" data-filter="figma">UI / Figma</button>
+      <button class="filter-btn" data-filter="research">Research</button>
+      <button class="filter-btn" data-filter="design">Branding</button>
+      <button class="filter-btn" data-filter="media">Media</button>
+      <button class="filter-btn" data-filter="group">Group</button>
+    </div>
+    <p class="proj-count">Showing <span id="proj-count">17</span> projects</p>
+  </div>
+
+  <!-- ── GRID ──────────────────────────────────────────────────── -->
+  <div class="proj-grid" id="projectsGrid">
+
+    <!-- ════════════════════════════════════════════
+         SOLO PROJECTS
+         ════════════════════════════════════════════ -->
+    <div class="proj-section-head section-divider">
+      <span class="proj-section-label is-blue">Solo Projects</span>
+      <div class="proj-section-rule"></div>
+      <span class="proj-section-sub">by Joseph S. Callos</span>
+    </div>
+
+    <!-- EkSpyRy ─────────────────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="python">
+      <div class="project-thumb type-python">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp1" width="24" height="24" patternUnits="userSpaceOnUse">
+            <path d="M0 0L24 24M24 0L0 24" stroke="rgba(77,127,230,1)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp1)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/ekspyry.jpg" alt="EkSpyRy"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Python · Desktop App</p>
+        <h3 class="project-title">EkSpyRy — Food Expiration Monitor</h3>
+        <p class="project-desc">
+          Desktop application that monitors food expiration dates, sends alerts before items expire,
+          and stores data persistently. Clean Tkinter GUI with practical daily-use functionality.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span>
+          <span class="tag">File I/O</span><span class="tag">Automation</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/LordDomino/expdatetracker" target="_blank" class="project-link">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- C.L.E.A.R. Aqua ──────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="research">
+      <div class="project-thumb type-research">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp2" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="10" cy="10" r="7" fill="none" stroke="rgba(196,154,74,1)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp2)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/waterpurifier.jpg" alt="C.L.E.A.R. Aqua"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Research · Engineering</p>
+        <h3 class="project-title">C.L.E.A.R. Aqua — Portable Water Purifier</h3>
+        <p class="project-desc">
+          Quantitative research on a portable water purification system for communities with
+          limited access to clean water. Analyzed filtration methods, cost feasibility, and
+          effectiveness metrics.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Research</span><span class="tag">Data Analysis</span>
+          <span class="tag">Engineering</span><span class="tag">Quantitative</span>
+        </div>
+        <div class="project-links">
+          <a href="files/CLEAR_Aqua-PortableWaterPurifier.pdf" target="_blank" class="project-link">📄 View Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- IT Helpdesk ──────────────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="web">
+      <div class="project-thumb type-net">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp3" width="30" height="30" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="15" x2="30" y2="15" stroke="rgba(77,127,230,1)" stroke-width=".5"/>
+            <line x1="15" y1="0" x2="15" y2="30" stroke="rgba(77,127,230,1)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp3)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/itHelpDesk.jpg" alt="IT Helpdesk"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Web App · Database</p>
+        <h3 class="project-title">IT Helpdesk Ticketing System</h3>
+        <p class="project-desc">
+          Web-based ticketing system that logs user issues, assigns IT technicians, tracks
+          resolution SLAs, and manages hardware asset inventory with a clean UI.
+        </p>
+        <div class="project-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span>
+          <span class="tag">Database</span><span class="tag">SLA Tracking</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/IMCapstone.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Website ───────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="web">
+      <div class="project-thumb type-web">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp4" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="10" cy="10" r="8" fill="none" stroke="rgba(77,127,230,1)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp4)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/logo-light.svg" alt="Portfolio"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Web Development</p>
+        <h3 class="project-title">Personal Portfolio Website</h3>
+        <p class="project-desc">
+          This very portfolio — a multi-page site built with pure HTML5, CSS3, and vanilla JS.
+          Dark/light mode with circular reveal, particle canvas, scroll animations, and 5 mini games.
+          No Bootstrap. No templates. From scratch.
+        </p>
+        <div class="project-tags">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span><span class="tag">Responsive</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrapbook ───────────────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="design figma">
+      <div class="project-thumb type-design">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp5" width="14" height="14" patternUnits="userSpaceOnUse">
+            <circle cx="7" cy="7" r="4" fill="none" stroke="rgba(196,154,74,.7)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp5)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/scrapbook.png" alt="Scrapbook"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Figma · Personal Design</p>
+        <h3 class="project-title">Scrapbook — Personal Portfolio in Figma</h3>
+        <p class="project-desc">
+          Digital scrapbook in Figma documenting personality, interests, hobbies, and student journey.
+          A creative self-introduction blending collage aesthetics with clean layout principles.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Figma</span><span class="tag">Layout</span>
+          <span class="tag">Personal</span><span class="tag">Collage</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.figma.com/design/Wv4LYju5K4XG98Qmri36iI/Scrapbook?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mubii ──────────────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="design figma">
+      <div class="project-thumb type-python">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp6" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M0 10 L10 0 L20 10 L10 20 Z" fill="rgba(77,127,230,.12)" stroke="rgba(77,127,230,.4)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp6)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/mubii.png" alt="Mubii"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Figma · Mobile App UI/UX</p>
+        <h3 class="project-title">Mubii — Free Movie Streaming App</h3>
+        <p class="project-desc">
+          Full mobile UI/UX design for a free movie streaming platform. Focused on clean
+          browse experience, watchlist management, and accessible layout hierarchy.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Figma</span><span class="tag">UI/UX</span>
+          <span class="tag">Mobile</span><span class="tag">Streaming</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.figma.com/design/MZrmToyD7N6RsrhPfZqM77/CALLOS_JOSEPH_BSIT1-6_MUBII?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online Newsletter ───────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="web">
+      <div class="project-thumb type-web">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp7" width="25" height="8" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="4" x2="25" y2="4" stroke="rgba(77,127,230,.55)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp7)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/emptechact.png" alt="Newsletter"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Web · Wix CMS</p>
+        <h3 class="project-title">Online Newsletter, Blog &amp; Magazine</h3>
+        <p class="project-desc">
+          Content website on Wix covering news, blog articles, and magazine-style editorial layouts.
+          Explored content management, readability design, and publishing workflows.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Wix</span><span class="tag">CMS</span>
+          <span class="tag">Editorial</span><span class="tag">Blog</span>
+        </div>
+        <div class="project-links">
+          <a href="https://callosjoseph818.wixsite.com/josephcallos" target="_blank" class="project-link">↗ Live Site</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Astro Cafe ──────────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="design">
+      <div class="project-thumb type-brand">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="pp8" width="28" height="28" patternUnits="userSpaceOnUse">
+            <circle cx="5"  cy="5"  r="1.2" fill="rgba(196,154,74,.7)"/>
+            <circle cx="19" cy="19" r="1.2" fill="rgba(196,154,74,.4)"/>
+            <circle cx="5"  cy="19" r=".7"  fill="rgba(77,127,230,.35)"/>
+            <circle cx="19" cy="5"  r=".7"  fill="rgba(77,127,230,.35)"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#pp8)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/astroCafe.jpg" alt="Astro Cafe"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-solo">Solo</span>
+        <p class="project-cat">Branding · Logo Design</p>
+        <h3 class="project-title">Astro Cafe — Logo &amp; Brand Identity</h3>
+        <p class="project-desc">
+          Complete visual identity system for a space-themed cafe concept. Logo, color palette,
+          typography pairing, and brand mockups applied to cups and packaging.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Branding</span><span class="tag">Logo</span>
+          <span class="tag">Canva</span><span class="tag">Figma</span><span class="tag">Mockup</span>
+        </div>
+        <div class="project-links">
+          <a href="https://canva.link/llfb8r9km74mkuh" target="_blank" class="project-link">↗ View on Canva</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         GROUP PROJECTS
+         ════════════════════════════════════════════ -->
+    <div class="proj-section-head is-group section-divider">
+      <span class="proj-section-label is-gold">Group Projects</span>
+      <div class="proj-section-rule"></div>
+      <span class="proj-section-sub">w/ classmates @ PLV</span>
+    </div>
+
+    <!-- Clothing Store ──────────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="python group">
+      <div class="project-thumb type-design">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp1" width="18" height="18" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="9" height="9" fill="rgba(196,154,74,.2)"/>
+            <rect x="9" y="9" width="9" height="9" fill="rgba(77,127,230,.1)"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp1)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/clothingStore.png" alt="Clothing Store"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Python · Tkinter · Linked List</p>
+        <h3 class="project-title">Clothing Store — Desktop Ordering System</h3>
+        <p class="project-desc">
+          Desktop ordering system simulating clothing store navigation — categories, 60+ items,
+          linked list–backed cart, and itemized receipt generation.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span>
+          <span class="tag">Linked List</span><span class="tag">POS System</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bank Queue ─────────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="python group">
+      <div class="project-thumb type-net">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp2" width="30" height="30" patternUnits="userSpaceOnUse">
+            <circle cx="15" cy="15" r="12" fill="none" stroke="rgba(77,127,230,1)" stroke-width=".4"/>
+            <circle cx="15" cy="15" r="6"  fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp2)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/bankqueue.png" alt="Bank Queue"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Python · Queue DSA</p>
+        <h3 class="project-title">Bank Queue Management System</h3>
+        <p class="project-desc">
+          Simulates a bank queue system with Priority and Regular customers across Deposit, Withdraw,
+          and Loan tellers. Auto-generates tickets and shows a real-time dashboard.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span>
+          <span class="tag">Priority Queue</span><span class="tag">Dashboard</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Valenzuela Utility Finder ───────────────── -->
+    <div class="project-card reveal rd1" data-cat="web group">
+      <div class="project-thumb type-python">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp3" width="22" height="22" patternUnits="userSpaceOnUse">
+            <path d="M11 0 L22 11 L11 22 L0 11 Z" fill="none" stroke="rgba(77,127,230,1)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp3)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/utilityfinder.png" alt="Utility Finder"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Graph · Map GUI · Python</p>
+        <h3 class="project-title">Valenzuela Utility Finder</h3>
+        <p class="project-desc">
+          Location-aware mapping app for Valenzuela City's 33 barangays. Ranks nearest utility
+          offices via Haversine distance with color-coded markers and routing lines.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Graph</span>
+          <span class="tag">Haversine</span><span class="tag">Map GUI</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- School Supplies ─────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="python group">
+      <div class="project-thumb type-brand">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp4" width="16" height="16" patternUnits="userSpaceOnUse">
+            <rect x="1" y="1" width="6" height="6" fill="rgba(196,154,74,.25)" rx="1"/>
+            <rect x="9" y="9" width="6" height="6" fill="rgba(77,127,230,.2)"  rx="1"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp4)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/schoolsupplies.png" alt="School Supplies"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Python · Stack DSA</p>
+        <h3 class="project-title">School Supplies Inventory &amp; Checkout</h3>
+        <p class="project-desc">
+          Desktop inventory system with 50+ items across 9 shelves. Restock, Take, Undo actions,
+          color-coded status alerts, and a timestamped receipt generator.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span>
+          <span class="tag">Stack DSA</span><span class="tag">Inventory</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shoe Stack Viewer ───────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="python group">
+      <div class="project-thumb type-web">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp5" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M0 20 Q10 0 20 20" fill="none" stroke="rgba(77,127,230,1)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp5)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/shoestack.png" alt="Shoe Stack"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Python · Stack Visualizer</p>
+        <h3 class="project-title">Shoe Material Stack Viewer</h3>
+        <p class="project-desc">
+          GUI that visualizes sneaker construction layer-by-layer using a Stack DSA. Browse 50+
+          sneakers across major brands with push/pop/reset operations and a searchable database.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Stack DSA</span>
+          <span class="tag">Visualization</span><span class="tag">Search</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLV LMS ─────────────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="design figma group">
+      <div class="project-thumb type-design">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp6" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="10" height="10" fill="rgba(77,127,230,.15)"/>
+            <rect x="10" y="10" width="10" height="10" fill="rgba(77,127,230,.08)"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp6)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/lms.png" alt="PLV LMS"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Figma · UI/UX Design</p>
+        <h3 class="project-title">PLV Learning Management System</h3>
+        <p class="project-desc">
+          Comprehensive UI/UX prototype for PLV's LMS — student dashboards, course modules,
+          submission portals, and grade tracking.
+          <small style="color:var(--text-faint);">w/ Alberto, Acuña, Galvez, Naquita, Vigo, Chua, Mitiam, Rodrigo</small>
+        </p>
+        <div class="project-tags">
+          <span class="tag">Figma</span><span class="tag">UI/UX</span>
+          <span class="tag">Prototype</span><span class="tag">Education</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.figma.com/proto/hW3XOIhUWDosTJbImrRgF3?node-id=0-1&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ Prototype</a>
+          <a href="files/pabatirangSistemaNgMagAaral.pdf" target="_blank" class="project-link">📄 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CineReel ─────────────────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="design figma group">
+      <div class="project-thumb type-web">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp7" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="8" cy="8" r="5" fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/>
+            <circle cx="8" cy="8" r="2" fill="rgba(196,154,74,.3)"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp7)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/cinereel.png" alt="CineReel"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Figma · Mobile App</p>
+        <h3 class="project-title">CineReel — Movie Short-Form App</h3>
+        <p class="project-desc">
+          TikTok-style mobile app for movies — clips, trailers, and reviews in a vertical scroll feed.
+          Cinematic dark UI with swipe interactions.
+          <small style="color:var(--text-faint);">w/ Alberto, Acuña</small>
+        </p>
+        <div class="project-tags">
+          <span class="tag">Figma</span><span class="tag">Mobile UI</span>
+          <span class="tag">Social Feed</span><span class="tag">Film App</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Future Times ────────────────────────── -->
+    <div class="project-card reveal rd2" data-cat="web group">
+      <div class="project-thumb type-net">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp8" width="30" height="10" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="5" x2="20" y2="5" stroke="rgba(77,127,230,.6)" stroke-width=".5"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp8)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/theFutureTimes.png" alt="The Future Times"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">HTML · CSS · Web</p>
+        <h3 class="project-title">The Future Times — Privacy &amp; Social Media</h3>
+        <p class="project-desc">
+          Editorial HTML/CSS website raising awareness about privacy in social media.
+          <small style="color:var(--text-faint);">w/ Alberto, Acuña, Galvez, Naquita, Vigo, Chua, Rodrigo</small>
+        </p>
+        <div class="project-tags">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span>
+          <span class="tag">Privacy</span><span class="tag">Informative</span>
+        </div>
+        <div class="project-links">
+          <a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" class="project-link">↗ Live Site</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Antukin Music Video ─────────────────────── -->
+    <div class="project-card reveal rd1" data-cat="media group">
+      <div class="project-thumb type-research">
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
+          <defs><pattern id="gp9" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M10 2 L18 10 L10 18 L2 10 Z" fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/>
+          </pattern></defs>
+          <rect width="200" height="200" fill="url(#gp9)"/>
+        </svg>
+        <div class="thumb-overlay"></div>
+        <span class="thumb-label"><img src="images/antukin.png" alt="Antukin Music Video"/></span>
+      </div>
+      <div class="project-body">
+        <span class="proj-type-badge is-group">Group</span>
+        <p class="project-cat">Multimedia · Video Production</p>
+        <h3 class="project-title">Antukin — Cover Music Video</h3>
+        <p class="project-desc">
+          Cinematic music video cover produced for Multimedia subject. Handled creative direction,
+          video editing via CapCut, and audio-visual synchronization.
+          <small style="color:var(--text-faint);">w/ Alberto, Acuña, Galvez, Naquita, Vigo, Chua, Rodrigo</small>
+        </p>
+        <div class="project-tags">
+          <span class="tag">CapCut</span><span class="tag">Video Editing</span>
+          <span class="tag">Music Video</span><span class="tag">Multimedia</span>
+        </div>
+        <div class="project-links">
+          <a href="https://youtu.be/RzN_gfi2xYg?si=KGvv2g_tsauiLjWn" target="_blank" class="project-link">↗ Watch on YouTube</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /proj-grid -->
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+  </div>
+</footer>
+
+<script src="javascript/main.js"></script>
+</body>
+</html>

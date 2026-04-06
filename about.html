@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Joseph S. Callos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"    onclick="closeMobile()">Home</a>
+  <a href="about.html"    onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a>
+  <a href="skills.html"   onclick="closeMobile()">Skills</a>
+  <a href="games.html"    onclick="closeMobile()">Games</a>
+  <a href="contact.html"  onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div>
+  <span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+<nav id="nav">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="page-header">
+  <p class="ph-label">01 — About Me</p>
+  <h1 class="ph-title">Who <em>I Am</em></h1>
+  <p class="ph-desc">A night-owl coder from Valenzuela — <em>wired for problems, built for solutions</em>. Personal motto: <strong style="color:var(--gold)">"Time is Gold."</strong></p>
+</header>
+
+<!-- BIO -->
+<section id="about-bio">
+  <div class="about-grid">
+    <div class="about-photo-col reveal left">
+      <div class="about-photo-frame">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(77,127,230,0.3)" stroke-width=".8">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+      <p class="about-photo-caption">Joseph "Otep" Callos · PLV, BSIT</p>
+
+      <div class="info-card">
+        <div class="info-row"><p class="info-label">Full Name</p><p class="info-value">Joseph S. Callos</p></div>
+        <div class="info-row"><p class="info-label">Nickname</p><p class="info-value">Otep / Otep Codes</p></div>
+        <div class="info-row"><p class="info-label">Age</p><p class="info-value">20 years old (Nov 3, 2005)</p></div>
+        <div class="info-row"><p class="info-label">Program</p><p class="info-value">BS Information Technology</p></div>
+        <div class="info-row"><p class="info-label">School</p><p class="info-value">Pamantasan ng Lungsod ng Valenzuela</p></div>
+        <div class="info-row"><p class="info-label">Year Level</p><p class="info-value">2nd Year</p></div>
+        <div class="info-row"><p class="info-label">Location</p><p class="info-value">Valenzuela City, Philippines</p></div>
+        <div class="info-row"><p class="info-label">Zodiac</p><p class="info-value">Scorpio ♏</p></div>
+        <div class="info-row"><p class="info-label">Personality</p><p class="info-value">Introvert · Night Owl</p></div>
+        <div class="info-row" style="margin-bottom:0"><p class="info-label">Life Motto</p><p class="info-value" style="color:var(--gold)">"Time is Gold"</p></div>
+      </div>
+    </div>
+
+    <div class="about-content reveal rd2">
+      <p class="about-intro">
+        A second-year BSIT student with a love for <em>building things</em> —
+        whether that's a web app, a <span class="b">Python script</span>, or a freshly improvised gadget.
+      </p>
+      <p class="about-body">
+        Joseph "Otep" Callos is a student at Pamantasan ng Lungsod ng Valenzuela who thrives on blending technology
+        with creativity. He builds web systems that are clean and scalable, designs interfaces that feel intuitive,
+        and solves problems with persistence and systematic thinking.
+        <br><br>
+        Whether it's writing Python automation, structuring HTML/CSS for maintainable design, organizing group
+        presentations into polished stories, or troubleshooting routers — his work is always guided by functionality
+        and imagination. He's motivated by his family and friends, and believes that <strong style="color:var(--gold);font-weight:400">every second counts</strong>.
+        <br><br>
+        Beyond academics, Otep plays guitar, practices sewing, competes in badminton, and collects building blocks.
+        He handles stress by listening to Rock, Country, and Folk music — his favorites being The Beatles and Jim Croce.
+      </p>
+
+      <div class="values-row">
+        <div class="val-card"><p class="val-num">01</p><p class="val-name">Collaboration</p></div>
+        <div class="val-card"><p class="val-num">02</p><p class="val-name">Clarity</p></div>
+        <div class="val-card"><p class="val-num">03</p><p class="val-name">Creativity</p></div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <p class="tl-year">2024 – Present</p>
+          <p class="tl-title">BS Information Technology — Year 2</p>
+          <p class="tl-desc">Pamantasan ng Lungsod ng Valenzuela (PLV) · Web Systems, Networking, Databases</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">2023 – 2024</p>
+          <p class="tl-title">BS Information Technology — Year 1</p>
+          <p class="tl-desc">Core courses: Programming (Java), Web Development, Computer Networks</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">2023</p>
+          <p class="tl-title">Senior High School Graduate</p>
+          <p class="tl-desc">ICT / TVL Track · Certified in SQL, Networking, HTML+CSS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUN FACTS -->
+<section id="fun-facts" style="background:var(--bg-2);">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Beyond the <em>Classroom</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="facts-grid">
+    <div class="fact-card reveal rd1"><span class="fact-icon">🎸</span><p class="fact-title">Guitar Player</p><p class="fact-desc">Plays acoustic guitar as a creative outlet — genres include Rock, Country, and Folk. Favorite artists: The Beatles and Jim Croce.</p></div>
+    <div class="fact-card reveal rd2"><span class="fact-icon">🧱</span><p class="fact-title">Building Blocks</p><p class="fact-desc">Collects and builds with building block sets — the same spatial reasoning skills that go into layout and systems design.</p></div>
+    <div class="fact-card reveal rd3"><span class="fact-icon">🏸</span><p class="fact-title">Badminton</p><p class="fact-desc">His go-to sport and outdoor activity. Quick reflexes on the court; the same precision applies to debugging code.</p></div>
+    <div class="fact-card reveal rd4"><span class="fact-icon">🐾</span><p class="fact-title">Pet Dad</p><p class="fact-desc">Proud owner of 3 cats and 2 dogs. Walking his pets is one of his favorite ways to decompress and clear his mind.</p></div>
+  </div>
+</section>
+
+<!-- STRENGTH PILLARS -->
+<section id="strengths" style="background:var(--bg-3);">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Core <span class="g">Strengths</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" class="reveal">
+    <div style="padding:2.5rem;background:var(--bg-card);border:1px solid var(--border);position:relative;overflow:hidden;">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),transparent)"></div>
+      <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:1rem;">Analytical</p>
+      <p style="font-family:var(--f-display);font-size:1.2rem;font-weight:300;line-height:1.5;color:var(--text-dim);">Strong in <strong style="color:var(--text);font-weight:400">math, logic, and puzzles</strong> — Otep approaches every technical challenge with systematic problem-solving.</p>
+    </div>
+    <div style="padding:2.5rem;background:var(--bg-2);border:1px solid var(--border);border-left:none;position:relative;overflow:hidden;">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),transparent)"></div>
+      <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;">Communicator</p>
+      <p style="font-family:var(--f-display);font-size:1.2rem;font-weight:300;line-height:1.5;color:var(--text-dim);">Explains technical concepts by comparing them to <strong style="color:var(--text);font-weight:400">things the listener already knows</strong> — making tech accessible to anyone.</p>
+    </div>
+    <div style="padding:2.5rem;background:var(--bg-card);border:1px solid var(--border);border-left:none;position:relative;overflow:hidden;">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--gold))"></div>
+      <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.22em;color:var(--blue);text-transform:uppercase;margin-bottom:1rem;">Improviser</p>
+      <p style="font-family:var(--f-display);font-size:1.2rem;font-weight:300;line-height:1.5;color:var(--text-dim);">His hidden talent: <strong style="color:var(--text);font-weight:400">fixing things by improvising</strong> — a resourcefulness that shines equally in DIY projects and debugging sessions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">My <em>Philosophy</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="quote-grid reveal">
+    <div class="quote-card"><p class="quote-cat">Design</p><p class="quote-text">"Good design is invisible — users notice when it's missing, not when it's there."</p></div>
+    <div class="quote-card"><p class="quote-cat">Code</p><p class="quote-text">"Write code for the next person who reads it — that person might be you, six months later."</p></div>
+    <div class="quote-card"><p class="quote-cat">Life Motto</p><p class="quote-text">"<strong style='color:var(--gold);font-weight:400'>Time is Gold.</strong> Every second spent on something should bring value — to yourself or to others."</p></div>
+  </div>
+  <div style="display:flex;justify-content:center;margin-top:4rem;" class="reveal">
+    <a href="contact.html" class="btn btn-primary"><span>Let's Work Together →</span></a>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li><li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+  </div>
+</footer>
+
+<script src="javascript/main.js"></script>
+</body>
+</html>
