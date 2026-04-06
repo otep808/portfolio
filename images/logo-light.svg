@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 80" width="264" height="80">
+
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&amp;family=Space+Mono&amp;display=swap');
+    </style>
+
+    <!-- Subtle dot-grid for the icon background -->
+    <pattern id="dg-l" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="0.65" fill="#2855d4" opacity="0.1"/>
+    </pattern>
+
+    <!-- Clip to the rounded icon rect -->
+    <clipPath id="ic-l">
+      <rect x="0" y="4" width="72" height="72" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <!-- ─────────────────────────────────────
+       ICON / MARK
+  ───────────────────────────────────────── -->
+
+  <!-- Background -->
+  <rect x="0" y="4" width="72" height="72" rx="10" fill="#e2e6f8"/>
+  <!-- Dot grid overlay -->
+  <rect x="0" y="4" width="72" height="72" fill="url(#dg-l)" clip-path="url(#ic-l)"/>
+  <!-- Blue border -->
+  <rect x="0" y="4" width="72" height="72" rx="10" fill="none" stroke="#2855d4" stroke-width="1.5"/>
+
+  <!-- Code-editor header bar -->
+  <rect x="0" y="4" width="72" height="16" fill="#2855d4" opacity="0.09" clip-path="url(#ic-l)"/>
+  <!-- Header separator line -->
+  <line x1="0" y1="20" x2="72" y2="20" stroke="#2855d4" stroke-width="0.5" opacity="0.2" clip-path="url(#ic-l)"/>
+  <!-- Traffic-light dots -->
+  <circle cx="11" cy="12" r="2.4" fill="#9a7030" opacity="0.85"/>
+  <circle cx="20" cy="12" r="2.4" fill="#2855d4" opacity="0.55"/>
+  <circle cx="29" cy="12" r="2.4" fill="#2855d4" opacity="0.28"/>
+  <!-- Filename label -->
+  <text x="52" y="12"
+        font-family="'Space Mono','Courier New',monospace"
+        font-size="6.5"
+        fill="#2855d4"
+        opacity="0.6"
+        dominant-baseline="middle"
+        text-anchor="middle">oc.js</text>
+
+  <!-- Code symbol: < / >
+       Code area: y=20..76, center y=48
+       Symbol height 32px: top=32, bottom=64 -->
+  <path d="M 22 32 L 11 48 L 22 64"
+        fill="none" stroke="#9a7030" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 38 32 L 32 64"
+        fill="none" stroke="#0e1120" stroke-width="1.8"
+        stroke-linecap="round" opacity="0.58"/>
+  <path d="M 44 32 L 57 48 L 44 64"
+        fill="none" stroke="#9a7030" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Gold accent bar at icon bottom -->
+  <line x1="6" y1="72" x2="66" y2="72"
+        stroke="#9a7030" stroke-width="0.9"
+        opacity="0.5" clip-path="url(#ic-l)"/>
+
+  <!-- ─────────────────────────────────────
+       DIVIDER
+  ───────────────────────────────────────── -->
+  <line x1="82" y1="20" x2="82" y2="60"
+        stroke="#2855d4" stroke-width="0.8" opacity="0.18"/>
+
+  <!-- ─────────────────────────────────────
+       WORDMARK
+  ───────────────────────────────────────── -->
+
+  <!-- "Otep." — display italic, dark + blue dot -->
+  <text x="94" y="36"
+        font-family="'Cormorant Garamond',Georgia,'Times New Roman',serif"
+        font-size="28"
+        font-weight="300"
+        font-style="italic"
+        fill="#0e1120"
+        dominant-baseline="middle"
+        xml:space="preserve">Otep<tspan fill="#2855d4">.</tspan></text>
+
+  <!-- "joseph s. callos" — mono, muted blue -->
+  <text x="96" y="58"
+        font-family="'Space Mono','Courier New',monospace"
+        font-size="8.5"
+        letter-spacing="1.4"
+        fill="#2855d4"
+        opacity="0.65"
+        dominant-baseline="middle">joseph s. callos</text>
+
+</svg>
