@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terminal — Joseph S. Callos</title>
+  <meta name="description" content="A working command-line version of Joseph S. Callos' portfolio. Type help to explore projects, skills, games and leaderboards."/>
+  <meta name="theme-color" content="#080911"/>
+  <meta name="color-scheme" content="dark light"/>
+  <link rel="icon" href="images/logomark_dark.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    .term-wrap{max-width:900px;margin:0 auto;padding:calc(var(--nav-h) + 2.5rem) var(--pad-x) 4rem}
+    .term-win{background:#0a0b14;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.45);font-family:var(--f-mono)}
+    [data-theme="light"] .term-win{background:#1a1b2e}
+    .term-bar{display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(77,127,230,.12)}
+    .term-bar .terminal-title{margin-left:.5rem;color:rgba(232,228,216,.4);font-size:.6rem;letter-spacing:.14em}
+    .term-out{height:min(60vh,520px);overflow-y:auto;padding:1rem 1.2rem;font-size:.78rem;line-height:1.7;color:#e8e4d8}
+    .term-out div{white-space:pre-wrap;word-break:break-word}
+    .t-dim{color:rgba(232,228,216,.55)}.t-gold{color:var(--gold-lt)}.t-blue{color:var(--blue-lt)}.t-err{color:var(--red)}.t-ok{color:var(--green)}
+    .term-line{display:flex;gap:.6rem;align-items:center;padding:.7rem 1.2rem;border-top:1px solid rgba(77,127,230,.12)}
+    .term-line span{color:var(--blue);font-size:.78rem;flex-shrink:0}
+    .term-line input{flex:1;background:transparent;border:0;outline:0;color:#e8e4d8;font:inherit;font-size:.82rem;caret-color:var(--gold)}
+    .term-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+    .term-chip{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;padding:.4rem .8rem;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;border-radius:var(--radius)}
+    .term-chip:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-glow)}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#termInput">Skip to terminal</a>
+<div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
+  <a href="index.html" onclick="closeMobile()">Home</a><a href="about.html" onclick="closeMobile()">About</a>
+  <a href="projects.html" onclick="closeMobile()">Projects</a><a href="skills.html" onclick="closeMobile()">Skills</a>
+  <a href="games.html" onclick="closeMobile()">Games</a><a href="terminal.html" onclick="closeMobile()">Terminal</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+  <div class="mob-divider"></div><span class="mob-sub">OtepCodes · PLV BSIT</span>
+</div>
+<nav id="nav" aria-label="Primary navigation">
+  <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
+    <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="nav-clock" aria-label="Manila time"><span class="nav-clock-time" data-clock-time>--:--</span><span class="nav-clock-date" data-clock-date></span></span><button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<main class="term-wrap">
+  <p class="ph-label">Only on this portfolio</p>
+  <h1 class="ph-title" style="font-size:clamp(2.2rem,6vw,4rem)">Browse me <em>like a shell</em></h1>
+  <p class="ph-desc" style="margin-bottom:2rem">The whole portfolio, as a command line. Type <strong>help</strong>, press <strong>Tab</strong> to autocomplete, <strong>↑/↓</strong> for history.</p>
+
+  <div class="term-win" id="termWin">
+    <div class="term-bar">
+      <span class="terminal-dot dot-red"></span><span class="terminal-dot dot-yellow"></span><span class="terminal-dot dot-green"></span>
+      <span class="terminal-title">otep@PLV:~$ portfolio</span>
+    </div>
+    <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
+    <label class="term-line" for="termInput"><span>otep@plv:~$</span>
+      <input id="termInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal command"/>
+    </label>
+  </div>
+  <div class="term-chips" id="termChips" aria-label="Quick commands"></div>
+</main>
+
+<footer>
+  <p class="footer-copy">© 2026 <strong>Joseph S. Callos</strong> — All rights reserved. No frameworks were harmed.</p>
+  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="projects.html">Projects</a></li><li><a href="games.html">Games</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="footer-socials">
+    <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn">fb</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+  </div>
+</footer>
+<script src="javascript/main.js"></script>
+<script src="javascript/terminal.js"></script>
+</body>
+</html>
