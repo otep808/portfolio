@@ -4,16 +4,36 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Joseph "Otep" Callos — Portfolio</title>
-  <meta name="description" content="Joseph S. Callos — BSIT Student at PLV. Full-Stack Developer, GUI Designer, Problem Solver."/>
+  <meta name="description" content="Joseph S. Callos — BSIT student at PLV. Full-Stack Developer, GUI Designer, Problem Solver. 17 projects, 17 vanilla-JS mini games, and a PHP admin + leaderboard backend. Wired for problems. Built for solutions."/>
+  <!-- Open Graph (share previews) -->
+  <meta property="og:title" content="Joseph 'Otep' Callos — Portfolio"/>
+  <meta property="og:description" content="Wired for problems. Built for solutions. BSIT @ PLV."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://otepcodes.callosjoseph818.workers.dev/"/>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="OtepCodes — Portfolio"/>
+  <meta name="twitter:description" content="Full-Stack Developer · GUI Designer · Problem Solver"/>
+  <meta name="theme-color" content="#080911"/>
+  <meta name="color-scheme" content="dark light"/>
+  <meta property="og:image" content="images/logomark_dark.png"/>
+  <meta name="twitter:image" content="images/logomark_dark.png"/>
+  <link rel="icon" href="images/logomark_dark.png"/>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/styles.css"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Joseph S. Callos","alternateName":"Otep","jobTitle":"BSIT Student","affiliation":{"@type":"EducationalOrganization","name":"Pamantasan ng Lungsod ng Valenzuela"},"url":"https://otepcodes.callosjoseph818.workers.dev/","sameAs":["https://github.com/otep808","https://www.linkedin.com/in/joseph-callos-329b153b8","https://www.facebook.com/joseph.callos.8"],"email":"callosjoseph818@gmail.com","knowsAbout":["HTML","CSS","JavaScript","PHP","Python","SQL"]}
+</script>
 </head>
 <body>
+<a class="skip-link" href="#hero">Skip to content</a>
 <div id="progress-bar"></div>
 <div id="cursor"></div>
 <div id="page-cover"></div>
 
-<div class="mobile-nav" id="mobileNav">
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
   <a href="index.html"    onclick="closeMobile()">Home</a>
   <a href="about.html"    onclick="closeMobile()">About</a>
   <a href="projects.html" onclick="closeMobile()">Projects</a>
@@ -24,7 +44,8 @@
   <span class="mob-sub">OtepCodes · PLV BSIT</span>
 </div>
 
-<nav id="nav">
+<!-- ── NAV ── -->
+<nav id="nav" aria-label="Primary navigation">
   <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
     <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
   </button>
@@ -36,28 +57,49 @@
     <li><a href="games.html">Games</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <span class="nav-clock" aria-label="Manila time"><span class="nav-clock-time" data-clock-time>--:--</span><span class="nav-clock-date" data-clock-date></span></span><button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ── HERO ────────────────────────────────────────────────────── -->
+<!-- ════════════════════════════════════════════════════════
+     HERO  —  Split: Terminal left · Photo right
+     ════════════════════════════════════════════════════════ -->
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
 
+  <!-- LEFT: text + terminal -->
   <div class="hero-text">
-    <p class="hero-eyebrow">Portfolio — 2025</p>
+    <p class="hero-eyebrow">Portfolio — 2026</p>
     <h1 class="hero-name">
       Hi, I'm<br>
       <em>Joseph</em><br>
       Callos.
     </h1>
+
+    <!-- Typewriter line -->
     <p class="typewriter-wrap">
       <span id="typewriter"></span><span class="tw-cursor"></span>
     </p>
     <p class="hero-tagline">Wired for problems. Built for solutions.</p>
+
     <p class="hero-desc">
       A BSIT student at PLV who builds things from scratch, by choice —
-      blending systematic thinking with creative design to solve real problems.
+      blending systematic thinking with creative design. No bugs intended.
+      <em style="color:var(--text-faint);font-size:.82rem;display:block;margin-top:.4rem;">(Some bugs unintentionally included.)</em>
     </p>
+
+    <!-- ── TERMINAL BLOCK (NEW) ── -->
+    <div class="terminal-block" id="heroTerminal" aria-label="Interactive terminal about Otep">
+      <div class="terminal-header">
+        <span class="terminal-dot dot-red"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+        <span class="terminal-title">otep@PLV:~$</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <!-- Lines typed by JS -->
+      </div>
+    </div>
+
     <div class="hero-stats">
       <div class="stat-item">
         <div class="stat-num"><span class="count" data-target="17">0</span><span class="stat-suffix">+</span></div>
@@ -74,65 +116,153 @@
     </div>
     <div class="btn-group">
       <a href="projects.html" class="btn btn-primary"><span>View My Work</span></a>
-      <a href="#"             class="btn btn-outline">Download Résumé</a>
+      <a href="images/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View Résumé</a>
     </div>
   </div>
 
+  <!-- RIGHT: photo -->
   <div class="hero-image">
     <div class="hero-photo-wrap">
       <div class="photo-placeholder">
-        <img src="images/me2.jpeg" alt="Photo of Joseph Callos"/>
+        <img src="images/me2.jpeg" alt="Photo of Joseph Callos" fetchpriority="high" decoding="async"/>
       </div>
     </div>
   </div>
 
+  <!-- HIGHLIGHTS strip -->
   <div class="hero-highlights reveal">
     <div class="highlight-box">
-      <span class="highlight-icon">🖥️</span>
+      <img class="highlight-icon-img" src="images/fullstack.png" alt="Full Stack Developer"/>
       <p class="highlight-title">Full Stack Developer</p>
-      <p class="highlight-desc">Builds front-end and back-end systems using HTML, CSS, JavaScript, Java, and Python.</p>
+      <p class="highlight-desc">Builds front-end and back-end systems using HTML, CSS, JavaScript, Java, and Python. Front-end, back-end, and the occasional all-nighter.</p>
     </div>
     <div class="highlight-box">
-      <span class="highlight-icon">🎨</span>
+      <img class="highlight-icon-img" src="images/uiux.png" alt="GUI Designer"/>
       <p class="highlight-title">GUI Designer</p>
-      <p class="highlight-desc">Designs intuitive, visually appealing interfaces using Figma, Canva, and Photoshop.</p>
+      <p class="highlight-desc">Designs intuitive, visually appealing interfaces using Figma, Canva, and Photoshop. Because UX without the UI is just a spreadsheet.</p>
     </div>
     <div class="highlight-box">
-      <span class="highlight-icon">🔧</span>
+      <img class="highlight-icon-img" src="images/problemsolver.png" alt="Problem Solver"/>
       <p class="highlight-title">Problem Solver</p>
-      <p class="highlight-desc">Approaches challenges systematically — from logic puzzles to network configurations.</p>
+      <p class="highlight-desc">Approaches challenges systematically — from logic puzzles to network configs. 404: Unsolved problems not found.</p>
     </div>
   </div>
 </section>
 
-<!-- ── DEMO REEL ──────────────────────────────────────────────── -->
+<!-- ════════════════════════════════════════════════════════
+     CURRENTLY  (NEW SECTION)
+     ════════════════════════════════════════════════════════ -->
+<section id="currently">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Currently <em>Active</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="currently-grid">
+    <div class="currently-card reveal rd1">
+      <span class="currently-icon">🏗️</span>
+      <div>
+        <p class="currently-label">Building</p>
+        <p class="currently-value">Personal portfolio v3 &amp; web-based school projects</p>
+      </div>
+    </div>
+    <div class="currently-card reveal rd2">
+      <span class="currently-icon">📚</span>
+      <div>
+        <p class="currently-label">Learning</p>
+        <p class="currently-value">React, advanced CSS animations, and database design</p>
+      </div>
+    </div>
+    <div class="currently-card reveal rd3">
+      <span class="currently-icon">🎓</span>
+      <div>
+        <p class="currently-label">Studying</p>
+        <p class="currently-value">BS Information Technology — Year 2 @ PLV</p>
+      </div>
+    </div>
+    <div class="currently-card reveal rd4">
+      <span class="currently-icon">🤝</span>
+      <div>
+        <p class="currently-label">Open to</p>
+        <p class="currently-value">Internships, collaborations &amp; freelance web projects</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     WIDGETS — bento cards: clock · stats · game of the day
+     ════════════════════════════════════════════════════════ -->
+<section id="widgets" aria-label="Widgets">
+  <div class="section-header reveal">
+    <span class="section-num">01½</span>
+    <h2 class="section-title">At a <em>Glance</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="widget-grid">
+    <div class="widget-card widget-clock reveal rd1">
+      <p class="widget-label">🕐 Manila Time</p>
+      <p class="widget-time" id="homeClockTime">--:--</p>
+      <p class="widget-date" id="homeClockDate">Loading…</p>
+      <p class="widget-note">Asia/Manila · updates every second, no fake weather here.</p>
+    </div>
+    <div class="widget-card reveal rd2">
+      <p class="widget-label">📊 By the Numbers</p>
+      <p class="widget-stat"><strong id="widgetProjects">17</strong> projects</p>
+      <p class="widget-stat"><strong id="widgetGames">17</strong> mini games</p>
+      <p class="widget-stat">Best score so far: <strong id="widgetTopScore">—</strong></p>
+      <p class="widget-note">Best score is read from your own saved game scores in this browser.</p>
+    </div>
+    <div class="widget-card reveal rd3">
+      <p class="widget-label">🎮 Game of the Day</p>
+      <h3 class="widget-gotd" id="gotdName">—</h3>
+      <p class="widget-note" id="gotdPun">—</p>
+      <a class="btn btn-outline" id="gotdPlay" href="games.html">Play it →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     DEMO REEL
+     ════════════════════════════════════════════════════════ -->
 <section id="demo-reel">
   <div class="reel-inner">
     <div class="reel-info reveal left">
-      <p class="reel-tag">Demo Reel 2025</p>
+      <p class="reel-tag">Demo Reel 2026</p>
       <h2 class="reel-title">Watch My <em>Work In Action</em></h2>
       <p class="reel-desc">
-        A curated showcase of my best projects — EkSpyRy, The Future Times, CineReel,
-        and more. See the thinking, the code, and the design decisions behind each build.
+        A curated showcase of my best projects — EkSpyRy, The Future Times, CineReel, and more.
+        See the thinking, the code, and the design decisions behind each build.
+        Warning: may cause the urge to start a side project at 2AM.
       </p>
       <div class="btn-group">
-        <a href="#" class="btn btn-primary"><span>▶ Watch Reel</span></a>
+        <button id="watchReelBtn" class="btn btn-primary"><span>▶ Watch Reel</span></button>
         <a href="projects.html" class="btn btn-ghost">All Projects →</a>
       </div>
     </div>
+
     <div class="reel-player reveal rd2" id="reelPlayer">
+      <video
+        id="reelVideo"
+        src="images/demoReel.mp4"
+        poster=""
+        preload="metadata"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;"
+      ></video>
       <div class="play-btn" id="playBtn">
         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
       </div>
-      <div class="reel-meta">
-        <span class="reel-duration">00:02:20</span>
+      <div class="reel-meta" id="reelMeta">
+        <span class="reel-duration" id="reelDuration">00:02:20</span>
         <span class="reel-quality">HD 1080p</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FEATURED WORK ───────────────────────────────────────────── -->
+<!-- ════════════════════════════════════════════════════════
+     FEATURED WORK
+     ════════════════════════════════════════════════════════ -->
 <section id="featured">
   <div class="section-header reveal">
     <span class="section-num">02</span>
@@ -142,91 +272,48 @@
 
   <div class="home-featured-grid">
 
-    <!-- EkSpyRy -->
     <div class="project-card reveal rd1">
       <div class="project-thumb type-python">
-        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
-          <defs><pattern id="p1" width="24" height="24" patternUnits="userSpaceOnUse">
-            <path d="M0 0L24 24M24 0L0 24" stroke="rgba(77,127,230,1)" stroke-width=".4"/>
-          </pattern></defs>
-          <rect width="200" height="200" fill="url(#p1)"/>
-        </svg>
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200"><defs><pattern id="p1" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M0 0L24 24M24 0L0 24" stroke="rgba(77,127,230,1)" stroke-width=".4"/></pattern></defs><rect width="200" height="200" fill="url(#p1)"/></svg>
         <div class="thumb-overlay"></div>
-        <span class="thumb-label"><img src="images/ekspyry.jpg" alt="EkSpyRy App"/></span>
+        <span class="thumb-label"><img src="images/ekspyry.jpg" alt="EkSpyRy"/></span>
       </div>
       <div class="project-body">
         <p class="project-cat">Python · Desktop App</p>
         <h3 class="project-title">EkSpyRy — Food Expiration Monitor</h3>
-        <p class="project-desc">
-          A Python desktop app that tracks food expiry dates, fires alerts before items
-          spoil, and logs everything through a clean Tkinter GUI.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Python</span><span class="tag">Tkinter</span>
-          <span class="tag">GUI</span><span class="tag">Automation</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/LordDomino/expdatetracker" target="_blank" class="project-link">↗ GitHub</a>
-        </div>
+        <p class="project-desc">A Python desktop app that monitors food expiry dates and fires alerts before items spoil. Built because food waste is not a feature.</p>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">GUI</span><span class="tag">Automation</span></div>
+        <div class="project-links"><a href="https://github.com/LordDomino/expdatetracker" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a></div>
       </div>
     </div>
 
-    <!-- The Future Times -->
     <div class="project-card reveal rd2">
       <div class="project-thumb type-net">
-        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
-          <defs><pattern id="p2" width="30" height="10" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="5" x2="30" y2="5" stroke="rgba(77,127,230,.6)" stroke-width=".5"/>
-          </pattern></defs>
-          <rect width="200" height="200" fill="url(#p2)"/>
-        </svg>
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200"><defs><pattern id="p2" width="30" height="10" patternUnits="userSpaceOnUse"><line x1="0" y1="5" x2="30" y2="5" stroke="rgba(77,127,230,.6)" stroke-width=".5"/></pattern></defs><rect width="200" height="200" fill="url(#p2)"/></svg>
         <div class="thumb-overlay"></div>
         <span class="thumb-label"><img src="images/theFutureTimes.png" alt="The Future Times"/></span>
       </div>
       <div class="project-body">
         <p class="project-cat">HTML · CSS · Group Project</p>
         <h3 class="project-title">The Future Times — Privacy &amp; Social Media</h3>
-        <p class="project-desc">
-          An editorial HTML/CSS website raising awareness about privacy in social media,
-          covering data collection, surveillance capitalism, and user rights.
-        </p>
-        <div class="project-tags">
-          <span class="tag">HTML5</span><span class="tag">CSS3</span>
-          <span class="tag">Editorial</span><span class="tag">Privacy</span>
-        </div>
-        <div class="project-links">
-          <a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" class="project-link">↗ Live Site</a>
-        </div>
+        <p class="project-desc">Editorial website raising awareness about privacy in social media. Because your data is worth more than you think — and so is your time.</p>
+        <div class="project-tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Editorial</span><span class="tag">Privacy</span></div>
+        <div class="project-links"><a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" rel="noopener noreferrer" class="project-link">↗ Live Site</a></div>
       </div>
     </div>
 
-    <!-- CineReel -->
     <div class="project-card reveal rd3">
       <div class="project-thumb type-design">
-        <svg class="thumb-svg-pattern" viewBox="0 0 200 200">
-          <defs><pattern id="p3" width="16" height="16" patternUnits="userSpaceOnUse">
-            <circle cx="8" cy="8" r="5" fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/>
-            <circle cx="8" cy="8" r="2" fill="rgba(196,154,74,.3)"/>
-          </pattern></defs>
-          <rect width="200" height="200" fill="url(#p3)"/>
-        </svg>
+        <svg class="thumb-svg-pattern" viewBox="0 0 200 200"><defs><pattern id="p3" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="5" fill="none" stroke="rgba(196,154,74,.5)" stroke-width=".4"/><circle cx="8" cy="8" r="2" fill="rgba(196,154,74,.3)"/></pattern></defs><rect width="200" height="200" fill="url(#p3)"/></svg>
         <div class="thumb-overlay"></div>
-        <span class="thumb-label"><img src="images/cinereel.png" alt="CineReel App"/></span>
+        <span class="thumb-label"><img src="images/cinereel.png" alt="CineReel"/></span>
       </div>
       <div class="project-body">
         <p class="project-cat">Figma · Mobile App · Group Project</p>
         <h3 class="project-title">CineReel — Movie Short-Form App</h3>
-        <p class="project-desc">
-          A TikTok-style mobile app built in Figma for movie clips and trailers.
-          Cinematic dark UI, swipe interactions, and curated discovery feed.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Figma</span><span class="tag">Mobile UI</span>
-          <span class="tag">Social Feed</span><span class="tag">Film App</span>
-        </div>
-        <div class="project-links">
-          <a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ Figma Prototype</a>
-        </div>
+        <p class="project-desc">TikTok-style mobile app for movie clips, trailers, and reviews. Dark cinematic UI with swipe interactions. Cinema, but make it scroll.</p>
+        <div class="project-tags"><span class="tag">Figma</span><span class="tag">Mobile UI</span><span class="tag">Social Feed</span><span class="tag">Film App</span></div>
+        <div class="project-links"><a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" rel="noopener noreferrer" class="project-link">↗ Figma Prototype</a></div>
       </div>
     </div>
 
@@ -238,8 +325,19 @@
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════════════
+     TESTIMONIAL / QUOTE STRIP  (NEW)
+     ════════════════════════════════════════════════════════ -->
+<section id="quote-strip">
+  <div class="quote-strip-inner reveal">
+    <span class="qs-mark">"</span>
+    <p class="qs-text">Every second spent on something should bring value — to yourself or to others. Choose your infinite loops wisely.</p>
+    <p class="qs-attr">— Joseph "Otep" Callos &nbsp;·&nbsp; <em>Life Motto</em></p>
+  </div>
+</section>
+
 <footer>
-  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <p class="footer-copy">© 2026 <strong>Joseph S. Callos</strong> — All rights reserved. No frameworks were harmed.</p>
   <ul class="footer-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="about.html">About</a></li>
@@ -247,9 +345,9 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="footer-socials">
-    <a href="https://github.com/otep808" target="_blank" class="social-btn" title="GitHub">GH</a>
-    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn" title="LinkedIn">in</a>
-    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn" title="Facebook">fb</a>
+    <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook">fb</a>
     <a href="mailto:callosjoseph818@gmail.com" class="social-btn" title="Email">✉</a>
   </div>
 </footer>

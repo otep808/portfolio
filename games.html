@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mini Games — Joseph S. Callos</title>
+  <meta name="description" content="Play 17 mini games built with vanilla JavaScript by Joseph S. Callos, including Snake, Memory, Type Sprint, Pong, Math Sprint, Click Frenzy, Odd One Out, Dice Duel, and more — with leaderboards."/>
+  <meta name="theme-color" content="#080911"/>
+  <meta name="color-scheme" content="dark light"/>
+  <link rel="icon" href="images/logomark_dark.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
+<a class="skip-link" href="#games">Skip to content</a>
 <div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
-
-<div class="mobile-nav" id="mobileNav">
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
   <a href="index.html"    onclick="closeMobile()">Home</a>
   <a href="about.html"    onclick="closeMobile()">About</a>
   <a href="projects.html" onclick="closeMobile()">Projects</a>
@@ -19,255 +23,431 @@
   <div class="mob-divider"></div>
   <span class="mob-sub">OtepCodes · PLV BSIT</span>
 </div>
-
-<nav id="nav">
+<nav id="nav" aria-label="Primary navigation">
   <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
     <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
   </button>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="games.html">Games</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
+    <li><a href="games.html">Games</a></li><li><a href="contact.html">Contact</a></li>
   </ul>
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <span class="nav-clock" aria-label="Manila time"><span class="nav-clock-time" data-clock-time>--:--</span><span class="nav-clock-date" data-clock-date></span></span><button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-header">
   <p class="ph-label">04 — Mini Games</p>
   <h1 class="ph-title">Take a <em>Break</em></h1>
-  <p class="ph-desc">Five quick games built with pure HTML, CSS &amp; JavaScript. Because the best coders also know when to <strong style="color:var(--gold)">take a break</strong>.</p>
+  <p class="ph-desc">17 games. Zero frameworks. All built with pure JavaScript. Because the best coders know when to ctrl+Z on productivity.</p>
 </header>
 
 <section id="games" style="background:var(--bg);">
 
-  <!-- Tab switcher -->
   <div class="game-tabs" id="gameTabs">
     <button class="game-tab-btn active" data-game="snake">🐍 Snake</button>
-    <button class="game-tab-btn" data-game="memory">🃏 Memory Match</button>
+    <button class="game-tab-btn" data-game="memory">🃏 Memory</button>
     <button class="game-tab-btn" data-game="typer">⌨️ Type Sprint</button>
     <button class="game-tab-btn" data-game="mole">🔨 Whack-a-Mole</button>
-    <button class="game-tab-btn" data-game="guess">🔢 Number Guesser</button>
+    <button class="game-tab-btn" data-game="guess">🔢 Guesser</button>
+    <button class="game-tab-btn" data-game="quiz">🧠 Dev Trivia</button>
+    <button class="game-tab-btn" data-game="ttt">❌ Tic-Tac-Toe</button>
+    <button class="game-tab-btn" data-game="rps">✊ Rock Paper Scissors</button>
+    <button class="game-tab-btn" data-game="hang">💀 Hangman</button>
+    <button class="game-tab-btn" data-game="simon">🎵 Simon Says</button>
+    <button class="game-tab-btn" data-game="pong">🏓 Pong</button>
+    <button class="game-tab-btn" data-game="math">🧮 Math Sprint</button>
+    <button class="game-tab-btn" data-game="scramble">🔤 Word Scramble</button>
+    <button class="game-tab-btn" data-game="reaction">⚡ Reaction Time</button>
+    <button class="game-tab-btn" data-game="click">🖱️ Click Frenzy</button>
+    <button class="game-tab-btn" data-game="odd">👀 Odd One Out</button>
+    <button class="game-tab-btn" data-game="dice">🎲 Dice Duel</button>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       GAME 1 — SNAKE
-       ════════════════════════════════════════════════════════ -->
+  <section class="games-widgets" aria-label="Player and leaderboards">
+    <div class="widget-card lb-card">
+      <p class="widget-label">🏆 Leaderboards — Top 10</p>
+      <div class="lb-row">
+        <label class="lb-label" for="playerName">Player name</label>
+        <input id="playerName" type="text" maxlength="30" placeholder="Anonymous" autocomplete="off"/>
+      </div>
+      <p class="widget-note">Your scores save to the server leaderboard when PHP is running; otherwise they stay in this browser (top 10 per game).</p>
+      <div class="lb-row">
+        <label class="lb-label" for="lbGame">Game</label>
+        <select id="lbGame" aria-label="Choose a game leaderboard"></select>
+      </div>
+      <ol class="lb-list" id="lbList"><li>Loading…</li></ol>
+      <p class="widget-note" id="lbNote"></p>
+    </div>
+    <div class="widget-card gotd-card">
+      <p class="widget-label">🎮 Game of the Day</p>
+      <h3 class="widget-gotd" id="gamesGotdName">—</h3>
+      <p class="widget-note" id="gamesGotdPun">—</p>
+      <button class="btn btn-outline" id="gamesGotdPlay" type="button">Play it →</button>
+    </div>
+  </section>
+
+  <!-- G1 SNAKE -->
   <div class="game-panel active" id="game-snake">
+    <p class="game-pun">Sss-litherin' through the grid — this snake never skips leg day, mostly because it has no legs.</p>
     <div class="snake-wrap">
       <div class="snake-hud">
-        <div class="snake-stat">
-          <div class="snake-stat-num" id="snakeScore">0</div>
-          <div class="snake-stat-label">Score</div>
-        </div>
-        <div class="snake-stat">
-          <div class="snake-stat-num" id="snakeHigh">0</div>
-          <div class="snake-stat-label">Best</div>
-        </div>
-        <div class="snake-stat">
-          <div class="snake-stat-num" id="snakeLevel">1</div>
-          <div class="snake-stat-label">Level</div>
-        </div>
+        <div class="snake-stat"><div class="snake-stat-num" id="snakeScore">0</div><div class="snake-stat-label">Score</div></div>
+        <div class="snake-stat"><div class="snake-stat-num" id="snakeHigh">0</div><div class="snake-stat-label">Best</div></div>
+        <div class="snake-stat"><div class="snake-stat-num" id="snakeLevel">1</div><div class="snake-stat-label">Level</div></div>
       </div>
-
       <canvas id="snakeCanvas" width="400" height="400"></canvas>
-
-      <p class="snake-msg" id="snakeMsg">Press <kbd style="font-family:var(--f-mono);font-size:.75em;border:1px solid var(--border);padding:.1em .35em;">Space</kbd> or tap Start to play</p>
-
+      <p class="snake-msg" id="snakeMsg">Press <kbd style="font-family:var(--f-mono);font-size:.75em;border:1px solid var(--border);padding:.1em .4em;border-radius:3px;">Space</kbd> or tap Start. The snake is hungry.</p>
       <div class="snake-controls">
         <button class="btn btn-primary" id="snakeStart"><span id="snakeStartTxt">Start Game →</span></button>
       </div>
-
-      <!-- D-pad for mobile -->
       <div class="dpad" id="dpad">
-        <div></div>
-        <button class="dpad-btn" id="dUp">▲</button>
-        <div></div>
+        <div></div><button class="dpad-btn" id="dUp">▲</button><div></div>
         <button class="dpad-btn" id="dLeft">◀</button>
         <div class="dpad-btn dpad-center" style="font-size:.5rem;color:var(--text-faint);">🐍</div>
         <button class="dpad-btn" id="dRight">▶</button>
-        <div></div>
-        <button class="dpad-btn" id="dDown">▼</button>
-        <div></div>
+        <div></div><button class="dpad-btn" id="dDown">▼</button><div></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       GAME 2 — MEMORY MATCH
-       ════════════════════════════════════════════════════════ -->
+  <!-- G2 MEMORY -->
   <div class="game-panel" id="game-memory">
+    <p class="game-pun">A match made in RAM — forget-me-not, literally.</p>
     <div class="memory-hud">
-      <div class="memory-stat">
-        <div class="memory-stat-num" id="memMoves">0</div>
-        <div class="memory-stat-label">Moves</div>
-      </div>
-      <div class="memory-stat">
-        <div class="memory-stat-num" id="memTime">0</div>
-        <div class="memory-stat-label">Seconds</div>
-      </div>
-      <div class="memory-stat">
-        <div class="memory-stat-num" id="memPairs">0 / 8</div>
-        <div class="memory-stat-label">Pairs</div>
-      </div>
+      <div class="memory-stat"><div class="memory-stat-num" id="memMoves">0</div><div class="memory-stat-label">Moves</div></div>
+      <div class="memory-stat"><div class="memory-stat-num" id="memTime">0</div><div class="memory-stat-label">Seconds</div></div>
+      <div class="memory-stat"><div class="memory-stat-num" id="memPairs">0 / 8</div><div class="memory-stat-label">Pairs</div></div>
       <div style="display:flex;align-items:center;margin-left:auto;">
         <button class="btn btn-outline" id="memRestart" style="font-size:.62rem;">↺ New Game</button>
       </div>
     </div>
     <div class="memory-grid" id="memGrid"></div>
     <div class="memory-win" id="memWin">
-      <h3>🎉 Nice work!</h3>
-      <p id="memWinMsg">You matched all 8 pairs!</p>
+      <h3>🎉 Matched!</h3>
+      <p id="memWinMsg">All pairs found!</p>
       <button class="btn btn-primary" id="memWinBtn"><span>Play Again →</span></button>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       GAME 3 — TYPE SPRINT
-       ════════════════════════════════════════════════════════ -->
+  <!-- G3 TYPE SPRINT -->
   <div class="game-panel" id="game-typer">
+    <p class="game-pun">Type fast or type furiously — either way, the keyboard is judging you.</p>
     <div class="typer-wrap">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;flex-wrap:wrap;gap:.8rem;">
-        <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">
-          Challenge <span id="typerNum">1</span> of <span id="typerTotal">10</span>
-        </p>
+        <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">Challenge <span id="typerNum">1</span> of <span id="typerTotal">10</span></p>
         <button class="btn btn-outline" id="typerSkip" style="font-size:.6rem;">↷ Skip</button>
       </div>
-
       <div class="typer-quote-box" id="typerDisplay" aria-hidden="true"></div>
-
-      <textarea
-        class="typer-input"
-        id="typerInput"
-        rows="3"
-        placeholder="Start typing the phrase above…"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-      ></textarea>
-
+      <textarea class="typer-input" id="typerInput" rows="3" placeholder="Start typing the phrase above…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
       <div class="typer-hud">
-        <div class="typer-stat">
-          <div class="typer-stat-num" id="typerWPM">—</div>
-          <div class="typer-stat-label">WPM</div>
-        </div>
-        <div class="typer-stat">
-          <div class="typer-stat-num" id="typerAcc">—</div>
-          <div class="typer-stat-label">Accuracy</div>
-        </div>
-        <div class="typer-stat">
-          <div class="typer-stat-num" id="typerTime">0s</div>
-          <div class="typer-stat-label">Time</div>
-        </div>
+        <div class="typer-stat"><div class="typer-stat-num" id="typerWPM">—</div><div class="typer-stat-label">WPM</div></div>
+        <div class="typer-stat"><div class="typer-stat-num" id="typerAcc">—</div><div class="typer-stat-label">Accuracy</div></div>
+        <div class="typer-stat"><div class="typer-stat-num" id="typerTime">0s</div><div class="typer-stat-label">Time</div></div>
       </div>
-
       <div class="typer-result" id="typerResult">
-        <div>
-          <p class="typer-result-title">Done! 🎉</p>
-          <p style="font-size:.78rem;color:var(--text-faint);">Here's how you did:</p>
-        </div>
+        <div><p class="typer-result-title">Done! 🎉</p><p style="font-size:.78rem;color:var(--text-faint);">Here's the breakdown:</p></div>
         <div class="typer-result-stats" id="typerResultStats"></div>
-        <button class="btn btn-primary" id="typerNext"><span>Next Challenge →</span></button>
+        <button class="btn btn-primary" id="typerNext"><span>Next →</span></button>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       GAME 4 — WHACK-A-MOLE
-       ════════════════════════════════════════════════════════ -->
+  <!-- G4 WHACK-A-MOLE -->
   <div class="game-panel" id="game-mole">
+    <p class="game-pun">Whack-a-Mole: the only job where hitting things at work is encouraged.</p>
     <div class="mole-wrap">
       <div class="mole-hud">
-        <div class="mole-stat">
-          <div class="mole-stat-num" id="moleScore">0</div>
-          <div class="mole-stat-label">Score</div>
-        </div>
-        <div class="mole-stat">
-          <div class="mole-stat-num" id="moleTime">30</div>
-          <div class="mole-stat-label">Time</div>
-        </div>
-        <div class="mole-stat">
-          <div class="mole-stat-num" id="moleHigh">0</div>
-          <div class="mole-stat-label">Best</div>
-        </div>
+        <div class="mole-stat"><div class="mole-stat-num" id="moleScore">0</div><div class="mole-stat-label">Score</div></div>
+        <div class="mole-stat"><div class="mole-stat-num" id="moleTime">30</div><div class="mole-stat-label">Time</div></div>
+        <div class="mole-stat"><div class="mole-stat-num" id="moleHigh">0</div><div class="mole-stat-label">Best</div></div>
       </div>
-
-      <!-- Holes generated by JS -->
       <div class="mole-grid" id="moleGrid"></div>
-
-      <p class="mole-msg" id="moleMsg">Hit the moles before they hide!</p>
-
+      <p class="mole-msg" id="moleMsg">Click Start and whack those moles!</p>
       <div class="mole-controls">
         <button class="btn btn-primary" id="moleStart"><span id="moleStartTxt">Start Game →</span></button>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       GAME 5 — NUMBER GUESSER
-       ════════════════════════════════════════════════════════ -->
+  <!-- G5 NUMBER GUESSER -->
   <div class="game-panel" id="game-guess">
+    <p class="game-pun">It's thinking of a number. Spoiler: it's not 42. Probably.</p>
     <div class="guess-wrap">
       <div class="guess-hud">
-        <div class="guess-stat">
-          <div class="guess-stat-num" id="guessAttempts">0</div>
-          <div class="guess-stat-label">Attempts</div>
-        </div>
-        <div class="guess-stat">
-          <div class="guess-stat-num" id="guessBest">—</div>
-          <div class="guess-stat-label">Best Score</div>
-        </div>
+        <div class="guess-stat"><div class="guess-stat-num" id="guessAttempts">0</div><div class="guess-stat-label">Attempts</div></div>
+        <div class="guess-stat"><div class="guess-stat-num" id="guessBest">—</div><div class="guess-stat-label">Best</div></div>
       </div>
-
       <p class="guess-range">Pick a number between <strong>1</strong> and <strong>100</strong></p>
-      <p class="guess-hint" id="guessHint">I've chosen a number between 1 and 100. Can you find it?</p>
-
-      <div class="guess-meter">
-        <div class="guess-meter-fill" id="guessMeterFill"></div>
-      </div>
-
+      <p class="guess-hint" id="guessHint">I'm thinking of a number. No hints. Well… just one hint: it's between 1 and 100.</p>
+      <div class="guess-meter"><div class="guess-meter-fill" id="guessMeterFill"></div></div>
       <div class="guess-input-row">
-        <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess…" class="guess-input"/>
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Your guess…" class="guess-input"/>
         <button class="btn btn-primary" id="guessBtn"><span>Guess →</span></button>
       </div>
-
       <div class="guess-history" id="guessHistory"></div>
-
       <div class="guess-win" id="guessWin">
         <h3>🎯 Got it!</h3>
-        <p id="guessWinMsg">You guessed the number!</p>
+        <p id="guessWinMsg">You found it!</p>
         <button class="btn btn-primary" id="guessNewGame"><span>New Game →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- G6 DEV TRIVIA -->
+  <div class="game-panel" id="game-quiz">
+    <p class="game-pun">Dev trivia: where 'I read the docs' counts as a flex.</p>
+    <div class="quiz-wrap">
+      <div class="quiz-hud">
+        <div class="quiz-stat"><div class="quiz-stat-num" id="quizStatScore">0</div><div class="quiz-stat-label">Correct</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-num" id="quizStatTotal">10</div><div class="quiz-stat-label">Total</div></div>
+      </div>
+      <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <p class="quiz-q-label" id="quizQLabel">Question 1 of 10</p>
+      <p class="quiz-question" id="quizQuestion">Loading…</p>
+      <div class="quiz-options" id="quizOptions"></div>
+      <p class="quiz-feedback" id="quizFeedback"></p>
+      <button class="btn btn-primary" id="quizNext" style="display:none;"><span>Next →</span></button>
+      <div class="quiz-score-board" id="quizScoreBoard">
+        <h3>Quiz Complete!</h3>
+        <div class="quiz-final-score" id="quizFinalScore">0/10</div>
+        <p style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;">Knowledge: verified. Googling: undetected.</p>
+        <button class="btn btn-primary" id="quizRestart"><span>Try Again →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- G7 TIC-TAC-TOE -->
+  <div class="game-panel" id="game-ttt">
+    <p class="game-pun">Tic-Tac-Toe: X marks the spot, O marks the 'oh no'.</p>
+    <div class="ttt-wrap">
+      <div class="ttt-score">
+        <div>You (X): <span id="tttScoreX">0</span></div>
+        <div>AI (O): <span id="tttScoreO">0</span></div>
+        <div>Draws: <span id="tttScoreDraw">0</span></div>
+      </div>
+      <p class="ttt-status" id="tttStatus">Press New Round to play. The AI has been planning since boot.</p>
+      <div class="ttt-grid" id="tttGrid"></div>
+      <button class="btn btn-primary" id="tttStart" style="margin-top:1rem;"><span>New Round →</span></button>
+    </div>
+  </div>
+
+  <!-- G8 ROCK PAPER SCISSORS -->
+  <div class="game-panel" id="game-rps">
+    <p class="game-pun">Rock beats scissors, paper beats rock, and the AI beats your confidence.</p>
+    <div class="rps-wrap">
+      <div class="rps-score">
+        <div><span class="rps-score-num" id="rpsPScore">0</span>You</div>
+        <div style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--text-faint);">Best of 3</div>
+        <div><span class="rps-score-num gold" id="rpsAScore">0</span>AI</div>
+      </div>
+      <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;text-align:center;">Round <span id="rpsRound">0</span></p>
+      <div class="rps-arena">
+        <div class="rps-choice" id="rpsPlayerChoice">❓</div>
+        <div class="rps-vs">VS</div>
+        <div class="rps-choice" id="rpsAiChoice">❓</div>
+      </div>
+      <p class="rps-result" id="rpsResult">Pick your weapon. No pressure. (There's pressure.)</p>
+      <div class="rps-btns">
+        <button class="rps-btn" data-choice="0" title="Rock">✊</button>
+        <button class="rps-btn" data-choice="1" title="Paper">✋</button>
+        <button class="rps-btn" data-choice="2" title="Scissors">✌️</button>
+      </div>
+      <button class="btn btn-outline" id="rpsReset" style="margin-top:1rem;font-size:.62rem;">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- G9 HANGMAN -->
+  <div class="game-panel" id="game-hang">
+    <p class="game-pun">Hangman: guess the word before your vocabulary hangs by a thread.</p>
+    <div class="hang-wrap">
+      <div class="hang-figure" id="hangFigure">😃</div>
+      <p class="hang-hint" id="hangHint">Hint: loading…</p>
+      <div class="hang-lives" id="hangLives">❤️❤️❤️❤️❤️❤️</div>
+      <div class="hang-word" id="hangWord"></div>
+      <div class="hang-keys" id="hangKeys"></div>
+      <p class="hang-msg" id="hangMsg"></p>
+      <button class="btn btn-primary" id="hangStart" style="margin-top:1rem;"><span>New Word →</span></button>
+    </div>
+  </div>
+
+  <!-- G10 SIMON SAYS -->
+  <div class="game-panel" id="game-simon">
+    <p class="game-pun">Simon says: remember the pattern. Simon also says: good luck.</p>
+    <div class="simon-wrap">
+      <div><div class="simon-level" id="simonLevel">0</div><div class="simon-label">Level</div></div>
+      <p class="simon-display">Watch the pattern, then repeat it. Your memory vs. the machine.</p>
+      <div class="simon-grid">
+        <button class="simon-btn" data-color="blue"></button>
+        <button class="simon-btn" data-color="gold"></button>
+        <button class="simon-btn" data-color="green"></button>
+        <button class="simon-btn" data-color="red"></button>
+      </div>
+      <p class="simon-msg" id="simonMsg">Press Start and watch carefully. Your memory is about to be tested.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center;">
+        <button class="btn btn-primary" id="simonStart"><span>Start →</span></button>
+        <div style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;">Best: <span id="simonHigh">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G11 PONG -->
+  <div class="game-panel" id="game-pong">
+    <p class="game-pun">Pong: the original 'just one more round', since before you were born.</p>
+    <div class="pong-wrap">
+      <div class="pong-hud">
+        <div>
+          <div class="pong-score-num" id="pongPlayerScore">0</div>
+          <div class="pong-score-label">You</div>
+        </div>
+        <div class="pong-vs">VS</div>
+        <div>
+          <div class="pong-score-num" id="pongAiScore">0</div>
+          <div class="pong-score-label">AI</div>
+        </div>
+      </div>
+      <canvas id="pongCanvas" width="560" height="320" style="max-width:100%;"></canvas>
+      <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;text-align:center;margin-top:.6rem;">
+        Mouse / Touch to move your paddle · First to 7 wins
+      </p>
+      <div style="display:flex;gap:.6rem;margin-top:1rem;">
+        <button class="btn btn-primary" id="pongStart"><span id="pongStartTxt">Start Game →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- G12 MATH SPRINT -->
+  <div class="game-panel" id="game-math">
+    <p class="game-pun">Math Sprint: where 2 + 2 = 4, but under pressure it equals panic.</p>
+    <div class="math-wrap">
+      <div class="math-hud" style="margin-bottom:1.2rem;">
+        <div class="math-stat"><div class="math-stat-num" id="mathScore">0</div><div class="math-stat-label">Score</div></div>
+        <div class="math-stat"><div class="math-stat-num" id="mathTime">60</div><div class="math-stat-label">Time</div></div>
+        <div class="math-stat"><div class="math-stat-num" id="mathStreak">0</div><div class="math-stat-label">Streak</div></div>
+        <div class="math-stat"><div class="math-stat-num" id="mathBest">0</div><div class="math-stat-label">Best</div></div>
+      </div>
+      <div class="math-progress"><div class="math-progress-fill" id="mathProgressFill" style="width:100%"></div></div>
+      <div class="math-problem" id="mathProblem">Press Start to begin</div>
+      <div class="math-input-row">
+        <input type="number" id="mathInput" class="math-input" placeholder="?" autocomplete="off"/>
+        <button class="btn btn-primary" id="mathSubmit"><span>→</span></button>
+      </div>
+      <p class="math-feedback" id="mathFeedback"></p>
+      <button class="btn btn-primary" id="mathStart" style="margin-top:.5rem;"><span id="mathStartTxt">Start Sprint →</span></button>
+    </div>
+  </div>
+
+  <!-- G13 WORD SCRAMBLE -->
+  <div class="game-panel" id="game-scramble">
+    <p class="game-pun">Word Scramble: an anagram of 'fun' is 'nuf', which is fun backwards.</p>
+    <div class="scramble-wrap">
+      <div class="scramble-hud" style="display:flex;gap:2.5rem;margin-bottom:1.2rem;">
+        <div class="scramble-stat"><div class="scramble-stat-num" id="scrambleScore">0</div><div class="scramble-stat-label">Score</div></div>
+        <div class="scramble-stat"><div class="scramble-stat-num" id="scrambleStreak">0</div><div class="scramble-stat-label">Streak</div></div>
+        <div class="scramble-stat"><div class="scramble-stat-num" id="scrambleSkips">3</div><div class="scramble-stat-label">Skips Left</div></div>
+      </div>
+      <div class="scramble-word" id="scrambleWord">LOADING</div>
+      <p class="scramble-hint" id="scrambleHint">Hint: …</p>
+      <div class="scramble-input-row">
+        <input type="text" id="scrambleInput" class="scramble-input" placeholder="Unscramble it…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+        <button class="btn btn-primary" id="scrambleSubmit"><span>→</span></button>
+        <button class="btn btn-outline" id="scrambleSkip" style="font-size:.62rem;">Skip</button>
+      </div>
+      <p class="scramble-msg" id="scrambleMsg">Unscramble the tech term above.</p>
+      <button class="btn btn-primary" id="scrambleStart" style="margin-top:1rem;"><span id="scrambleStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G14 REACTION TIME -->
+  <div class="game-panel" id="game-reaction">
+    <p class="game-pun">Reaction Time: blink and you'll miss it. Don't blink.</p>
+    <div class="reaction-wrap">
+      <div class="reaction-hud">
+        <div class="reaction-stat"><div class="reaction-stat-num" id="reactionLast">—</div><div class="reaction-stat-label">Last (ms)</div></div>
+        <div class="reaction-stat"><div class="reaction-stat-num" id="reactionBest">—</div><div class="reaction-stat-label">Best (ms)</div></div>
+        <div class="reaction-stat"><div class="reaction-stat-num" id="reactionAvg">—</div><div class="reaction-stat-label">Avg (ms)</div></div>
+        <div class="reaction-stat"><div class="reaction-stat-num" id="reactionRound">0/5</div><div class="reaction-stat-label">Round</div></div>
+      </div>
+      <div class="reaction-target wait" id="reactionTarget">
+        <div>
+          <p class="reaction-label" id="reactionLabel">Click Start below to begin</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="reactionStart"><span id="reactionStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G15 CLICK FRENZY -->
+  <div class="game-panel" id="game-click">
+    <p class="game-pun">Click Frenzy: ten seconds, one button, zero mercy for your mouse.</p>
+    <div class="click-wrap">
+      <div class="click-hud">
+        <div class="click-stat"><div class="click-stat-num" id="clickScore">0</div><div class="click-stat-label">Clicks</div></div>
+        <div class="click-stat"><div class="click-stat-num" id="clickTime">10</div><div class="click-stat-label">Seconds</div></div>
+        <div class="click-stat"><div class="click-stat-num" id="clickBest">0</div><div class="click-stat-label">Best</div></div>
+      </div>
+      <button class="btn btn-primary click-big" id="clickBtn" type="button"><span>CLICK ME!</span></button>
+      <p class="click-msg" id="clickMsg">Press Start, then click as fast as you can for 10 seconds.</p>
+      <button class="btn btn-primary" id="clickStart" type="button"><span id="clickStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G16 ODD ONE OUT -->
+  <div class="game-panel" id="game-odd">
+    <p class="game-pun">Odd One Out: one of these emojis is not like the others. It knows it.</p>
+    <div class="odd-wrap">
+      <div class="odd-hud">
+        <div class="odd-stat"><div class="odd-stat-num" id="oddRound">0</div><div class="odd-stat-label">Round</div></div>
+        <div class="odd-stat"><div class="odd-stat-num" id="oddScore">0</div><div class="odd-stat-label">Score</div></div>
+        <div class="odd-stat"><div class="odd-stat-num" id="oddBest">0</div><div class="odd-stat-label">Best</div></div>
+      </div>
+      <div class="odd-grid" id="oddGrid"></div>
+      <p class="odd-msg" id="oddMsg">Press Start and find the one emoji that is different.</p>
+      <button class="btn btn-primary" id="oddStart" type="button"><span id="oddStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G17 DICE DUEL -->
+  <div class="game-panel" id="game-dice">
+    <p class="game-pun">Dice Duel: roll the dice, blame the dice, love the dice.</p>
+    <div class="dice-wrap">
+      <div class="dice-score">
+        <div><span class="dice-score-num" id="dicePScore">0</span>You</div>
+        <div style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--text-faint);">First to 5</div>
+        <div><span class="dice-score-num gold" id="diceAScore">0</span>AI</div>
+      </div>
+      <div class="dice-arena">
+        <div class="dice-die" id="dicePlayer">🎲</div>
+        <div class="dice-vs">VS</div>
+        <div class="dice-die" id="diceAi">🎲</div>
+      </div>
+      <p class="dice-msg" id="diceMsg">Roll against the AI. Higher roll wins the round. First to 5 wins the duel.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;">
+        <button class="btn btn-primary" id="diceRoll" type="button"><span>Roll Dice →</span></button>
+        <button class="btn btn-outline" id="diceReset" type="button">↺ Reset</button>
       </div>
     </div>
   </div>
 
 </section>
 
-<!-- Tip bar -->
 <div style="background:var(--bg-2);border-top:1px solid var(--border);padding:1.2rem var(--pad-x);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-  <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">Tip</span>
-  <p style="font-size:.78rem;color:var(--text-faint);">Snake: arrow keys / D-pad &nbsp;·&nbsp; Memory: click to flip pairs &nbsp;·&nbsp; Type Sprint: type exactly as shown &nbsp;·&nbsp; Mole: click those pesky hamsters &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
+  <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;">17 Games</span>
+  <p style="font-size:.78rem;color:var(--text-faint);">Snake · Memory · Type Sprint · Whack-a-Mole · Number Guesser · Dev Trivia · Tic-Tac-Toe · Rock Paper Scissors · Hangman · Simon Says · Pong · Math Sprint · Word Scramble · Reaction Time · Click Frenzy · Odd One Out · Dice Duel &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
 </div>
 
 <footer>
-  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <p class="footer-copy">© 2026 <strong>Joseph S. Callos</strong> — All rights reserved. No frameworks were harmed.</p>
   <ul class="footer-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="projects.html">Projects</a></li>
-    <li><a href="skills.html">Skills</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="index.html">Home</a></li><li><a href="projects.html">Projects</a></li>
+    <li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="footer-socials">
-    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
-    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
-    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn">fb</a>
     <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
   </div>
 </footer>
-
 <script src="javascript/main.js"></script>
 </body>
 </html>

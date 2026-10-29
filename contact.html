@@ -3,12 +3,20 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact — Joseph S. Callos</title>
+  <meta name="description" content="Contact Joseph S. Callos for internships, collaborations, freelance web projects, academic work, and UI/UX or development questions."/>
+  <meta name="theme-color" content="#080911"/>
+  <meta name="color-scheme" content="dark light"/>
+  <link rel="icon" href="images/logomark_dark.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/styles.css"/>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
+  <!-- <script>emailjs.init('YOUR_PUBLIC_KEY');</script> -->
 </head>
 <body>
+<a class="skip-link" href="#contact">Skip to content</a>
 <div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
-<div class="mobile-nav" id="mobileNav">
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
   <a href="index.html"    onclick="closeMobile()">Home</a>
   <a href="about.html"    onclick="closeMobile()">About</a>
   <a href="projects.html" onclick="closeMobile()">Projects</a>
@@ -17,7 +25,7 @@
   <a href="contact.html"  onclick="closeMobile()">Contact</a>
   <div class="mob-divider"></div><span class="mob-sub">OtepCodes · PLV BSIT</span>
 </div>
-<nav id="nav">
+<nav id="nav" aria-label="Primary navigation">
   <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
     <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
   </button>
@@ -26,13 +34,13 @@
     <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
     <li><a href="games.html">Games</a></li><li><a href="contact.html">Contact</a></li>
   </ul>
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <span class="nav-clock" aria-label="Manila time"><span class="nav-clock-time" data-clock-time>--:--</span><span class="nav-clock-date" data-clock-date></span></span><button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-header">
   <p class="ph-label">05 — Get In Touch</p>
   <h1 class="ph-title">Let's <em>Connect</em></h1>
-  <p class="ph-desc">Have a project, a question, or just want to say hello? I'd love to hear from you — preferred contact: email or Facebook.</p>
+  <p class="ph-desc">Have a project, a question, or just want to say hello? My inbox is always open. Response time: within 24 hours. (Faster if you mention you love Jim Croce.)</p>
 </header>
 
 <section id="contact">
@@ -41,24 +49,25 @@
     <!-- Info -->
     <div class="reveal left">
       <p class="contact-intro">
-        My inbox is always open — whether it's a <em>collaboration</em>, an academic project, or a creative idea worth exploring.
+        My inbox is always open — whether it's a <em>collaboration</em>, an academic project,
+        a creative idea, or just a good pun. Especially the puns.
       </p>
 
       <div class="contact-links">
         <a href="mailto:callosjoseph818@gmail.com" class="c-link">
-          <div class="c-icon">✉</div><span class="__cf_email__" data-cfemail="96f5f7fafaf9e5fcf9e5f3e6feaea7aed6f1fbf7fffab8f5f9fb">[email&#160;protected]</span>
+          <div class="c-icon"><img src="images\gmail.png" alt="✉"></div>callosjoseph818@gmail.com
         </a>
-        <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="c-link">
-          <div class="c-icon">fb</div>facebook.com/joseph.callos.8
+        <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="c-link">
+          <div class="c-icon"><img src="images\facebook.png" alt="FB"></div>facebook.com/joseph.callos.8
         </a>
-        <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="c-link">
-          <div class="c-icon">in</div>linkedin.com/in/joseph-callos-329b153b8
+        <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="c-link">
+          <div class="c-icon"><img src="images\linkedIn.png"alt="LI"></div>linkedin.com/in/joseph-callos-329b153b8
         </a>
-        <a href="https://github.com/otep808" target="_blank" class="c-link">
-          <div class="c-icon">GH</div>github.com/otep808
+        <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="c-link">
+          <div class="c-icon"><img src="images\github-color.svg" alt="GH"></div>github.com/otep808
         </a>
-        <a href="https://discordapp.com/users/1163857497963102219" target="_blank" class="c-link">
-          <div class="c-icon">DC</div>Discord — Otep Codes
+        <a href="https://discordapp.com/users/1163857497963102219" target="_blank" rel="noopener noreferrer" class="c-link">
+          <div class="c-icon"><img src="images\discord.png" alt="DC"></div>Discord — Otep Codes
         </a>
       </div>
 
@@ -67,7 +76,11 @@
         <span class="avail-text">Open to Internships &amp; Collaborations</span>
       </div>
 
-      <!-- Quick Info -->
+      <div class="contact-actions">
+        <button type="button" class="btn btn-outline" id="copyEmailBtn">Copy Email</button>
+        <a href="images/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">View Resume</a>
+      </div>
+
       <div style="border:1px solid var(--border);padding:1.4rem;background:var(--bg-card);margin-bottom:1.5rem;transition:background .4s;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
           <div>
@@ -89,39 +102,40 @@
         </div>
       </div>
 
-      <div class="map-placeholder">
-        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width=".9" opacity=".4">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-          <circle cx="12" cy="9" r="2.5"/>
-        </svg>
-        <p>Valenzuela City, Metro Manila, Philippines</p>
-      </div>
+      <iframe
+        class="map-frame"
+        title="Gen. T. de Leon, Valenzuela City"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=General+T.+de+Leon,+Valenzuela+City,+Metro+Manila,+Philippines&output=embed&z=15">
+      </iframe>
     </div>
 
     <!-- Form -->
     <div class="reveal rd2">
-      <form id="contactForm" novalidate>
+      <form id="contactForm" action="mailto:callosjoseph818@gmail.com" method="post" enctype="text/plain" novalidate>
         <div class="form-row">
           <div class="form-group">
             <label for="fname">Name *</label>
-            <input type="text" id="fname" placeholder="Your name"/>
-            <span class="field-error" id="err-fname">Please enter your name.</span>
+            <input type="text" id="fname" name="name" placeholder="Your name" autocomplete="name" required aria-describedby="err-fname"/>
+            <span class="field-error" id="err-fname" role="alert">Please enter your name.</span>
           </div>
           <div class="form-group">
             <label for="femail">Email *</label>
-            <input type="email" id="femail" placeholder="your@email.com"/>
-            <span class="field-error" id="err-femail">Please enter a valid email.</span>
+            <input type="email" id="femail" name="email" placeholder="your@email.com" autocomplete="email" required aria-describedby="err-femail"/>
+            <span class="field-error" id="err-femail" role="alert">Please enter a valid email.</span>
           </div>
         </div>
         <div class="form-group full" style="margin-bottom:.9rem;">
           <label for="fsubject">Subject *</label>
-          <input type="text" id="fsubject" placeholder="What's this about?"/>
-          <span class="field-error" id="err-fsubject">Please enter a subject.</span>
+          <input type="text" id="fsubject" name="subject" placeholder="What's this about?" autocomplete="off" required aria-describedby="err-fsubject"/>
+          <span class="field-error" id="err-fsubject" role="alert">Please enter a subject.</span>
         </div>
         <div class="form-group full">
           <label for="fmsg">Message *</label>
-          <textarea id="fmsg" rows="6" placeholder="Tell me about your project, idea, or question…"></textarea>
-          <span class="field-error" id="err-fmsg">Please write at least 10 characters.</span>
+          <textarea id="fmsg" name="message" rows="6" maxlength="500" placeholder="Tell me about your project, idea, or question." required aria-describedby="err-fmsg"></textarea>
+          <span class="field-error" id="err-fmsg" role="alert">Please write at least 10 characters.</span>
         </div>
         <p style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.12em;color:var(--text-faint);text-align:right;margin-top:.4rem;">
           <span id="charCount">0</span> / 500
@@ -133,7 +147,7 @@
           </button>
         </div>
         <div class="form-success" id="formSuccess">
-          <p>✓ Message sent! I'll get back to you within 24 hours.</p>
+          <p>✓ Email draft opened. I will reply within 24 hours once your message is sent.</p>
         </div>
       </form>
     </div>
@@ -141,19 +155,18 @@
 </section>
 
 <footer>
-  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <p class="footer-copy">© 2026 <strong>Joseph S. Callos</strong> — All rights reserved. No frameworks were harmed.</p>
   <ul class="footer-links">
     <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
     <li><a href="projects.html">Projects</a></li><li><a href="skills.html">Skills</a></li>
   </ul>
   <div class="footer-socials">
-    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
-    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
-    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn">fb</a>
     <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
   </div>
 </footer>
-
 <script src="javascript/main.js"></script>
 </body>
 </html>

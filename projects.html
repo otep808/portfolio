@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projects — Joseph S. Callos</title>
+  <meta name="description" content="Explore Joseph S. Callos' portfolio of Python apps, web projects, UI/UX prototypes, research work, branding, and media projects."/>
+  <meta name="theme-color" content="#080911"/>
+  <meta name="color-scheme" content="dark light"/>
+  <link rel="icon" href="images/logomark_dark.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
+<a class="skip-link" href="#projects">Skip to content</a>
 <div id="progress-bar"></div><div id="cursor"></div><div id="page-cover"></div>
 
-<div class="mobile-nav" id="mobileNav">
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
   <a href="index.html"    onclick="closeMobile()">Home</a>
   <a href="about.html"    onclick="closeMobile()">About</a>
   <a href="projects.html" onclick="closeMobile()">Projects</a>
@@ -19,7 +24,7 @@
   <div class="mob-divider"></div><span class="mob-sub">OtepCodes · PLV BSIT</span>
 </div>
 
-<nav id="nav">
+<nav id="nav" aria-label="Primary navigation">
   <button class="nav-logo" id="navLogoBtn" aria-label="Toggle light/dark mode" title="Click to toggle theme">
     <img class="site-logo" src="images/logo-dark.svg" alt="OtepCodes" height="44"/>
   </button>
@@ -30,14 +35,15 @@
     <li><a href="skills.html">Skills</a></li>
     <li><a href="games.html">Games</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="admin.php">Admin</a></li>
   </ul>
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  <span class="nav-clock" aria-label="Manila time"><span class="nav-clock-time" data-clock-time>--:--</span><span class="nav-clock-date" data-clock-date></span></span><button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-header">
   <p class="ph-label">02 — Portfolio</p>
   <h1 class="ph-title">My <em>Work</em></h1>
-  <p class="ph-desc">Wired for problems, built for solutions — a collection of Python apps, web projects, UI/UX designs, and branding work.</p>
+  <p class="ph-desc">Wired for problems, built for solutions — a collection of Python apps, web projects, UI/UX designs, and branding work. Every project here started with a problem and a blank file. Just caffeine and commitment.</p>
 </header>
 
 <section id="projects">
@@ -45,17 +51,25 @@
   <!-- ── FILTER + COUNT BAR ────────────────────────────────────── -->
   <div class="proj-filter-bar">
     <div class="filter-tabs" id="filterTabs">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="python">Python</button>
-      <button class="filter-btn" data-filter="web">Web Dev</button>
-      <button class="filter-btn" data-filter="figma">UI / Figma</button>
-      <button class="filter-btn" data-filter="research">Research</button>
-      <button class="filter-btn" data-filter="design">Branding</button>
-      <button class="filter-btn" data-filter="media">Media</button>
-      <button class="filter-btn" data-filter="group">Group</button>
+      <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="filter-btn" data-filter="python" aria-pressed="false">Python</button>
+      <button type="button" class="filter-btn" data-filter="web" aria-pressed="false">Web Dev</button>
+      <button type="button" class="filter-btn" data-filter="figma" aria-pressed="false">UI / Figma</button>
+      <button type="button" class="filter-btn" data-filter="research" aria-pressed="false">Research</button>
+      <button type="button" class="filter-btn" data-filter="design" aria-pressed="false">Branding</button>
+      <button type="button" class="filter-btn" data-filter="media" aria-pressed="false">Media</button>
+      <button type="button" class="filter-btn" data-filter="group" aria-pressed="false">Group</button>
     </div>
-    <p class="proj-count">Showing <span id="proj-count">17</span> projects</p>
+    <div class="proj-tools">
+      <label class="sr-only" for="projectSearch">Search projects</label>
+      <div class="project-search-wrap">
+        <input class="project-search" type="search" id="projectSearch" placeholder="Search projects, tools, topics" autocomplete="off"/>
+        <button type="button" class="project-search-clear" id="projectSearchClear" aria-label="Clear project search">×</button>
+      </div>
+      <p class="proj-count" aria-live="polite">Showing <span id="proj-count">17</span> projects</p>
+    </div>
   </div>
+  <p class="project-empty" id="projectEmpty" hidden>No matching projects found. Try another keyword or category.</p>
 
   <!-- ── GRID ──────────────────────────────────────────────────── -->
   <div class="proj-grid" id="projectsGrid">
@@ -82,7 +96,7 @@
         <span class="thumb-label"><img src="images/ekspyry.jpg" alt="EkSpyRy"/></span>
       </div>
       <div class="project-body">
-        <span class="proj-type-badge is-solo">Solo</span>
+        <span class="proj-type-badge is-group">Group</span>
         <p class="project-cat">Python · Desktop App</p>
         <h3 class="project-title">EkSpyRy — Food Expiration Monitor</h3>
         <p class="project-desc">
@@ -94,7 +108,7 @@
           <span class="tag">File I/O</span><span class="tag">Automation</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/LordDomino/expdatetracker" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="https://github.com/LordDomino/expdatetracker" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
         </div>
       </div>
     </div>
@@ -112,7 +126,7 @@
         <span class="thumb-label"><img src="images/waterpurifier.jpg" alt="C.L.E.A.R. Aqua"/></span>
       </div>
       <div class="project-body">
-        <span class="proj-type-badge is-solo">Solo</span>
+        <span class="proj-type-badge is-group">Group</span>
         <p class="project-cat">Research · Engineering</p>
         <h3 class="project-title">C.L.E.A.R. Aqua — Portable Water Purifier</h3>
         <p class="project-desc">
@@ -125,7 +139,7 @@
           <span class="tag">Engineering</span><span class="tag">Quantitative</span>
         </div>
         <div class="project-links">
-          <a href="files/CLEAR_Aqua-PortableWaterPurifier.pdf" target="_blank" class="project-link">📄 View Paper</a>
+          <a href="images/CLEAR_Aqua-PortableWaterPurifier.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 View Paper</a>
         </div>
       </div>
     </div>
@@ -144,7 +158,7 @@
         <span class="thumb-label"><img src="images/itHelpDesk.jpg" alt="IT Helpdesk"/></span>
       </div>
       <div class="project-body">
-        <span class="proj-type-badge is-solo">Solo</span>
+        <span class="proj-type-badge is-group">Group</span>
         <p class="project-cat">Web App · Database</p>
         <h3 class="project-title">IT Helpdesk Ticketing System</h3>
         <p class="project-desc">
@@ -156,8 +170,8 @@
           <span class="tag">Database</span><span class="tag">SLA Tracking</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/IMCapstone.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/IMCapstone.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -172,7 +186,7 @@
           <rect width="200" height="200" fill="url(#pp4)"/>
         </svg>
         <div class="thumb-overlay"></div>
-        <span class="thumb-label"><img src="images/logo-light.svg" alt="Portfolio"/></span>
+        <span class="thumb-label"><img src="images/logomark_dark.png" alt="Portfolio"/></span>
       </div>
       <div class="project-body">
         <span class="proj-type-badge is-solo">Solo</span>
@@ -180,7 +194,7 @@
         <h3 class="project-title">Personal Portfolio Website</h3>
         <p class="project-desc">
           This very portfolio — a multi-page site built with pure HTML5, CSS3, and vanilla JS.
-          Dark/light mode with circular reveal, particle canvas, scroll animations, and 5 mini games.
+          Dark/light mode with circular reveal, particle canvas, scroll animations, and 17 mini games.
           No Bootstrap. No templates. From scratch.
         </p>
         <div class="project-tags">
@@ -188,7 +202,7 @@
           <span class="tag">JavaScript</span><span class="tag">Responsive</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
         </div>
       </div>
     </div>
@@ -218,7 +232,7 @@
           <span class="tag">Personal</span><span class="tag">Collage</span>
         </div>
         <div class="project-links">
-          <a href="https://www.figma.com/design/Wv4LYju5K4XG98Qmri36iI/Scrapbook?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+          <a href="https://www.figma.com/design/Wv4LYju5K4XG98Qmri36iI/Scrapbook?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" rel="noopener noreferrer" class="project-link">↗ View in Figma</a>
         </div>
       </div>
     </div>
@@ -248,7 +262,7 @@
           <span class="tag">Mobile</span><span class="tag">Streaming</span>
         </div>
         <div class="project-links">
-          <a href="https://www.figma.com/design/MZrmToyD7N6RsrhPfZqM77/CALLOS_JOSEPH_BSIT1-6_MUBII?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+          <a href="https://www.figma.com/design/MZrmToyD7N6RsrhPfZqM77/CALLOS_JOSEPH_BSIT1-6_MUBII?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" rel="noopener noreferrer" class="project-link">↗ View in Figma</a>
         </div>
       </div>
     </div>
@@ -278,7 +292,7 @@
           <span class="tag">Editorial</span><span class="tag">Blog</span>
         </div>
         <div class="project-links">
-          <a href="https://callosjoseph818.wixsite.com/josephcallos" target="_blank" class="project-link">↗ Live Site</a>
+          <a href="https://callosjoseph818.wixsite.com/josephcallos" target="_blank" rel="noopener noreferrer" class="project-link">↗ Live Site</a>
         </div>
       </div>
     </div>
@@ -311,7 +325,7 @@
           <span class="tag">Canva</span><span class="tag">Figma</span><span class="tag">Mockup</span>
         </div>
         <div class="project-links">
-          <a href="https://canva.link/llfb8r9km74mkuh" target="_blank" class="project-link">↗ View on Canva</a>
+          <a href="https://canva.link/llfb8r9km74mkuh" target="_blank" rel="noopener noreferrer" class="project-link">↗ View on Canva</a>
         </div>
       </div>
     </div>
@@ -351,8 +365,8 @@
           <span class="tag">Linked List</span><span class="tag">POS System</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/dsa.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -383,8 +397,8 @@
           <span class="tag">Priority Queue</span><span class="tag">Dashboard</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/dsa.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -414,8 +428,8 @@
           <span class="tag">Haversine</span><span class="tag">Map GUI</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/dsa.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -446,8 +460,8 @@
           <span class="tag">Stack DSA</span><span class="tag">Inventory</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/dsa.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -477,8 +491,8 @@
           <span class="tag">Visualization</span><span class="tag">Search</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/otep808" target="_blank" class="project-link">↗ GitHub</a>
-          <a href="files/dsa.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="project-link">↗ GitHub</a>
+          <a href="images/dsa.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -510,8 +524,8 @@
           <span class="tag">Prototype</span><span class="tag">Education</span>
         </div>
         <div class="project-links">
-          <a href="https://www.figma.com/proto/hW3XOIhUWDosTJbImrRgF3?node-id=0-1&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ Prototype</a>
-          <a href="files/pabatirangSistemaNgMagAaral.pdf" target="_blank" class="project-link">📄 Paper</a>
+          <a href="https://www.figma.com/proto/hW3XOIhUWDosTJbImrRgF3?node-id=0-1&t=VMM9GG8iVzDjEYyK-6" target="_blank" rel="noopener noreferrer" class="project-link">↗ Prototype</a>
+          <a href="images/pabatirangSystemaNgMagAaral.pdf" target="_blank" rel="noopener noreferrer" class="project-link">📄 Paper</a>
         </div>
       </div>
     </div>
@@ -543,7 +557,7 @@
           <span class="tag">Social Feed</span><span class="tag">Film App</span>
         </div>
         <div class="project-links">
-          <a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" class="project-link">↗ View in Figma</a>
+          <a href="https://www.figma.com/design/RwhH7gePlMAj9oVsXZXG9L/CineReel?m=auto&t=VMM9GG8iVzDjEYyK-6" target="_blank" rel="noopener noreferrer" class="project-link">↗ View in Figma</a>
         </div>
       </div>
     </div>
@@ -573,7 +587,7 @@
           <span class="tag">Privacy</span><span class="tag">Informative</span>
         </div>
         <div class="project-links">
-          <a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" class="project-link">↗ Live Site</a>
+          <a href="https://lorddomino.github.io/mst4-website-project/" target="_blank" rel="noopener noreferrer" class="project-link">↗ Live Site</a>
         </div>
       </div>
     </div>
@@ -604,7 +618,7 @@
           <span class="tag">Music Video</span><span class="tag">Multimedia</span>
         </div>
         <div class="project-links">
-          <a href="https://youtu.be/RzN_gfi2xYg?si=KGvv2g_tsauiLjWn" target="_blank" class="project-link">↗ Watch on YouTube</a>
+          <a href="https://youtu.be/RzN_gfi2xYg?si=KGvv2g_tsauiLjWn" target="_blank" rel="noopener noreferrer" class="project-link">↗ Watch on YouTube</a>
         </div>
       </div>
     </div>
@@ -613,15 +627,15 @@
 </section>
 
 <footer>
-  <p class="footer-copy">© 2025 <strong>Joseph S. Callos</strong> — All rights reserved.</p>
+  <p class="footer-copy">© 2026 <strong>Joseph S. Callos</strong> — All rights reserved. No frameworks were harmed.</p>
   <ul class="footer-links">
     <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
     <li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="footer-socials">
-    <a href="https://github.com/otep808" target="_blank" class="social-btn">GH</a>
-    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" class="social-btn">in</a>
-    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" class="social-btn">fb</a>
+    <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn">GH</a>
+    <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn">in</a>
+    <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn">fb</a>
     <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
   </div>
 </footer>
