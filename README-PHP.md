@@ -15,7 +15,8 @@ php -S localhost:8000
 Then open http://localhost:8000/ — and http://localhost:8000/admin.php
 for the Admin area. The database file `data/portfolio.db` is created
 automatically on first use, and the 17 original projects are seeded from
-`api/seed_data.php` (extracted from the original projects.html).
+`api/seed_data.php` (extracted from the original projects.html) and the
+11 original certificates from `api/seed_certificates.php` (from skills.html).
 
 ## Run it on XAMPP (Windows)
 
@@ -33,8 +34,13 @@ is stored only as a `password_hash`. After that, admin.php shows a login
 form. Log out with the Log out button.
 
 In Admin you can add, edit and delete projects (title, category, filter
-keywords, description, tags, image path, link). The image field is a
-path/text field only — no file uploads are accepted.
+keywords, description, tags, image path, link) **and certificates**
+(label, title, description, icon path, certificate file path). The
+image/icon/file fields are paths/text only — no file uploads are
+accepted, so put a certificate file in `images/` first, then type its
+path in Admin. Certificates added in Admin appear on skills.html
+when PHP is running; without PHP, skills.html keeps its original
+hard-coded certificate cards.
 
 ## What happens without PHP?
 
@@ -53,6 +59,7 @@ So nothing ever goes blank because PHP is missing.
 ## Endpoints
 
 - `GET api/projects.php` — all projects as JSON (public, read-only).
+- `GET api/certificates.php` — all certificates as JSON (public, read-only).
 - `GET api/scores.php?game=snake` — top 10 scores for one game.
 - `POST api/scores.php` with JSON `{game, player, score}` — save a score.
   Game must be one of the 17 game keys, player 1–30 characters, score a

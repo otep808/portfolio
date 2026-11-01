@@ -65,7 +65,8 @@
       ]);
     },
     about() {
-      lines(['Joseph "Otep" Callos — BSIT student @ PLV, Valenzuela City.',
+      lines(['Joseph "Otep" Callos — BSIT student, 3rd year @ PLV, Valenzuela City.',
+        'Currently studying Game Development, Software Development, and App Development.',
         'Full-Stack Developer · GUI Designer · Problem Solver. Night owl. Guitar, badminton, 3 cats & 2 dogs.'], 't-blue');
     },
     whoami() { C.about(); },
@@ -116,7 +117,8 @@
     classic() { C.retro(); },
     html1() { C.retro(); },
     neofetch() {
-      lines(['otep@plv', '---------', 'OS      : Windows / Android', 'Shell    : portfolio.js', 'School   : PLV — BSIT, 2nd year',
+      lines(['otep@plv', '---------', 'OS      : Windows / Android', 'Shell    : portfolio.js', 'School   : PLV — BSIT, 3rd year',
+        'Subjects : Game Development, Software Development, App Development',
         'Editor   : Notepad++', 'Languages: Python, Java, JavaScript, PHP', 'Hobbies  : guitar · badminton · building blocks',
         'Uptime   : since 2005-11-03'], 't-blue');
     },

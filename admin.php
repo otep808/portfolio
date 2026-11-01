@@ -103,20 +103,60 @@ if ($loggedIn && isset($_POST['action']) && csrf_ok()) {
     }
 }
 
+// --- Certificate CRUD (logged in only; same login, same CSRF protection) ---
+$certFields = ['label','title','description','icon','file'];
+if ($loggedIn && isset($_POST['action']) && csrf_ok()) {
+    $action = $_POST['action'];
+    if ($action === 'cert_save') {
+        $data = [];
+        foreach ($certFields as $f) {
+            $data[$f] = trim((string) ($_POST['cert_' . $f] ?? ''));
+        }
+        $data['icon'] = otep_clean_link($data['icon']);
+        $data['file'] = otep_clean_link($data['file']);
+        if ($data['title'] === '') { $errors[] = 'Certificate title is required.'; }
+        if (mb_strlen($data['title']) > 200 || mb_strlen($data['description']) > 2000) { $errors[] = 'Certificate title/description too long.'; }
+        if (!$errors) {
+            $id = (int) ($_POST['cert_id'] ?? 0);
+            if ($id > 0) {
+                $set = implode(', ', array_map(fn($f) => "$f = :$f", $certFields));
+                $data['id'] = $id;
+                $db->prepare("UPDATE certificates SET $set WHERE id = :id")->execute($data);
+                $notice = 'Certificate updated.';
+            } else {
+                $cols = implode(', ', $certFields);
+                $ph = implode(', ', array_map(fn($f) => ":$f", $certFields));
+                $db->prepare("INSERT INTO certificates ($cols) VALUES ($ph)")->execute($data);
+                $notice = 'Certificate added.';
+            }
+        }
+    } elseif ($action === 'cert_delete') {
+        $db->prepare('DELETE FROM certificates WHERE id = :id')->execute([':id' => (int) ($_POST['cert_id'] ?? 0)]);
+        $notice = 'Certificate deleted.';
+    }
+}
+
 $edit = null;
 if ($loggedIn && isset($_GET['edit'])) {
     $stmt = $db->prepare('SELECT * FROM projects WHERE id = :id');
     $stmt->execute([':id' => (int) $_GET['edit']]);
     $edit = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 }
+$certEdit = null;
+if ($loggedIn && isset($_GET['cert_edit'])) {
+    $stmt = $db->prepare('SELECT * FROM certificates WHERE id = :id');
+    $stmt->execute([':id' => (int) $_GET['cert_edit']]);
+    $certEdit = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+}
 $projects = $loggedIn ? $db->query('SELECT * FROM projects ORDER BY id ASC')->fetchAll(PDO::FETCH_ASSOC) : [];
+$certificates = $loggedIn ? $db->query('SELECT * FROM certificates ORDER BY id ASC')->fetchAll(PDO::FETCH_ASSOC) : [];
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin — Joseph S. Callos</title>
-<meta name="description" content="Admin area for managing portfolio projects."/>
+<meta name="description" content="Admin area for managing portfolio projects and certificates."/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/styles.css"/>
 <style>
@@ -141,7 +181,7 @@ $projects = $loggedIn ? $db->query('SELECT * FROM projects ORDER BY id ASC')->fe
 </nav>
 <main class="admin-wrap">
   <h1 style="font-family:var(--f-display);font-weight:300;margin-bottom:.5rem;">Portfolio <em style="color:var(--blue-lt)">Admin</em></h1>
-  <p style="color:var(--text-dim);margin-bottom:1.5rem;">Manage the projects shown on projects.html. Changes take effect immediately. No file uploads — the image field is a path such as <code>images/my-project.png</code>.</p>
+  <p style="color:var(--text-dim);margin-bottom:1.5rem;">Manage the projects shown on projects.html and the certificates shown on skills.html. Changes take effect immediately. No file uploads — image/icon/file fields are paths such as <code>images/cert12.png</code> (put the file in <code>images/</code> first, then type its path here).</p>
   <?php if ($notice): ?><p class="admin-msg"><?= h($notice) ?></p><?php endif; ?>
   <?php foreach ($errors as $e): ?><p class="admin-err"><?= h($e) ?></p><?php endforeach; ?>
 
@@ -171,7 +211,7 @@ $projects = $loggedIn ? $db->query('SELECT * FROM projects ORDER BY id ASC')->fe
     </section>
   <?php else: ?>
     <div class="admin-row" style="margin-bottom:1.5rem;">
-      <span style="font-family:var(--f-mono);font-size:.7rem;color:var(--text-dim);">Signed in as <strong><?= h($_SESSION['admin_user'] ?? '') ?></strong> · <?= count($projects) ?> projects</span>
+      <span style="font-family:var(--f-mono);font-size:.7rem;color:var(--text-dim);">Signed in as <strong><?= h($_SESSION['admin_user'] ?? '') ?></strong> · <?= count($projects) ?> projects · <?= count($certificates) ?> certificates</span>
       <form method="post" style="margin-left:auto;"><input type="hidden" name="csrf" value="<?= h($csrf) ?>"/><input type="hidden" name="action" value="logout"/><button class="btn btn-outline" type="submit">Log out</button></form>
     </div>
     <section class="admin-card">
@@ -205,6 +245,38 @@ $projects = $loggedIn ? $db->query('SELECT * FROM projects ORDER BY id ASC')->fe
             <td><div class="admin-row">
               <a class="btn btn-outline" href="admin.php?edit=<?= (int) $p['id'] ?>">Edit</a>
               <form method="post" onsubmit="return confirm('Delete this project?');"><input type="hidden" name="csrf" value="<?= h($csrf) ?>"/><input type="hidden" name="action" value="delete"/><input type="hidden" name="id" value="<?= (int) $p['id'] ?>"/><button class="btn btn-outline" type="submit">Delete</button></form>
+            </div></td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+      </table>
+    </section>
+    <section class="admin-card">
+      <h2><?= $certEdit ? 'Edit certificate' : 'Add certificate' ?></h2>
+      <form method="post">
+        <input type="hidden" name="csrf" value="<?= h($csrf) ?>"/>
+        <input type="hidden" name="action" value="cert_save"/>
+        <input type="hidden" name="cert_id" value="<?= $certEdit ? (int) $certEdit['id'] : 0 ?>"/>
+        <div class="admin-field"><label for="c-title">Title *</label><input id="c-title" name="cert_title" required value="<?= h($certEdit['title'] ?? '') ?>"/></div>
+        <div class="admin-field"><label for="c-label">Label (e.g. “Certification” or “Seminar · 2026”)</label><input id="c-label" name="cert_label" value="<?= h($certEdit['label'] ?? '') ?>"/></div>
+        <div class="admin-field"><label for="c-desc">Description</label><textarea id="c-desc" name="cert_description" rows="3"><?= h($certEdit['description'] ?? '') ?></textarea></div>
+        <div class="admin-field"><label for="c-icon">Icon path (text only, e.g. images/seminar.png)</label><input id="c-icon" name="cert_icon" value="<?= h($certEdit['icon'] ?? '') ?>"/></div>
+        <div class="admin-field"><label for="c-file">Certificate file path (text only, e.g. images/cert12.png or images/cert12.pdf)</label><input id="c-file" name="cert_file" value="<?= h($certEdit['file'] ?? '') ?>"/></div>
+        <div class="admin-row"><button class="btn btn-primary" type="submit"><span><?= $certEdit ? 'Save changes →' : 'Add certificate →' ?></span></button>
+        <?php if ($certEdit): ?><a class="btn btn-outline" href="admin.php">Cancel</a><?php endif; ?></div>
+      </form>
+    </section>
+    <section class="admin-card">
+      <h2>Existing certificates</h2>
+      <table class="admin-table">
+        <thead><tr><th>Title</th><th>Label</th><th>File</th><th></th></tr></thead>
+        <tbody>
+        <?php foreach ($certificates as $c): ?>
+          <tr>
+            <td><?= h($c['title']) ?></td><td><?= h($c['label']) ?></td><td><?= h($c['file']) ?></td>
+            <td><div class="admin-row">
+              <a class="btn btn-outline" href="admin.php?cert_edit=<?= (int) $c['id'] ?>">Edit</a>
+              <form method="post" onsubmit="return confirm('Delete this certificate?');"><input type="hidden" name="csrf" value="<?= h($csrf) ?>"/><input type="hidden" name="action" value="cert_delete"/><input type="hidden" name="cert_id" value="<?= (int) $c['id'] ?>"/><button class="btn btn-outline" type="submit">Delete</button></form>
             </div></td>
           </tr>
         <?php endforeach; ?>

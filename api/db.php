@@ -41,11 +41,32 @@ function otep_db(): PDO {
         created_at TEXT NOT NULL DEFAULT (datetime('now'))
     )");
     $pdo->exec("CREATE INDEX IF NOT EXISTS idx_scores_game_score ON scores (game, score DESC)");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS certificates (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        label TEXT NOT NULL DEFAULT '', title TEXT NOT NULL,
+        description TEXT NOT NULL DEFAULT '', icon TEXT NOT NULL DEFAULT '',
+        file TEXT NOT NULL DEFAULT ''
+    )");
     $pdo->exec("CREATE TABLE IF NOT EXISTS admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL,
         created_at TEXT NOT NULL DEFAULT (datetime('now'))
     )");
+    // Seed certificates once, from the original skills.html cards.
+    $certCount = (int) $pdo->query('SELECT COUNT(*) FROM certificates')->fetchColumn();
+    if ($certCount === 0) {
+        $certSeed = require __DIR__ . '/seed_certificates.php';
+        $stmt = $pdo->prepare('INSERT INTO certificates
+            (label, title, description, icon, file)
+            VALUES (:label, :title, :description, :icon, :file)');
+        foreach ($certSeed as $row) {
+            $stmt->execute([
+                ':label' => $row['label'], ':title' => $row['title'],
+                ':description' => $row['description'], ':icon' => $row['icon'],
+                ':file' => $row['file'],
+            ]);
+        }
+    }
     // Seed projects once, from the original projects.html (see api/seed_data.php).
     $count = (int) $pdo->query('SELECT COUNT(*) FROM projects')->fetchColumn();
     if ($count === 0) {
