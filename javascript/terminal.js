@@ -152,5 +152,4 @@
   });
 
   lines(['Welcome to OtepCodes OS v2026.', 'Type "help" to see commands.', ''], 't-gold');
-  input.focus({ preventScroll: true });
 })();
