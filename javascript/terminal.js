@@ -57,6 +57,7 @@
         '  theme [dark|light]  switch theme',
         '  time             Manila time',
         '  contact          how to reach me',
+        '  retro            plain old-style HTML version of this whole site',
         '  motto            life motto',
         '  neofetch         system info, portfolio style',
         '  history | clear  history of commands / clear screen',
@@ -106,6 +107,14 @@
         'Facebook : facebook.com/joseph.callos.8', 'Status   : open to internships & collaborations'], 't-blue');
     },
     motto() { line('"Time is Gold." — Choose your infinite loops wisely.', 't-gold'); },
+    retro() {
+      lines(['Switching to the plain old-style version of this site…',
+        'One long page, no theme, no animations — just scroll up and down.',
+        'A button at the bottom takes you back to the actual website.'], 't-ok');
+      go('retro.html');
+    },
+    classic() { C.retro(); },
+    html1() { C.retro(); },
     neofetch() {
       lines(['otep@plv', '---------', 'OS      : Windows / Android', 'Shell    : portfolio.js', 'School   : PLV — BSIT, 2nd year',
         'Editor   : Notepad++', 'Languages: Python, Java, JavaScript, PHP', 'Hobbies  : guitar · badminton · building blocks',
@@ -144,7 +153,7 @@
   });
   document.getElementById('termWin').addEventListener('click', () => input.focus());
 
-  ['help', 'about', 'skills', 'projects', 'games', 'contact', 'neofetch'].forEach(c => {
+  ['help', 'about', 'skills', 'projects', 'games', 'contact', 'neofetch', 'retro'].forEach(c => {
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'term-chip'; b.textContent = c;
     b.addEventListener('click', () => { run(c); input.focus(); });
