@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mini Games — Joseph S. Callos</title>
-  <meta name="description" content="Play 17 mini games built with vanilla JavaScript by Joseph S. Callos, including Snake, Memory, Type Sprint, Pong, Math Sprint, Click Frenzy, Odd One Out, Dice Duel, and more — with leaderboards."/>
+  <meta name="description" content="Play 20 mini games built with vanilla JavaScript by Joseph S. Callos, including Snake, Memory, Type Sprint, Pong, Math Sprint, Click Frenzy, Odd One Out, Dice Duel, and more — with leaderboards."/>
   <meta name="theme-color" content="#080911"/>
   <meta name="color-scheme" content="dark light"/>
   <link rel="icon" href="images/logomark_dark.png"/>
@@ -38,7 +38,7 @@
 <header class="page-header">
   <p class="ph-label">04 — Mini Games</p>
   <h1 class="ph-title">Take a <em>Break</em></h1>
-  <p class="ph-desc">17 games. Zero frameworks. All built with pure JavaScript. Because the best coders know when to ctrl+Z on productivity.</p>
+  <p class="ph-desc">20 games. Zero frameworks. All built with pure JavaScript. Because the best coders know when to ctrl+Z on productivity.</p>
 </header>
 
 <section id="games" style="background:var(--bg);">
@@ -61,6 +61,9 @@
     <button class="game-tab-btn" data-game="click">🖱️ Click Frenzy</button>
     <button class="game-tab-btn" data-game="odd">👀 Odd One Out</button>
     <button class="game-tab-btn" data-game="dice">🎲 Dice Duel</button>
+    <button class="game-tab-btn" data-game="aim">🎯 Aim Trainer</button>
+    <button class="game-tab-btn" data-game="dodge">🏃 Dodge Dash</button>
+    <button class="game-tab-btn" data-game="catch">🍎 Fruit Catcher</button>
   </div>
 
   <section class="games-widgets" aria-label="Player and leaderboards">
@@ -74,7 +77,9 @@
       <div class="lb-row">
         <label class="lb-label" for="lbGame">Game</label>
         <select id="lbGame" aria-label="Choose a game leaderboard"></select>
+        <button class="btn btn-outline" id="lbRefresh" type="button" style="font-size:.62rem;">↻ Refresh</button>
       </div>
+      <p class="widget-note" id="lbBest"></p>
       <ol class="lb-list" id="lbList"><li>Loading…</li></ol>
       <p class="widget-note" id="lbNote"></p>
     </div>
@@ -89,6 +94,7 @@
   <!-- G1 SNAKE -->
   <div class="game-panel active" id="game-snake">
     <p class="game-pun">Sss-litherin' through the grid — this snake never skips leg day, mostly because it has no legs.</p>
+    <div class="diff-row" data-diff="snake" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="snake-wrap">
       <div class="snake-hud">
         <div class="snake-stat"><div class="snake-stat-num" id="snakeScore">0</div><div class="snake-stat-label">Score</div></div>
@@ -97,6 +103,7 @@
       </div>
       <canvas id="snakeCanvas" width="400" height="400"></canvas>
       <p class="snake-msg" id="snakeMsg">Press <kbd style="font-family:var(--f-mono);font-size:.75em;border:1px solid var(--border);padding:.1em .4em;border-radius:3px;">Space</kbd> or tap Start. The snake is hungry.</p>
+      <p class="rage-quote" id="rage-snake" aria-live="polite"></p>
       <div class="snake-controls">
         <button class="btn btn-primary" id="snakeStart"><span id="snakeStartTxt">Start Game →</span></button>
       </div>
@@ -113,6 +120,7 @@
   <!-- G2 MEMORY -->
   <div class="game-panel" id="game-memory">
     <p class="game-pun">A match made in RAM — forget-me-not, literally.</p>
+    <div class="diff-row" data-diff="memory" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="memory-hud">
       <div class="memory-stat"><div class="memory-stat-num" id="memMoves">0</div><div class="memory-stat-label">Moves</div></div>
       <div class="memory-stat"><div class="memory-stat-num" id="memTime">0</div><div class="memory-stat-label">Seconds</div></div>
@@ -132,6 +140,7 @@
   <!-- G3 TYPE SPRINT -->
   <div class="game-panel" id="game-typer">
     <p class="game-pun">Type fast or type furiously — either way, the keyboard is judging you.</p>
+    <div class="diff-row" data-diff="typer" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="typer-wrap">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;flex-wrap:wrap;gap:.8rem;">
         <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.2em;color:var(--blue);text-transform:uppercase;">Challenge <span id="typerNum">1</span> of <span id="typerTotal">10</span></p>
@@ -155,6 +164,7 @@
   <!-- G4 WHACK-A-MOLE -->
   <div class="game-panel" id="game-mole">
     <p class="game-pun">Whack-a-Mole: the only job where hitting things at work is encouraged.</p>
+    <div class="diff-row" data-diff="mole" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="mole-wrap">
       <div class="mole-hud">
         <div class="mole-stat"><div class="mole-stat-num" id="moleScore">0</div><div class="mole-stat-label">Score</div></div>
@@ -172,6 +182,7 @@
   <!-- G5 NUMBER GUESSER -->
   <div class="game-panel" id="game-guess">
     <p class="game-pun">It's thinking of a number. Spoiler: it's not 42. Probably.</p>
+    <div class="diff-row" data-diff="guess" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="guess-wrap">
       <div class="guess-hud">
         <div class="guess-stat"><div class="guess-stat-num" id="guessAttempts">0</div><div class="guess-stat-label">Attempts</div></div>
@@ -196,6 +207,7 @@
   <!-- G6 DEV TRIVIA -->
   <div class="game-panel" id="game-quiz">
     <p class="game-pun">Dev trivia: where 'I read the docs' counts as a flex.</p>
+    <div class="diff-row" data-diff="quiz" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="quiz-wrap">
       <div class="quiz-hud">
         <div class="quiz-stat"><div class="quiz-stat-num" id="quizStatScore">0</div><div class="quiz-stat-label">Correct</div></div>
@@ -219,6 +231,7 @@
   <!-- G7 TIC-TAC-TOE -->
   <div class="game-panel" id="game-ttt">
     <p class="game-pun">Tic-Tac-Toe: X marks the spot, O marks the 'oh no'.</p>
+    <div class="diff-row" data-diff="ttt" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="ttt-wrap">
       <div class="ttt-score">
         <div>You (X): <span id="tttScoreX">0</span></div>
@@ -226,6 +239,7 @@
         <div>Draws: <span id="tttScoreDraw">0</span></div>
       </div>
       <p class="ttt-status" id="tttStatus">Press New Round to play. The AI has been planning since boot.</p>
+      <p class="rage-quote" id="rage-ttt" aria-live="polite"></p>
       <div class="ttt-grid" id="tttGrid"></div>
       <button class="btn btn-primary" id="tttStart" style="margin-top:1rem;"><span>New Round →</span></button>
     </div>
@@ -234,6 +248,7 @@
   <!-- G8 ROCK PAPER SCISSORS -->
   <div class="game-panel" id="game-rps">
     <p class="game-pun">Rock beats scissors, paper beats rock, and the AI beats your confidence.</p>
+    <div class="diff-row" data-diff="rps" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="rps-wrap">
       <div class="rps-score">
         <div><span class="rps-score-num" id="rpsPScore">0</span>You</div>
@@ -247,6 +262,7 @@
         <div class="rps-choice" id="rpsAiChoice">❓</div>
       </div>
       <p class="rps-result" id="rpsResult">Pick your weapon. No pressure. (There's pressure.)</p>
+      <p class="rage-quote" id="rage-rps" aria-live="polite"></p>
       <div class="rps-btns">
         <button class="rps-btn" data-choice="0" title="Rock">✊</button>
         <button class="rps-btn" data-choice="1" title="Paper">✋</button>
@@ -259,6 +275,7 @@
   <!-- G9 HANGMAN -->
   <div class="game-panel" id="game-hang">
     <p class="game-pun">Hangman: guess the word before your vocabulary hangs by a thread.</p>
+    <div class="diff-row" data-diff="hang" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="hang-wrap">
       <div class="hang-figure" id="hangFigure">😃</div>
       <p class="hang-hint" id="hangHint">Hint: loading…</p>
@@ -266,6 +283,7 @@
       <div class="hang-word" id="hangWord"></div>
       <div class="hang-keys" id="hangKeys"></div>
       <p class="hang-msg" id="hangMsg"></p>
+      <p class="rage-quote" id="rage-hang" aria-live="polite"></p>
       <button class="btn btn-primary" id="hangStart" style="margin-top:1rem;"><span>New Word →</span></button>
     </div>
   </div>
@@ -273,16 +291,20 @@
   <!-- G10 SIMON SAYS -->
   <div class="game-panel" id="game-simon">
     <p class="game-pun">Simon says: remember the pattern. Simon also says: good luck.</p>
+    <div class="diff-row" data-diff="simon" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="simon-wrap">
       <div><div class="simon-level" id="simonLevel">0</div><div class="simon-label">Level</div></div>
       <p class="simon-display">Watch the pattern, then repeat it. Your memory vs. the machine.</p>
-      <div class="simon-grid">
+      <div class="simon-grid" id="simonGrid">
         <button class="simon-btn" data-color="blue"></button>
         <button class="simon-btn" data-color="gold"></button>
         <button class="simon-btn" data-color="green"></button>
         <button class="simon-btn" data-color="red"></button>
+        <button class="simon-btn simon-extra" data-color="purple"></button>
+        <button class="simon-btn simon-extra" data-color="pink"></button>
       </div>
       <p class="simon-msg" id="simonMsg">Press Start and watch carefully. Your memory is about to be tested.</p>
+      <p class="rage-quote" id="rage-simon" aria-live="polite"></p>
       <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center;">
         <button class="btn btn-primary" id="simonStart"><span>Start →</span></button>
         <div style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;">Best: <span id="simonHigh">0</span></div>
@@ -293,6 +315,7 @@
   <!-- G11 PONG -->
   <div class="game-panel" id="game-pong">
     <p class="game-pun">Pong: the original 'just one more round', since before you were born.</p>
+    <div class="diff-row" data-diff="pong" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="pong-wrap">
       <div class="pong-hud">
         <div>
@@ -309,6 +332,8 @@
       <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;text-align:center;margin-top:.6rem;">
         Mouse / Touch to move your paddle · First to 7 wins
       </p>
+      <p class="pong-note" id="pongNote">Middle Child: standard ball speed and a fair-ish AI.</p>
+      <p class="rage-quote" id="rage-pong" aria-live="polite"></p>
       <div style="display:flex;gap:.6rem;margin-top:1rem;">
         <button class="btn btn-primary" id="pongStart"><span id="pongStartTxt">Start Game →</span></button>
       </div>
@@ -318,6 +343,7 @@
   <!-- G12 MATH SPRINT -->
   <div class="game-panel" id="game-math">
     <p class="game-pun">Math Sprint: where 2 + 2 = 4, but under pressure it equals panic.</p>
+    <div class="diff-row" data-diff="math" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="math-wrap">
       <div class="math-hud" style="margin-bottom:1.2rem;">
         <div class="math-stat"><div class="math-stat-num" id="mathScore">0</div><div class="math-stat-label">Score</div></div>
@@ -339,6 +365,7 @@
   <!-- G13 WORD SCRAMBLE -->
   <div class="game-panel" id="game-scramble">
     <p class="game-pun">Word Scramble: an anagram of 'fun' is 'nuf', which is fun backwards.</p>
+    <div class="diff-row" data-diff="scramble" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="scramble-wrap">
       <div class="scramble-hud" style="display:flex;gap:2.5rem;margin-bottom:1.2rem;">
         <div class="scramble-stat"><div class="scramble-stat-num" id="scrambleScore">0</div><div class="scramble-stat-label">Score</div></div>
@@ -421,6 +448,7 @@
         <div class="dice-die" id="diceAi">🎲</div>
       </div>
       <p class="dice-msg" id="diceMsg">Roll against the AI. Higher roll wins the round. First to 5 wins the duel.</p>
+      <p class="rage-quote" id="rage-dice" aria-live="polite"></p>
       <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;">
         <button class="btn btn-primary" id="diceRoll" type="button"><span>Roll Dice →</span></button>
         <button class="btn btn-outline" id="diceReset" type="button">↺ Reset</button>
@@ -428,11 +456,57 @@
     </div>
   </div>
 
+  <!-- G18 AIM TRAINER -->
+  <div class="game-panel" id="game-aim">
+    <p class="game-pun">Aim Trainer: click the target before it ghosts you — it's faster than your Wi-Fi.</p>
+    <div class="aim-wrap">
+      <div class="aim-hud">
+        <div class="aim-stat"><div class="aim-stat-num" id="aimScore">0</div><div class="aim-stat-label">Hits</div></div>
+        <div class="aim-stat"><div class="aim-stat-num" id="aimTime">30</div><div class="aim-stat-label">Seconds</div></div>
+        <div class="aim-stat"><div class="aim-stat-num" id="aimBest">0</div><div class="aim-stat-label">Best</div></div>
+      </div>
+      <div class="aim-arena" id="aimArena"><button class="aim-target" id="aimTarget" type="button" aria-label="Target">🎯</button></div>
+      <p class="aim-msg" id="aimMsg">Press Start, then click the target as fast as you can for 30 seconds.</p>
+      <button class="btn btn-primary" id="aimStart" type="button"><span id="aimStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G19 DODGE DASH -->
+  <div class="game-panel" id="game-dodge">
+    <p class="game-pun">Dodge Dash: the obstacles are falling, your dignity is optional.</p>
+    <div class="dodge-wrap">
+      <div class="dodge-hud">
+        <div class="dodge-stat"><div class="dodge-stat-num" id="dodgeScore">0</div><div class="dodge-stat-label">Seconds survived</div></div>
+        <div class="dodge-stat"><div class="dodge-stat-num" id="dodgeBest">0</div><div class="dodge-stat-label">Best</div></div>
+      </div>
+      <canvas id="dodgeCanvas" width="400" height="300" style="max-width:100%;"></canvas>
+      <p class="dodge-msg" id="dodgeMsg">Move with mouse, touch, or arrow keys. Don't get hit.</p>
+      <p class="rage-quote" id="rage-dodge" aria-live="polite"></p>
+      <button class="btn btn-primary" id="dodgeStart" type="button"><span id="dodgeStartTxt">Start →</span></button>
+    </div>
+  </div>
+
+  <!-- G20 FRUIT CATCHER -->
+  <div class="game-panel" id="game-catch">
+    <p class="game-pun">Fruit Catcher: five-a-day, but make it a high score.</p>
+    <div class="catch-wrap">
+      <div class="catch-hud">
+        <div class="catch-stat"><div class="catch-stat-num" id="catchScore">0</div><div class="catch-stat-label">Caught</div></div>
+        <div class="catch-stat"><div class="catch-stat-num" id="catchMisses">0 / 3</div><div class="catch-stat-label">Misses</div></div>
+        <div class="catch-stat"><div class="catch-stat-num" id="catchBest">0</div><div class="catch-stat-label">Best</div></div>
+      </div>
+      <canvas id="catchCanvas" width="400" height="300" style="max-width:100%;"></canvas>
+      <p class="catch-msg" id="catchMsg">Move the basket with mouse, touch, or arrow keys. Miss 3 fruits and it's over.</p>
+      <p class="rage-quote" id="rage-catch" aria-live="polite"></p>
+      <button class="btn btn-primary" id="catchStart" type="button"><span id="catchStartTxt">Start →</span></button>
+    </div>
+  </div>
+
 </section>
 
 <div style="background:var(--bg-2);border-top:1px solid var(--border);padding:1.2rem var(--pad-x);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-  <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;">17 Games</span>
-  <p style="font-size:.78rem;color:var(--text-faint);">Snake · Memory · Type Sprint · Whack-a-Mole · Number Guesser · Dev Trivia · Tic-Tac-Toe · Rock Paper Scissors · Hangman · Simon Says · Pong · Math Sprint · Word Scramble · Reaction Time · Click Frenzy · Odd One Out · Dice Duel &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
+  <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;">20 Games</span>
+  <p style="font-size:.78rem;color:var(--text-faint);">Snake · Memory · Type Sprint · Whack-a-Mole · Number Guesser · Dev Trivia · Tic-Tac-Toe · Rock Paper Scissors · Hangman · Simon Says · Pong · Math Sprint · Word Scramble · Reaction Time · Click Frenzy · Odd One Out · Dice Duel · Aim Trainer · Dodge Dash · Fruit Catcher &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
 </div>
 
 <footer>

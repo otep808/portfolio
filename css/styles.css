@@ -2616,3 +2616,36 @@ footer::before {
   .game-panel.active, .dice-die.pop, .rps-choice.pop { animation: none !important; }
   .widget-card:hover, .project-card:hover, .game-tab-btn:hover, .game-tab-btn.active { transform: none !important; }
 }
+
+/* ---- Games upgrade: difficulty, leaderboards, new games ---- */
+.diff-row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:center;margin:0 auto 1.2rem}
+.diff-label{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint)}
+.diff-btn{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.08em;padding:.45rem .9rem;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;border-radius:var(--radius)}
+.diff-btn:hover{border-color:var(--blue);color:var(--blue)}
+.diff-btn.active{background:var(--blue-glow);border-color:var(--blue);color:var(--blue)}
+.diff-btn:focus-visible,.game-tab-btn:focus-visible,.aim-target:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.rage-quote{font-family:var(--f-display);font-style:italic;font-size:1rem;color:var(--gold-lt);text-align:center;min-height:1.4rem;margin:.6rem 0}
+.lb-list{max-height:340px;overflow-y:auto;padding-right:.4rem}
+.lb-list li.lb-you{background:var(--blue-glow);border-left:3px solid var(--blue);padding-left:.5rem}
+.lb-list li.lb-you strong{color:var(--blue-lt)}
+.pong-note{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.15em;color:var(--text-faint);text-transform:uppercase;text-align:center;margin-top:.6rem}
+.simon-btn[data-color="purple"]{background:#a855f7}
+.simon-btn[data-color="pink"]{background:#ec4899}
+.aim-wrap,.dodge-wrap,.catch-wrap{display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center}
+.aim-hud,.dodge-hud,.catch-hud{display:flex;gap:2.5rem;flex-wrap:wrap;justify-content:center}
+.aim-stat,.dodge-stat,.catch-stat{text-align:center}
+.aim-stat-num,.dodge-stat-num,.catch-stat-num{font-family:var(--f-display);font-size:2rem;font-weight:300;color:var(--blue-lt);line-height:1}
+.aim-stat-label,.dodge-stat-label,.catch-stat-label{font-family:var(--f-mono);font-size:.56rem;letter-spacing:.2em;color:var(--text-faint);text-transform:uppercase;margin-top:.2rem}
+.aim-arena{position:relative;width:100%;max-width:520px;height:320px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.aim-target{position:absolute;width:56px;height:56px;font-size:1.8rem;background:transparent;border:none;cursor:pointer;display:none;transform:translate(-50%,-50%)}
+.aim-msg,.dodge-msg,.catch-msg{font-family:var(--f-display);font-size:1.05rem;color:var(--text-dim);min-height:1.6rem}
+#dodgeCanvas,#catchCanvas{background:var(--bg-2);border:1px solid var(--border);border-radius:8px;touch-action:none}
+@media(max-width:767px){
+  .game-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:.9rem;scrollbar-width:thin}
+  .game-tab-btn{flex-shrink:0}
+  .diff-row{justify-content:flex-start}
+  .aim-arena{height:260px}
+}
+@media (prefers-reduced-motion: reduce){
+  .game-tab-btn,.diff-btn{transition:none}
+}

@@ -12,7 +12,8 @@
     { key: 'ttt', label: 'Tic-Tac-Toe' }, { key: 'rps', label: 'Rock Paper Scissors' }, { key: 'hang', label: 'Hangman' },
     { key: 'simon', label: 'Simon Says' }, { key: 'pong', label: 'Pong' }, { key: 'math', label: 'Math Sprint' },
     { key: 'scramble', label: 'Word Scramble' }, { key: 'reaction', label: 'Reaction Time' }, { key: 'click', label: 'Click Frenzy' },
-    { key: 'odd', label: 'Odd One Out' }, { key: 'dice', label: 'Dice Duel' }
+    { key: 'odd', label: 'Odd One Out' }, { key: 'dice', label: 'Dice Duel' },
+    { key: 'aim', label: 'Aim Trainer' }, { key: 'dodge', label: 'Dodge Dash' }, { key: 'catch', label: 'Fruit Catcher' }
   ];
 
   const PAGES = { home: 'index.html', about: 'about.html', projects: 'projects.html', skills: 'skills.html', games: 'games.html', contact: 'contact.html' };
@@ -50,7 +51,7 @@
         '  about            who is Otep?',
         '  skills           technical + creative skills',
         '  projects         list all projects',
-        '  games            list the 17 mini games',
+        '  games            list the 20 mini games',
         '  play <game>      open a game (e.g. play snake)',
         '  scores <game>    top 10 saved in this browser (e.g. scores pong)',
         '  open <page>      home | about | projects | skills | games | contact',

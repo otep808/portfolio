@@ -458,16 +458,57 @@ window.showOtepToast=showToast;
     });
   });
 
+  /* ---- Shared: difficulty + rage quotes (games upgrade) ---- */
+  const DIFF_STATE = {};
+  window.otepGetDiff = function(k){ return DIFF_STATE[k] || 'normal'; };
+  window.otepBindDiff = function(key, onChange){
+    const row = document.querySelector('[data-diff="'+key+'"]'); if(!row) return;
+    row.querySelectorAll('[data-diff-btn]').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(DIFF_STATE[key]===b.dataset.diffBtn) return;
+        DIFF_STATE[key]=b.dataset.diffBtn;
+        row.querySelectorAll('[data-diff-btn]').forEach(function(x){ x.classList.toggle('active', x===b); x.setAttribute('aria-pressed', x===b ? 'true' : 'false'); });
+        if(onChange) onChange(DIFF_STATE[key]);
+      });
+    });
+  };
+  const RAGE_QUOTES = [
+    "The AI just filed that loss under 'expected'.",
+    "Skill issue? No — skill missing.",
+    "The game is not hard. You are just warming up. Still.",
+    "That loss has been framed and hung in the hall of almost.",
+    "The AI didn't even try. It wrote that down, by the way.",
+    "Plot twist: the game was rooting for you. It gave up.",
+    "You didn't lose. You just discovered a new way to not win.",
+    "The leaderboard saw that. It pretended not to.",
+    "Somewhere, a tutorial is crying.",
+    "That was not a loss. That was a speedrun to the end screen.",
+    "The AI sends its regards — and a participation trophy.",
+    "You were so close! Close only counts in horseshoes and hand grenades.",
+    "Error 404: winning strategy not found.",
+    "The game would like to thank you for the free win. It is very polite like that.",
+    "You played beautifully. Beautifully wrong, but beautifully.",
+    "That round has been saved as a cautionary tale.",
+    "The AI blinked. You still lost. Impressive, honestly.",
+    "New achievement unlocked: 'At Least You Tried'."
+  ];
+  let lastRage = -1;
+  window.otepRage = function(elId){
+    const el = document.getElementById(elId); if(!el) return;
+    let i; do { i = Math.floor(Math.random()*RAGE_QUOTES.length); } while (i===lastRage && RAGE_QUOTES.length>1);
+    lastRage = i; el.textContent = '😤 ' + RAGE_QUOTES[i];
+  };
+
   /* ==== GAME 1: SNAKE ==== */
   (function(){
     const canvas=document.getElementById('snakeCanvas');if(!canvas)return;
     const ctx=canvas.getContext('2d'),CELL=20,COLS=canvas.width/CELL,ROWS=canvas.height/CELL;
-    let snake,dir,nextDir,food,score,highScore=+localStorage.getItem('snake_hs')||0,level,speed,running,loop;
+    let snake,dir,nextDir,food,score,highScore=+localStorage.getItem('snake_hs')||0,level,speed,baseSpeed=140,running,loop;
     document.getElementById('snakeHigh').textContent=highScore;
     const rand=n=>Math.floor(Math.random()*n);
     const isDark=()=>document.documentElement.getAttribute('data-theme')!=='light';
     function spawnFood(){let p;do{p={x:rand(COLS),y:rand(ROWS)};}while(snake.some(s=>s.x===p.x&&s.y===p.y));return p;}
-    function init(){const mx=Math.floor(COLS/2),my=Math.floor(ROWS/2);snake=[{x:mx,y:my},{x:mx-1,y:my},{x:mx-2,y:my}];dir={x:1,y:0};nextDir={x:1,y:0};food=spawnFood();score=0;level=1;speed=140;running=false;document.getElementById('snakeScore').textContent=0;document.getElementById('snakeLevel').textContent=1;document.getElementById('snakeMsg').textContent='';draw();}
+    function init(){const mx=Math.floor(COLS/2),my=Math.floor(ROWS/2);snake=[{x:mx,y:my},{x:mx-1,y:my},{x:mx-2,y:my}];dir={x:1,y:0};nextDir={x:1,y:0};food=spawnFood();score=0;level=1;baseSpeed=(window.otepGetDiff('snake')==='chill'?200:window.otepGetDiff('snake')==='hard'?90:140);speed=baseSpeed;running=false;document.getElementById('snakeScore').textContent=0;document.getElementById('snakeLevel').textContent=1;document.getElementById('snakeMsg').textContent='';draw();}
     function draw(){
       ctx.fillStyle=isDark()?'#0d0e18':'#e6e9f5';ctx.fillRect(0,0,canvas.width,canvas.height);
       ctx.strokeStyle=isDark()?'rgba(77,127,230,.06)':'rgba(40,85,212,.05)';ctx.lineWidth=.5;
@@ -481,12 +522,12 @@ window.showOtepToast=showToast;
       dir={...nextDir};const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
       if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||snake.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return;}
       snake.unshift(head);
-      if(head.x===food.x&&head.y===food.y){score++;document.getElementById('snakeScore').textContent=score;if(score>highScore){highScore=score;localStorage.setItem('snake_hs',highScore);document.getElementById('snakeHigh').textContent=highScore;}food=spawnFood();if(score%5===0){level++;speed=Math.max(60,speed-10);document.getElementById('snakeLevel').textContent=level;clearInterval(loop);loop=setInterval(tick,speed);}}else{snake.pop();}
+      if(head.x===food.x&&head.y===food.y){score++;document.getElementById('snakeScore').textContent=score;if(score>highScore){highScore=score;localStorage.setItem('snake_hs',highScore);document.getElementById('snakeHigh').textContent=highScore;}food=spawnFood();if(score%5===0){level++;speed=Math.max(50,baseSpeed-(level-1)*10);document.getElementById('snakeLevel').textContent=level;clearInterval(loop);loop=setInterval(tick,speed);}}else{snake.pop();}
       draw();
     }
     function tick(){if(running)step();}
     function start(){init();running=true;document.getElementById('snakeStartTxt').textContent='Restart →';clearInterval(loop);loop=setInterval(tick,speed);}
-    function gameOver(){running=false;clearInterval(loop);if(window.otepSaveScore)window.otepSaveScore('snake',score);document.getElementById('snakeMsg').innerHTML=`Game Over — Score: <strong style="color:var(--blue)">${score}</strong>`;ctx.fillStyle='rgba(8,9,17,.65)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle=isDark()?'#e8e4d8':'#0e1120';ctx.font=`300 28px 'Cormorant Garamond',serif`;ctx.textAlign='center';ctx.fillText('GAME OVER',canvas.width/2,canvas.height/2-10);ctx.font=`300 16px 'Space Mono',monospace`;ctx.fillStyle='#4d7fe6';ctx.fillText(`Score: ${score}`,canvas.width/2,canvas.height/2+20);ctx.textAlign='left';}
+    function gameOver(){running=false;clearInterval(loop);if(window.otepSaveScore)window.otepSaveScore('snake',score);if(window.otepRage)window.otepRage('rage-snake');document.getElementById('snakeMsg').innerHTML=`Game Over — Score: <strong style="color:var(--blue)">${score}</strong>`;ctx.fillStyle='rgba(8,9,17,.65)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle=isDark()?'#e8e4d8':'#0e1120';ctx.font=`300 28px 'Cormorant Garamond',serif`;ctx.textAlign='center';ctx.fillText('GAME OVER',canvas.width/2,canvas.height/2-10);ctx.font=`300 16px 'Space Mono',monospace`;ctx.fillStyle='#4d7fe6';ctx.fillText(`Score: ${score}`,canvas.width/2,canvas.height/2+20);ctx.textAlign='left';}
     const KM={ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0},w:{x:0,y:-1},W:{x:0,y:-1},s:{x:0,y:1},S:{x:0,y:1},a:{x:-1,y:0},A:{x:-1,y:0},d:{x:1,y:0},D:{x:1,y:0}};
     document.addEventListener('keydown',e=>{
       // TYPING FIX: never steal keys from a text field, and only run while
@@ -500,19 +541,21 @@ window.showOtepToast=showToast;
       const d=KM[e.key];if(!d)return;if(e.key.startsWith('Arrow'))e.preventDefault();if(d.x!==-dir.x||d.y!==-dir.y)nextDir=d;});
     document.getElementById('snakeStart').addEventListener('click',start);
     [{id:'dUp',d:{x:0,y:-1}},{id:'dDown',d:{x:0,y:1}},{id:'dLeft',d:{x:-1,y:0}},{id:'dRight',d:{x:1,y:0}}].forEach(({id,d})=>document.getElementById(id)?.addEventListener('click',()=>{if(d.x!==-dir.x||d.y!==-dir.y)nextDir=d;}));
+    if(window.otepBindDiff)window.otepBindDiff('snake',()=>{clearInterval(loop);running=false;init();document.getElementById('snakeStartTxt').textContent='Start Game →';document.getElementById('snakeMsg').textContent='Difficulty changed — press Start.';});
     init();
   })();
 
   /* ==== GAME 2: MEMORY MATCH ==== */
   (function(){
-    const PAIRS=[{icon:'html.png',label:'HTML5'},{icon:'css.png',label:'CSS3'},{icon:'js.png',label:'JS'},{icon:'python.png',label:'Python'},{icon:'java.png',label:'Java'},{icon:'sql.png',label:'SQL'},{icon:'git.png',label:'Git'},{icon:'figma.png',label:'Figma'}];
+    const PAIRS=[{icon:'html.png',label:'HTML5'},{icon:'css.png',label:'CSS3'},{icon:'js.png',label:'JS'},{icon:'python.png',label:'Python'},{icon:'java.png',label:'Java'},{icon:'sql.png',label:'SQL'},{icon:'git.png',label:'Git'},{icon:'figma.png',label:'Figma'},{icon:'ai.png',label:'AI'},{icon:'canva.png',label:'Canva'},{icon:'capcut.png',label:'CapCut'},{icon:'azure.png',label:'Azure'}];
+    let pairCount=8;
     let flipped=[],matched=0,moves=0,seconds=0,timer,locked=false;
     function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
     function buildGrid(){
-      const grid=document.getElementById('memGrid');const cards=shuffle([...PAIRS,...PAIRS].map((p,i)=>({...p,id:i})));
+      const grid=document.getElementById('memGrid');const d=window.otepGetDiff?window.otepGetDiff('memory'):'normal';pairCount=(d==='chill'?4:d==='hard'?12:8);const pool=PAIRS.slice(0,pairCount);const cards=shuffle([...pool,...pool].map((p,i)=>({...p,id:i})));
       grid.innerHTML='';flipped=[];matched=0;moves=0;seconds=0;locked=false;
       ['memMoves','memTime'].forEach(id=>document.getElementById(id).textContent=0);
-      document.getElementById('memPairs').textContent='0 / 8';document.getElementById('memWin').classList.remove('show');
+      document.getElementById('memPairs').textContent='0 / '+pairCount;document.getElementById('memWin').classList.remove('show');
       clearInterval(timer);let started=false;
       cards.forEach(card=>{
         const el=document.createElement('div');el.className='mem-card';el.dataset.label=card.label;el.dataset.icon=card.icon;
@@ -522,8 +565,8 @@ window.showOtepToast=showToast;
           if(!started){started=true;timer=setInterval(()=>{seconds++;document.getElementById('memTime').textContent=seconds;},1000);}
           el.classList.add('flipped');flipped.push(el);
           if(flipped.length===2){moves++;document.getElementById('memMoves').textContent=moves;locked=true;
-            if(flipped[0].dataset.label===flipped[1].dataset.label){flipped.forEach(c=>c.classList.add('matched'));flipped=[];locked=false;matched++;document.getElementById('memPairs').textContent=`${matched} / 8`;
-              if(matched===8){clearInterval(timer);document.getElementById('memWinMsg').textContent=`${moves} moves · ${seconds}s · All matched! Your RAM is clearly running fine. 🧠`;if(window.otepSaveScore)window.otepSaveScore('memory',Math.max(1,1000-moves*5-seconds));document.getElementById('memWin').classList.add('show');}}
+            if(flipped[0].dataset.label===flipped[1].dataset.label){flipped.forEach(c=>c.classList.add('matched'));flipped=[];locked=false;matched++;document.getElementById('memPairs').textContent=`${matched} / ${pairCount}`;
+              if(matched===pairCount){clearInterval(timer);document.getElementById('memWinMsg').textContent=`${moves} moves · ${seconds}s · All matched! Your RAM is clearly running fine. 🧠`;if(window.otepSaveScore)window.otepSaveScore('memory',Math.max(1,1000-moves*5-seconds));document.getElementById('memWin').classList.add('show');}}
             else{setTimeout(()=>{flipped.forEach(c=>c.classList.remove('flipped'));flipped=[];locked=false;},900);}
           }
         });
@@ -533,15 +576,19 @@ window.showOtepToast=showToast;
     buildGrid();
     document.getElementById('memRestart').addEventListener('click',()=>{clearInterval(timer);buildGrid();});
     document.getElementById('memWinBtn').addEventListener('click',()=>{clearInterval(timer);buildGrid();});
+    if(window.otepBindDiff)window.otepBindDiff('memory',()=>{clearInterval(timer);buildGrid();});
   })();
 
   /* ==== GAME 3: TYPE SPRINT ==== */
   (function(){
+    const SHORT_QUOTES=["hello world","code and coffee","debug it twice","ship it now","eat sleep code repeat","hello from otep"];
+    const LONG_QUOTES=["the best way to predict the future of your code is to write tests that fail loudly before your users ever notice that anything is wrong","clean code is not written by accident it is the result of caring about the next person who has to read it at three in the morning","a good programmer is someone who always looks both ways before crossing a one way street and still checks the documentation twice","the hardest bug to fix is the one you cannot reproduce and the second hardest is the one you introduced while fixing the first one","good software like good music is mostly about what you leave out and knowing when to stop adding features that nobody asked for","debugging is twice as hard as writing the code in the first place so if you write code as cleverly as possible you are by definition not smart enough to debug it"];
     const QUOTES=["first solve the problem then write the code","wired for problems built for solutions","clean code always looks like it was written by someone who cares","any fool can write code that a computer can understand","simplicity is the soul of efficiency","the best code is no code at all","make it work make it right make it fast","programming is not about typing it is about thinking","code is read more often than it is written","talk is cheap show me the code"];
     let quoteIdx=0,startTime=null,timerInt=null,elapsed=0,totalTyped=0,correctTyped=0;
-    document.getElementById('typerTotal').textContent=QUOTES.length;
+    let POOL=QUOTES;
+    document.getElementById('typerTotal').textContent=POOL.length;
     function loadQuote(idx){
-      const q=QUOTES[idx];document.getElementById('typerNum').textContent=idx+1;
+      const q=POOL[idx];document.getElementById('typerNum').textContent=idx+1;
       const display=document.getElementById('typerDisplay');
       display.innerHTML=q.split('').map((ch,i)=>`<span class="typer-char" data-idx="${i}">${ch===' '?'&nbsp;':ch}</span>`).join('');
       display.querySelector('.typer-char')?.classList.add('cursor');
@@ -552,7 +599,7 @@ window.showOtepToast=showToast;
       startTime=null;elapsed=0;totalTyped=0;correctTyped=0;clearInterval(timerInt);
     }
     document.getElementById('typerInput')?.addEventListener('input',e=>{
-      const input=e.target,typed=input.value,target=QUOTES[quoteIdx];
+      const input=e.target,typed=input.value,target=POOL[quoteIdx];
       const chars=document.querySelectorAll('#typerDisplay .typer-char');
       if(!startTime&&typed.length>0){startTime=Date.now();timerInt=setInterval(()=>{elapsed=Math.floor((Date.now()-startTime)/1000);document.getElementById('typerTime').textContent=elapsed+'s';},200);}
       totalTyped=typed.length;correctTyped=0;
@@ -567,10 +614,11 @@ window.showOtepToast=showToast;
         if(fw>=60)showToast(`🔥 ${fw} WPM! That's not typing — that's debugging at the speed of thought.`,4000);
       }
     });
-    function nextQuote(){quoteIdx=(quoteIdx+1)%QUOTES.length;loadQuote(quoteIdx);}
+    function nextQuote(){quoteIdx=(quoteIdx+1)%POOL.length;loadQuote(quoteIdx);}
     document.getElementById('typerNext')?.addEventListener('click',nextQuote);
     document.getElementById('typerSkip')?.addEventListener('click',nextQuote);
     QUOTES.sort(()=>Math.random()-.5);loadQuote(0);
+    if(window.otepBindDiff)window.otepBindDiff('typer',()=>{const d=window.otepGetDiff('typer');POOL=(d==='chill'?[...SHORT_QUOTES]:d==='hard'?[...LONG_QUOTES]:QUOTES);POOL.sort(()=>Math.random()-.5);quoteIdx=0;document.getElementById('typerTotal').textContent=POOL.length;loadQuote(0);});
   })();
 
   /* ==== GAME 4: WHACK-A-MOLE ==== */
@@ -578,25 +626,28 @@ window.showOtepToast=showToast;
     const grid=document.getElementById('moleGrid');if(!grid)return;
     const scoreEl=document.getElementById('moleScore'),timeEl=document.getElementById('moleTime'),highEl=document.getElementById('moleHigh'),msgEl=document.getElementById('moleMsg');
     const startBtn=document.getElementById('moleStart'),startTxt=document.getElementById('moleStartTxt');
-    const HOLES=9,DURATION=30;let score=0,highScore=+localStorage.getItem('mole_hs')||0,timeLeft=DURATION,running=false,moleTimer,countdown,currentMole=-1;
+    const DURATION=30;let HOLES=9,score=0,highScore=+localStorage.getItem('mole_hs')||0,timeLeft=DURATION,running=false,moleTimer,countdown,currentMole=-1;
     highEl.textContent=highScore;
-    for(let i=0;i<HOLES;i++){const h=document.createElement('div');h.className='mole-hole';h.dataset.idx=i;h.innerHTML='<div class="mole-creature">🐹</div>';h.addEventListener('click',()=>whack(i));grid.appendChild(h);}
-    const holes=grid.querySelectorAll('.mole-hole');
-    function showMole(){if(!running)return;if(currentMole>=0)holes[currentMole].classList.remove('has-mole');let next;do{next=Math.floor(Math.random()*HOLES);}while(next===currentMole);currentMole=next;holes[currentMole].classList.add('has-mole');moleTimer=setTimeout(showMole,Math.max(450,1200-(DURATION-timeLeft)*25));}
+    function buildHoles(n){HOLES=n;grid.innerHTML='';for(let i=0;i<HOLES;i++){const h=document.createElement('div');h.className='mole-hole';h.dataset.idx=i;h.innerHTML='<div class="mole-creature">🐹</div>';h.addEventListener('click',()=>whack(i));grid.appendChild(h);}grid.style.gridTemplateColumns='repeat('+(HOLES===16?4:3)+', 1fr)';holes=grid.querySelectorAll('.mole-hole');}
+    let holes=[];buildHoles(9);
+    function moleDelay(){const d=window.otepGetDiff?window.otepGetDiff('mole'):'normal';if(d==='chill')return Math.max(800,1600-(DURATION-timeLeft)*15);if(d==='hard')return Math.max(300,800-(DURATION-timeLeft)*20);return Math.max(450,1200-(DURATION-timeLeft)*25);}
+    function showMole(){if(!running)return;if(currentMole>=0)holes[currentMole].classList.remove('has-mole');let next;do{next=Math.floor(Math.random()*HOLES);}while(next===currentMole);currentMole=next;holes[currentMole].classList.add('has-mole');moleTimer=setTimeout(showMole,moleDelay());}
     function whack(idx){if(!running||idx!==currentMole)return;holes[idx].classList.remove('has-mole');holes[idx].classList.add('whacked');setTimeout(()=>holes[idx].classList.remove('whacked'),350);score++;scoreEl.textContent=score;currentMole=-1;clearTimeout(moleTimer);showMole();}
     function startGame(){score=0;timeLeft=DURATION;scoreEl.textContent=0;timeEl.textContent=DURATION;holes.forEach(h=>h.classList.remove('has-mole','whacked'));msgEl.textContent='Whack those pesky hamsters!';startTxt.textContent='Restart →';running=true;currentMole=-1;clearTimeout(moleTimer);clearInterval(countdown);showMole();countdown=setInterval(()=>{timeLeft--;timeEl.textContent=timeLeft;if(timeLeft<=0)endGame();},1000);}
     function endGame(){running=false;if(window.otepSaveScore)window.otepSaveScore('mole',score);clearTimeout(moleTimer);clearInterval(countdown);holes.forEach(h=>h.classList.remove('has-mole'));currentMole=-1;if(score>highScore){highScore=score;localStorage.setItem('mole_hs',highScore);highEl.textContent=highScore;}msgEl.innerHTML=`Time's up! Score: <strong style="color:var(--gold)">${score}</strong>${score>=15?' 🏆 Hamster hunter!':score>=8?' 🎉 Solid reflexes!':' — The hamsters send their regards.'}` ;}
     startBtn.addEventListener('click',startGame);
+    if(window.otepBindDiff)window.otepBindDiff('mole',()=>{running=false;clearTimeout(moleTimer);clearInterval(countdown);buildHoles(window.otepGetDiff('mole')==='hard'?16:9);score=0;timeLeft=DURATION;scoreEl.textContent=0;timeEl.textContent=DURATION;msgEl.textContent='Difficulty changed — press Start.';startTxt.textContent='Start Game →';});
   })();
 
   /* ==== GAME 5: NUMBER GUESSER ==== */
   (function(){
     const input=document.getElementById('guessInput');if(!input)return;
     const btn=document.getElementById('guessBtn'),hint=document.getElementById('guessHint'),attemptsEl=document.getElementById('guessAttempts'),bestEl=document.getElementById('guessBest'),meterFill=document.getElementById('guessMeterFill'),historyEl=document.getElementById('guessHistory'),win=document.getElementById('guessWin'),winMsg=document.getElementById('guessWinMsg'),newGameBtn=document.getElementById('guessNewGame');
-    let secret,attempts,bestScore=+localStorage.getItem('guess_best')||0;if(bestScore)bestEl.textContent=bestScore;
-    function newGame(){secret=Math.floor(Math.random()*100)+1;attempts=0;attemptsEl.textContent=0;hint.textContent="I'm thinking of a number between 1 and 100. No hints. Okay, one hint: it exists.";hint.style.color='';meterFill.style.width='50%';meterFill.style.background='linear-gradient(90deg,var(--blue),var(--gold))';historyEl.innerHTML='';input.value='';input.disabled=false;btn.disabled=false;win.classList.remove('show');input.focus();}
-    function makeGuess(){const val=parseInt(input.value.trim());if(!input.value.trim()||isNaN(val)||val<1||val>100){hint.textContent='⚠ A number between 1 and 100. Not a philosophy, an actual number.';hint.style.color='var(--red)';return;}attempts++;attemptsEl.textContent=attempts;const badge=document.createElement('span');badge.className='guess-badge';badge.textContent=val;if(val===secret){badge.classList.add('exact');historyEl.appendChild(badge);if(window.otepSaveScore)window.otepSaveScore('guess',Math.max(1,101-attempts));input.disabled=true;btn.disabled=true;meterFill.style.width='100%';meterFill.style.background='var(--green)';if(!bestScore||attempts<bestScore){bestScore=attempts;localStorage.setItem('guess_best',bestScore);bestEl.textContent=bestScore;}winMsg.textContent=`Got it in ${attempts} attempt${attempts===1?'':'s'}! The number was ${secret}. ${attempts<=3?'🔥 Binary search energy!':attempts<=6?'💪 Solid!':'🎯 Persistence is a feature, not a bug.'}`;win.classList.add('show');return;}if(val<secret){badge.classList.add('low');hint.textContent='↑  Higher';hint.style.color='var(--blue-lt)';}else{badge.classList.add('high');hint.textContent='↓  Lower';hint.style.color='var(--gold-lt)';}meterFill.style.width=(val/100*100)+'%';historyEl.appendChild(badge);input.value='';input.focus();}
-    btn.addEventListener('click',makeGuess);input.addEventListener('keydown',e=>{if(e.key==='Enter')makeGuess();});newGameBtn.addEventListener('click',newGame);newGame();
+    let secret,attempts,maxNum=100,bestScore=+localStorage.getItem('guess_best')||0;if(bestScore)bestEl.textContent=bestScore;
+    function newGame(){secret=Math.floor(Math.random()*maxNum)+1;attempts=0;attemptsEl.textContent=0;hint.textContent="I'm thinking of a number between 1 and "+maxNum+". No hints. Okay, one hint: it exists.";const rangeEl=document.querySelector('#game-guess .guess-range');if(rangeEl)rangeEl.innerHTML='Pick a number between <strong>1</strong> and <strong>'+maxNum+'</strong>';input.max=maxNum;hint.style.color='';meterFill.style.width='50%';meterFill.style.background='linear-gradient(90deg,var(--blue),var(--gold))';historyEl.innerHTML='';input.value='';input.disabled=false;btn.disabled=false;win.classList.remove('show');input.focus();}
+    function makeGuess(){const val=parseInt(input.value.trim());if(!input.value.trim()||isNaN(val)||val<1||val>maxNum){hint.textContent='⚠ A number between 1 and '+maxNum+'. Not a philosophy, an actual number.';hint.style.color='var(--red)';return;}attempts++;attemptsEl.textContent=attempts;const badge=document.createElement('span');badge.className='guess-badge';badge.textContent=val;if(val===secret){badge.classList.add('exact');historyEl.appendChild(badge);if(window.otepSaveScore)window.otepSaveScore('guess',Math.max(1,maxNum+1-attempts));input.disabled=true;btn.disabled=true;meterFill.style.width='100%';meterFill.style.background='var(--green)';if(!bestScore||attempts<bestScore){bestScore=attempts;localStorage.setItem('guess_best',bestScore);bestEl.textContent=bestScore;}winMsg.textContent=`Got it in ${attempts} attempt${attempts===1?'':'s'}! The number was ${secret}. ${attempts<=3?'🔥 Binary search energy!':attempts<=6?'💪 Solid!':'🎯 Persistence is a feature, not a bug.'}`;win.classList.add('show');return;}if(val<secret){badge.classList.add('low');hint.textContent='↑  Higher';hint.style.color='var(--blue-lt)';}else{badge.classList.add('high');hint.textContent='↓  Lower';hint.style.color='var(--gold-lt)';}meterFill.style.width=(val/maxNum*100)+'%';historyEl.appendChild(badge);input.value='';input.focus();}
+    btn.addEventListener('click',makeGuess);
+    if(window.otepBindDiff)window.otepBindDiff('guess',()=>{const d=window.otepGetDiff('guess');maxNum=(d==='chill'?50:d==='hard'?200:100);newGame();});input.addEventListener('keydown',e=>{if(e.key==='Enter')makeGuess();});newGameBtn.addEventListener('click',newGame);newGame();
   })();
 
 
@@ -617,10 +668,17 @@ window.showOtepToast=showToast;
       {q:"A Stack data structure follows which order?",a:3,opts:["FIFO","LILO","FILO","LIFO"]},
       {q:"What framework does Otep use for this portfolio?",a:2,opts:["Bootstrap","React","None — pure HTML/CSS/JS","Vue"]},
       {q:"What is Otep's school?",a:0,opts:["PLV — Pamantasan ng Lungsod ng Valenzuela","PLM — Pamantasan ng Lungsod ng Maynila","PUP — Polytechnic University","PLN — Pamantasan ng Lungsod ng Navotas"]},
+      {q:"What does API stand for?",a:1,opts:["Application Program Interface","Application Programming Interface","Advanced Programming Internet","App Process Integration"]},
+      {q:"Which HTTP status code means 'Not Found'?",a:2,opts:["200","403","404","500"]},
+      {q:"What does a SQL SELECT statement do?",a:0,opts:["Retrieves data from a database","Deletes a table","Creates a new user","Sorts a spreadsheet"]},
+      {q:"What is Git mainly used for?",a:3,opts:["Image editing","Video rendering","Database backup","Version control"]},
+      {q:"Which of these is a JavaScript package manager?",a:1,opts:["Pip","npm","Composer","Gradle"]},
+      {q:"What does the CSS box model include?",a:2,opts:["Only margins","Only borders","Content, padding, border and margin","Only content and padding"]},
     ];
+    let ACTIVE=[...QS];
     let current=0,score=0;
     function loadQ(){
-      const q=QS[current];labelEl.textContent=`Question ${current+1} of ${QS.length}`;questionEl.textContent=q.q;feedbackEl.textContent='';progressFill.style.width=(current/QS.length*100)+'%';
+      const q=ACTIVE[current];labelEl.textContent=`Question ${current+1} of ${ACTIVE.length}`;questionEl.textContent=q.q;feedbackEl.textContent='';progressFill.style.width=(current/ACTIVE.length*100)+'%';
       optionsEl.innerHTML='';q.opts.forEach((opt,i)=>{const b=document.createElement('button');b.className='quiz-opt';b.textContent=opt;b.addEventListener('click',()=>answer(i,b,q.a));optionsEl.appendChild(b);});
       nextBtn.style.display='none';
     }
@@ -631,9 +689,10 @@ window.showOtepToast=showToast;
       else{btn.classList.add('wrong');feedbackEl.textContent='❌ Not quite. Correct answer is highlighted.';feedbackEl.style.color='var(--red)';}
       nextBtn.style.display='inline-flex';
     }
-    nextBtn?.addEventListener('click',()=>{current++;if(current<QS.length){loadQ();}else{progressFill.style.width='100%';if(window.otepSaveScore)window.otepSaveScore('quiz',score);scoreBoard.classList.add('show');finalScore.textContent=`${score}/${QS.length}`;statScore.textContent=score;statTotal.textContent=QS.length;nextBtn.style.display='none';if(score===QS.length)showToast('🏆 Perfect score! Did you write the quiz? ...wait.',4500);else if(score>=7)showToast('🎉 Great score! You\'ve clearly been paying attention.',3500);}});
-    restartBtn?.addEventListener('click',()=>{current=0;score=0;scoreBoard.classList.remove('show');QS.sort(()=>Math.random()-.5);loadQ();});
-    QS.sort(()=>Math.random()-.5);loadQ();
+    nextBtn?.addEventListener('click',()=>{current++;if(current<ACTIVE.length){loadQ();}else{progressFill.style.width='100%';if(window.otepSaveScore)window.otepSaveScore('quiz',score);scoreBoard.classList.add('show');finalScore.textContent=`${score}/${ACTIVE.length}`;statScore.textContent=score;statTotal.textContent=ACTIVE.length;nextBtn.style.display='none';if(score===QS.length)showToast('🏆 Perfect score! Did you write the quiz? ...wait.',4500);else if(score>=7)showToast('🎉 Great score! You\'ve clearly been paying attention.',3500);}});
+    restartBtn?.addEventListener('click',()=>{current=0;score=0;scoreBoard.classList.remove('show');ACTIVE=[...QS].sort(()=>Math.random()-.5);loadQ();});
+    if(window.otepBindDiff)window.otepBindDiff('quiz',()=>{const d=window.otepGetDiff('quiz');const n=(d==='chill'?5:d==='hard'?15:10);ACTIVE=[...QS].sort(()=>Math.random()-.5).slice(0,n);current=0;score=0;scoreBoard.classList.remove('show');statScore.textContent=0;statTotal.textContent=n;loadQ();});
+    ACTIVE=[...QS].sort(()=>Math.random()-.5).slice(0,10);loadQ();
   })();
 
 
@@ -650,13 +709,28 @@ window.showOtepToast=showToast;
     });
     function checkWin(b,p){return WINS.find(w=>w.every(i=>b[i]===p));}
     function bestMove(b,p){for(const w of WINS){const v=w.map(i=>b[i]);if(v.filter(x=>x===p).length===2&&v.includes('')){return w[v.indexOf('')];}}return -1;}
-    function initGame(){board=Array(9).fill('');running=true;cells.forEach(c=>{c.textContent='';c.className='ttt-cell';});statusEl.textContent="Your turn — you're X. Choose wisely.";}
+    function initGame(){board=Array(9).fill('');running=true;cells.forEach(c=>{c.textContent='';c.className='ttt-cell';});statusEl.textContent=(window.otepGetDiff&&window.otepGetDiff('ttt')==='hard')?"Boss Level: minimax AI — it cannot lose. Your best result is a draw. Your turn — you're X.":"Your turn — you're X. Choose wisely.";}
     function playerMove(idx){if(!running||board[idx])return;place(idx,'X');const w=checkWin(board,'X');if(w){highlight(w);end('X');}else if(board.every(v=>v)){end(null);}else{statusEl.textContent='AI thinking…';setTimeout(aiMove,380);}}
-    function aiMove(){if(!running)return;let m=bestMove(board,'O');if(m<0)m=bestMove(board,'X');if(m<0&&!board[4])m=4;if(m<0){const c=[0,2,6,8].filter(i=>!board[i]);if(c.length)m=c[Math.floor(Math.random()*c.length)];}if(m<0){const e=board.map((v,i)=>v?-1:i).filter(i=>i>=0);if(e.length)m=e[Math.floor(Math.random()*e.length)];}place(m,'O');const w=checkWin(board,'O');if(w){highlight(w);end('O');}else if(board.every(v=>v)){end(null);}else{statusEl.textContent='Your turn.';}}
+    function aiMove(){if(!running)return;const d=window.otepGetDiff?window.otepGetDiff('ttt'):'normal';let m=-1;
+      if(d==='chill'){
+        // Chill Pill: mostly random, occasionally blocks/wins.
+        if(Math.random()<0.3){ m=bestMove(board,'O'); if(m<0)m=bestMove(board,'X'); }
+        if(m<0){ const e=board.map((v,i)=>v?-1:i).filter(i=>i>=0); m=e[Math.floor(Math.random()*e.length)]; }
+      } else if(d==='hard'){
+        // Boss Level: minimax — the AI can never lose.
+        const scores={O:10,X:-10,D:0};
+        function winnerOf(b){ for(const w of WINS){ if(b[w[0]]&&b[w[0]]===b[w[1]]&&b[w[1]]===b[w[2]]) return b[w[0]]; } return b.every(v=>v)?'D':null; }
+        function minimax(b,isMax,depth){ const w=winnerOf(b); if(w) return scores[w]- (w==='O'?depth:0) + (w==='X'?depth:0); let best=isMax?-Infinity:Infinity; for(let i=0;i<9;i++){ if(!b[i]){ b[i]=isMax?'O':'X'; const v=minimax(b,!isMax,depth+1); b[i]=''; best=isMax?Math.max(best,v):Math.min(best,v); } } return best; }
+        let bestVal=-Infinity; for(let i=0;i<9;i++){ if(!board[i]){ board[i]='O'; const v=minimax(board,false,0); board[i]=''; if(v>bestVal){ bestVal=v; m=i; } } }
+      } else {
+        m=bestMove(board,'O');if(m<0)m=bestMove(board,'X');if(m<0&&!board[4])m=4;if(m<0){const c=[0,2,6,8].filter(i=>!board[i]);if(c.length)m=c[Math.floor(Math.random()*c.length)];}if(m<0){const e=board.map((v,i)=>v?-1:i).filter(i=>i>=0);if(e.length)m=e[Math.floor(Math.random()*e.length)];}
+      }
+      place(m,'O');const w=checkWin(board,'O');if(w){highlight(w);end('O');}else if(board.every(v=>v)){end(null);}else{statusEl.textContent='Your turn.';}}
     function place(idx,p){board[idx]=p;cells[idx].textContent=p;cells[idx].classList.add(p.toLowerCase(),'taken');}
     function highlight(w){w.forEach(i=>cells[i].classList.add('win'));}
-    function end(winner){running=false;if(winner==='X'){scores.X++;scoreXEl.textContent=scores.X;if(window.otepSaveScore)window.otepSaveScore('ttt',scores.X);statusEl.textContent='You win! The AI is reconsidering its life choices.';}else if(winner==='O'){scores.O++;scoreOEl.textContent=scores.O;statusEl.textContent='AI wins. Programmed to succeed. Unlike some commits.';}else{scores.D++;scoreDrawEl.textContent=scores.D;statusEl.textContent="Draw. Perfectly balanced, as all things should be.";}}
+    function end(winner){running=false;if(winner==='X'){scores.X++;scoreXEl.textContent=scores.X;if(window.otepSaveScore)window.otepSaveScore('ttt',scores.X);statusEl.textContent='You win! The AI is reconsidering its life choices.';}else if(winner==='O'){scores.O++;scoreOEl.textContent=scores.O;statusEl.textContent='AI wins. Programmed to succeed. Unlike some commits.';if(window.otepRage)window.otepRage('rage-ttt');}else{scores.D++;scoreDrawEl.textContent=scores.D;statusEl.textContent="Draw. Perfectly balanced, as all things should be.";}}
     document.getElementById('tttStart')?.addEventListener('click',initGame);
+    if(window.otepBindDiff)window.otepBindDiff('ttt',()=>{initGame();});
     initGame();
   })();
 
@@ -668,17 +742,18 @@ window.showOtepToast=showToast;
     let pS=0,aS=0,round=0;
     document.querySelectorAll('.rps-btn').forEach(btn=>{
       btn.addEventListener('click',()=>{
-        const p=+btn.dataset.choice,a=Math.floor(Math.random()*3);
+        const p=+btn.dataset.choice;const d=window.otepGetDiff?window.otepGetDiff('rps'):'normal';let a;if(d==='hard'){a=(p+1)%3;}else if(d==='chill'){a=(Math.random()<0.7)?BEATS[p]:Math.floor(Math.random()*3);}else{a=Math.floor(Math.random()*3);}
         pChoice.textContent=EMOJIS[p];aChoice.textContent=EMOJIS[a];
         [pChoice,aChoice].forEach(el=>{el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),400);});
         round++;roundEl.textContent=round;
         if(p===a){resultEl.textContent="Tie! Even randomness couldn't decide.";}
-        else if(BEATS[p]===a){pS++;pScoreEl.textContent=pS;resultEl.textContent=`${NAMES[p]} beats ${NAMES[a]}. Point yours!`;}
-        else{aS++;aScoreEl.textContent=aS;resultEl.textContent=`${NAMES[a]} beats ${NAMES[p]}. The AI is not sorry.`;}
+        else if(BEATS[p]===a){pS++;pScoreEl.textContent=pS;resultEl.textContent=`${NAMES[p]} beats ${NAMES[a]}. Point yours!`+(d==='hard'?' The AI peeked. It admits nothing.':'');}
+        else{aS++;aScoreEl.textContent=aS;resultEl.textContent=`${NAMES[a]} beats ${NAMES[p]}. The AI is not sorry.`+(d==='hard'?' The AI peeked. It admits nothing.':'');}
         if(pS===3){if(window.otepSaveScore)window.otepSaveScore('rps',pS);resultEl.textContent='You win the set! 🏆';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
-        else if(aS===3){resultEl.textContent='AI wins the set. 🤖';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
+        else if(aS===3){resultEl.textContent=(d==='hard'?'AI wins the set. 🤖 The AI peeked. It admits nothing.':'AI wins the set. 🤖');if(window.otepRage)window.otepRage('rage-rps');document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
       });
     });
+    if(window.otepBindDiff)window.otepBindDiff('rps',()=>{document.getElementById('rpsReset')?.click();});
     document.getElementById('rpsReset')?.addEventListener('click',()=>{pS=0;aS=0;round=0;[pScoreEl,aScoreEl,roundEl].forEach(el=>el.textContent=0);pChoice.textContent='❓';aChoice.textContent='❓';resultEl.textContent='Pick your weapon. No pressure.';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=false);});
   })();
 
@@ -686,14 +761,17 @@ window.showOtepToast=showToast;
   (function(){
     const wordEl=document.getElementById('hangWord');if(!wordEl)return;
     const livesEl=document.getElementById('hangLives'),keysEl=document.getElementById('hangKeys'),msgEl=document.getElementById('hangMsg'),hintEl=document.getElementById('hangHint'),figEl=document.getElementById('hangFigure');
-    const WORDS=[{w:'javascript',h:'Language of the web (and of regrets)'},{w:'python',h:'Named after Monty Python, not the snake'},{w:'algorithm',h:'A recipe that never tastes the same twice'},{w:'debugging',h:'Removing bugs you added yesterday'},{w:'recursion',h:'See: recursion'},{w:'repository',h:'Where code lives and PRs go to die'},{w:'frontend',h:'The part users see and complain about'},{w:'iteration',h:'Doing the same thing, but better. Allegedly.'},{w:'boolean',h:'True or false. No "maybe" in prod.'},{w:'otepcode',h:"Otep's personal brand. You should know this."},{w:'variable',h:'A box you forget to name properly'},{w:'function',h:'Reusable logic. Or 200 lines of chaos.'},{w:'framework',h:'Something Otep deliberately did NOT use'},{w:'database',h:'Where the data lives and sometimes dies'},{w:'network',h:'Very important tubes'}];
+    const SHORT_WORDS=[{w:'code',h:'What Otep writes, mostly at night'},{w:'bug',h:'An undocumented feature'},{w:'git',h:'Version control, not a insult'},{w:'java',h:'Coffee and code, in one word'},{w:'sql',h:'Ask the database nicely'},{w:'html',h:'The skeleton of every webpage'},{w:'css',h:'Makes the skeleton look good'},{w:'api',h:'How programs talk to each other'},{w:'loop',h:'Round and round it goes'},{w:'data',h:'The new oil, allegedly'}];
+    const LONG_WORDS=[{w:'microservice',h:'Small service, big architecture'},{w:'containerization',h:'Shipping code in a box'},{w:'authentication',h:'Proving you are really you'},{w:'documentation',h:'The thing everyone promises to write'},{w:'asynchronous',h:'Not waiting around for anyone'},{w:'cryptography',h:'Secret writing, but make it math'},{w:'virtualization',h:'One machine pretending to be many'},{w:'architecture',h:'Planning before the building falls over'}];
+    let WORDS=[{w:'javascript',h:'Language of the web (and of regrets)'},{w:'python',h:'Named after Monty Python, not the snake'},{w:'algorithm',h:'A recipe that never tastes the same twice'},{w:'debugging',h:'Removing bugs you added yesterday'},{w:'recursion',h:'See: recursion'},{w:'repository',h:'Where code lives and PRs go to die'},{w:'frontend',h:'The part users see and complain about'},{w:'iteration',h:'Doing the same thing, but better. Allegedly.'},{w:'boolean',h:'True or false. No "maybe" in prod.'},{w:'otepcode',h:"Otep's personal brand. You should know this."},{w:'variable',h:'A box you forget to name properly'},{w:'function',h:'Reusable logic. Or 200 lines of chaos.'},{w:'framework',h:'Something Otep deliberately did NOT use'},{w:'database',h:'Where the data lives and sometimes dies'},{w:'network',h:'Very important tubes'}];
     const STAGES=['😃','😅','😬','😰','😱','😵','💀'];
     let word,guessed,wrong,running;
-    function newGame(){const pick=WORDS[Math.floor(Math.random()*WORDS.length)];word=pick.w;guessed=new Set();wrong=0;running=true;figEl.textContent=STAGES[0];hintEl.textContent='Hint: '+pick.h;msgEl.textContent='';render();buildKeys();}
+    function newGame(){const d=window.otepGetDiff?window.otepGetDiff('hang'):'normal';const pool=(d==='chill'?SHORT_WORDS:d==='hard'?LONG_WORDS:WORDS);const pick=pool[Math.floor(Math.random()*pool.length)];word=pick.w;guessed=new Set();wrong=0;running=true;figEl.textContent=STAGES[0];hintEl.textContent='Hint: '+pick.h;msgEl.textContent='';render();buildKeys();}
     function render(){wordEl.innerHTML=word.split('').map(l=>`<div class="hang-letter">${guessed.has(l)?l:''}</div>`).join('');livesEl.textContent='❤️'.repeat(6-wrong)+'🖤'.repeat(wrong);figEl.textContent=STAGES[Math.min(wrong,6)];}
     function buildKeys(){keysEl.innerHTML='';'abcdefghijklmnopqrstuvwxyz'.split('').forEach(l=>{const b=document.createElement('button');b.className='hang-key';b.textContent=l;b.addEventListener('click',()=>guess(l,b));keysEl.appendChild(b);});}
-    function guess(l,btn){if(!running||guessed.has(l))return;guessed.add(l);if(word.includes(l)){btn.classList.add('used-right');}else{wrong++;btn.classList.add('used-wrong');}btn.disabled=true;render();if(word.split('').every(c=>guessed.has(c))){running=false;if(window.otepSaveScore)window.otepSaveScore('hang',(6-wrong)*100);msgEl.textContent=`"${word.toUpperCase()}" — nailed it! Your inner dev is showing.`;}else if(wrong>=6){running=false;msgEl.textContent=`It was "${word.toUpperCase()}". The bugs win today.`;wordEl.querySelectorAll('.hang-letter').forEach((el,i)=>{el.textContent=word[i];el.classList.add('wrong');});}}
+    function guess(l,btn){if(!running||guessed.has(l))return;guessed.add(l);if(word.includes(l)){btn.classList.add('used-right');}else{wrong++;btn.classList.add('used-wrong');}btn.disabled=true;render();if(word.split('').every(c=>guessed.has(c))){running=false;if(window.otepSaveScore)window.otepSaveScore('hang',(6-wrong)*100);msgEl.textContent=`"${word.toUpperCase()}" — nailed it! Your inner dev is showing.`;}else if(wrong>=6){running=false;if(window.otepRage)window.otepRage('rage-hang');msgEl.textContent=`It was "${word.toUpperCase()}". The bugs win today.`;wordEl.querySelectorAll('.hang-letter').forEach((el,i)=>{el.textContent=word[i];el.classList.add('wrong');});}}
     document.getElementById('hangStart')?.addEventListener('click',newGame);
+    if(window.otepBindDiff)window.otepBindDiff('hang',()=>{newGame();});
     newGame();
   })();
 
@@ -701,16 +779,21 @@ window.showOtepToast=showToast;
   (function(){
     const levelEl=document.getElementById('simonLevel'),msgEl=document.getElementById('simonMsg');if(!levelEl)return;
     const highEl=document.getElementById('simonHigh');
-    const COLORS=['blue','gold','green','red'];
+    const COLORS_BASE=['blue','gold','green','red'];
+    const COLORS_ALL=['blue','gold','green','red','purple','pink'];
+    let COLORS=[...COLORS_BASE];
     let sequence=[],playerIdx,level,running,accepting,highScore=+localStorage.getItem('simon_hs')||0;
     highEl.textContent=highScore;
-    const btns={};COLORS.forEach(c=>{btns[c]=document.querySelector(`.simon-btn[data-color="${c}"]`);});
+    const btns={};COLORS_ALL.forEach(c=>{btns[c]=document.querySelector(`.simon-btn[data-color="${c}"]`);});
+    function applySimonTiles(){const d=window.otepGetDiff?window.otepGetDiff('simon'):'normal';COLORS=(d==='hard'?[...COLORS_ALL]:[...COLORS_BASE]);document.querySelectorAll('.simon-extra').forEach(el=>{el.style.display=(d==='hard'?'':'none');});const grid=document.getElementById('simonGrid');if(grid)grid.style.gridTemplateColumns=(d==='hard'?'repeat(3, 1fr)':'1fr 1fr');}
+    applySimonTiles();
     function flash(c,dur=400){return new Promise(res=>{btns[c]?.classList.add('lit');setTimeout(()=>{btns[c]?.classList.remove('lit');setTimeout(res,100);},dur);});}
-    async function playSeq(){accepting=false;msgEl.textContent='Watch the pattern…';for(const c of sequence){await flash(c,Math.max(250,450-level*15));await new Promise(r=>setTimeout(r,80));}accepting=true;playerIdx=0;msgEl.textContent='Your turn — repeat it!';}
+    async function playSeq(){accepting=false;msgEl.textContent='Watch the pattern…';const d=window.otepGetDiff?window.otepGetDiff('simon'):'normal';const dur=(d==='chill'?Math.max(400,650-level*10):d==='hard'?Math.max(180,320-level*15):Math.max(250,450-level*15));for(const c of sequence){await flash(c,dur);await new Promise(r=>setTimeout(r,80));}accepting=true;playerIdx=0;msgEl.textContent='Your turn — repeat it!';}
     function startGame(){sequence=[];level=0;running=true;nextRound();}
     function nextRound(){level++;levelEl.textContent=level;sequence.push(COLORS[Math.floor(Math.random()*4)]);setTimeout(playSeq,600);}
-    COLORS.forEach(c=>{btns[c]?.addEventListener('click',()=>{if(!running||!accepting)return;btns[c].classList.add('lit');setTimeout(()=>btns[c].classList.remove('lit'),150);if(c===sequence[playerIdx]){playerIdx++;if(playerIdx===sequence.length){if(level>highScore){highScore=level;localStorage.setItem('simon_hs',highScore);highEl.textContent=highScore;}msgEl.textContent=`Level ${level} done! ${level>=10?'RAM chip energy! 🔥':level>=5?'Great memory!':'Keep going!'}`;setTimeout(nextRound,1100);}}else{accepting=false;running=false;if(window.otepSaveScore)window.otepSaveScore('simon',level);msgEl.textContent=`Wrong at level ${level}! ${level>=10?'Elite run 🏆':level>=5?'Not bad!':'The colors were buffering.'}`;}});});
+    COLORS_ALL.forEach(c=>{btns[c]?.addEventListener('click',()=>{if(!running||!accepting)return;if(!COLORS.includes(c))return;btns[c].classList.add('lit');setTimeout(()=>btns[c].classList.remove('lit'),150);if(c===sequence[playerIdx]){playerIdx++;if(playerIdx===sequence.length){if(level>highScore){highScore=level;localStorage.setItem('simon_hs',highScore);highEl.textContent=highScore;}msgEl.textContent=`Level ${level} done! ${level>=10?'RAM chip energy! 🔥':level>=5?'Great memory!':'Keep going!'}`;setTimeout(nextRound,1100);}}else{accepting=false;running=false;if(window.otepSaveScore)window.otepSaveScore('simon',level);msgEl.textContent=`Wrong at level ${level}! ${level>=10?'Elite run 🏆':level>=5?'Not bad!':'The colors were buffering.'}`;if(window.otepRage)window.otepRage('rage-simon');}});});
     document.getElementById('simonStart')?.addEventListener('click',startGame);
+    if(window.otepBindDiff)window.otepBindDiff('simon',()=>{applySimonTiles();running=false;accepting=false;sequence=[];level=0;levelEl.textContent=0;msgEl.textContent='Difficulty changed — press Start.';});
   })();
 
   /* ==== GAME 11: PONG ==== */
@@ -719,11 +802,11 @@ window.showOtepToast=showToast;
     const ctx=canvas.getContext('2d');
     const W=canvas.width,H=canvas.height;
     const PAD_H=64,PAD_W=10,BALL_R=8,WIN_SCORE=7;
-    let ball,playerPad,aiPad,pScore,aScore,running,animId,speed;
+    let ball,playerPad,aiPad,pScore,aScore,running,animId,speed,baseSpeed=4.5,aiSpeed=3.8;
     const isDark=()=>document.documentElement.getAttribute('data-theme')!=='light';
     function col(){return isDark()?{bg:'#0d0e18',accent:'#4d7fe6',gold:'#c49a4a',text:'#e8e4d8',dim:'rgba(232,228,216,.15)'}:{bg:'#e6e9f5',accent:'#2855d4',gold:'#9a7030',text:'#0e1120',dim:'rgba(14,17,32,.1)'};}
-    function init(){ball={x:W/2,y:H/2,vx:(Math.random()>.5?1:-1)*4.5,vy:(Math.random()-.5)*4};playerPad={y:H/2-PAD_H/2,dy:0};aiPad={y:H/2-PAD_H/2};pScore=0;aScore=0;speed=1;document.getElementById('pongPlayerScore').textContent=0;document.getElementById('pongAiScore').textContent=0;}
-    function reset(dir){ball={x:W/2,y:H/2,vx:dir*4.5*speed,vy:(Math.random()-.5)*4};speed=Math.min(speed+.05,1.8);}
+    function init(){const d=window.otepGetDiff?window.otepGetDiff('pong'):'normal';baseSpeed=(d==='chill'?3.2:d==='hard'?6:4.5);aiSpeed=(d==='chill'?2.6:d==='hard'?6.5:3.8);const note=document.getElementById('pongNote');if(note)note.textContent=(d==='chill'?'Chill Pill: slower ball, slower AI. Take your time.':d==='hard'?'Boss Level: near-perfect AI tracking and a faster ball. First to 7 still applies.':'Middle Child: standard ball speed and a fair-ish AI.');ball={x:W/2,y:H/2,vx:(Math.random()>.5?1:-1)*baseSpeed,vy:(Math.random()-.5)*4};playerPad={y:H/2-PAD_H/2,dy:0};aiPad={y:H/2-PAD_H/2};pScore=0;aScore=0;speed=1;document.getElementById('pongPlayerScore').textContent=0;document.getElementById('pongAiScore').textContent=0;}
+    function reset(dir){ball={x:W/2,y:H/2,vx:dir*baseSpeed*speed,vy:(Math.random()-.5)*4};speed=Math.min(speed+.05,1.8);}
     function draw(){
       const c=col();ctx.fillStyle=c.bg;ctx.fillRect(0,0,W,H);
       // Center line
@@ -752,13 +835,14 @@ window.showOtepToast=showToast;
       if(ball.x<0){aScore++;document.getElementById('pongAiScore').textContent=aScore;if(aScore>=WIN_SCORE){endGame('AI');return;}reset(1);}
       if(ball.x>W){pScore++;document.getElementById('pongPlayerScore').textContent=pScore;if(pScore>=WIN_SCORE){endGame('You');return;}reset(-1);}
       // AI movement - imperfect tracking for fairness
-      const aiCenter=aiPad.y+PAD_H/2;const diff=ball.y-aiCenter;const aiSpeed=Math.min(Math.abs(diff),3.8);aiPad.y+=diff>0?aiSpeed:-aiSpeed;aiPad.y=Math.max(0,Math.min(H-PAD_H,aiPad.y));
+      const aiCenter=aiPad.y+PAD_H/2;const diff=ball.y-aiCenter;const step=Math.min(Math.abs(diff),aiSpeed);aiPad.y+=diff>0?step:-step;aiPad.y=Math.max(0,Math.min(H-PAD_H,aiPad.y));
     }
-    function endGame(winner){running=false;if(winner==='You'&&window.otepSaveScore)window.otepSaveScore('pong',pScore);cancelAnimationFrame(animId);document.getElementById('pongStartTxt').textContent='Play Again →';const c=col();ctx.fillStyle='rgba(8,9,17,.7)';ctx.fillRect(0,0,W,H);ctx.font=`300 32px 'Cormorant Garamond',serif`;ctx.fillStyle=winner==='You'?'#4d7fe6':'#c49a4a';ctx.textAlign='center';ctx.fillText(`${winner} win${winner==='You'?'!':'. The AI says thanks.'}`,W/2,H/2);ctx.textAlign='left';}
+    function endGame(winner){running=false;if(winner==='You'&&window.otepSaveScore)window.otepSaveScore('pong',pScore);if(winner==='AI'&&window.otepRage)window.otepRage('rage-pong');cancelAnimationFrame(animId);document.getElementById('pongStartTxt').textContent='Play Again →';const c=col();ctx.fillStyle='rgba(8,9,17,.7)';ctx.fillRect(0,0,W,H);ctx.font=`300 32px 'Cormorant Garamond',serif`;ctx.fillStyle=winner==='You'?'#4d7fe6':'#c49a4a';ctx.textAlign='center';ctx.fillText(`${winner} win${winner==='You'?'!':'. The AI says thanks.'}`,W/2,H/2);ctx.textAlign='left';}
     function loop(){if(!running)return;update();draw();animId=requestAnimationFrame(loop);}
     // Mouse/touch control
     canvas.addEventListener('mousemove',e=>{if(!running)return;const r=canvas.getBoundingClientRect();const sy=canvas.height/r.height;const y=(e.clientY-r.top)*sy;playerPad.y=Math.max(0,Math.min(H-PAD_H,y-PAD_H/2));});
     canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!running)return;const r=canvas.getBoundingClientRect();const sy=canvas.height/r.height;const y=(e.touches[0].clientY-r.top)*sy;playerPad.y=Math.max(0,Math.min(H-PAD_H,y-PAD_H/2));},{passive:false});
+    if(window.otepBindDiff)window.otepBindDiff('pong',()=>{cancelAnimationFrame(animId);running=false;init();draw();document.getElementById('pongStartTxt').textContent='Start Game →';});
     document.getElementById('pongStart').addEventListener('click',()=>{cancelAnimationFrame(animId);init();running=true;document.getElementById('pongStartTxt').textContent='Restart →';loop();});
     init();draw();
   })();
@@ -775,11 +859,21 @@ window.showOtepToast=showToast;
     let score,streak,best=+localStorage.getItem('math_best')||0,timeLeft,running,timer,answer;
     bestEl.textContent=best;
     function genProblem(){
-      const ops=['+','-','×','÷'];const op=ops[Math.floor(Math.random()*ops.length)];let a,b,ans;
-      if(op==='+'){a=Math.floor(Math.random()*50)+1;b=Math.floor(Math.random()*50)+1;ans=a+b;}
-      else if(op==='-'){a=Math.floor(Math.random()*50)+10;b=Math.floor(Math.random()*(a-1))+1;ans=a-b;}
-      else if(op==='×'){a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;ans=a*b;}
-      else{b=Math.floor(Math.random()*10)+1;ans=Math.floor(Math.random()*10)+1;a=b*ans;}
+      const d=window.otepGetDiff?window.otepGetDiff('math'):'normal';let op,a,b,ans;
+      if(d==='chill'){ op=(Math.random()<.5?'+':'-'); if(op==='+'){a=Math.floor(Math.random()*30)+1;b=Math.floor(Math.random()*30)+1;ans=a+b;} else {a=Math.floor(Math.random()*30)+10;b=Math.floor(Math.random()*(a-1))+1;ans=a-b;} }
+      else if(d==='hard'){
+        const ops=['+','-','×','÷']; op=ops[Math.floor(Math.random()*ops.length)];
+        if(op==='+'){a=Math.floor(Math.random()*90)+10;b=Math.floor(Math.random()*90)+10;ans=a+b;}
+        else if(op==='-'){a=Math.floor(Math.random()*90)+20;b=Math.floor(Math.random()*80)+10;if(b>a){const t=a;a=b;b=t;}ans=a-b;}
+        else if(op==='×'){a=Math.floor(Math.random()*88)+12;b=Math.floor(Math.random()*18)+2;ans=a*b;}
+        else{b=Math.floor(Math.random()*8)+2;ans=Math.floor(Math.random()*38)+12;a=b*ans;}
+      } else {
+        const ops=['+','-','×','÷'];op=ops[Math.floor(Math.random()*ops.length)];
+        if(op==='+'){a=Math.floor(Math.random()*50)+1;b=Math.floor(Math.random()*50)+1;ans=a+b;}
+        else if(op==='-'){a=Math.floor(Math.random()*50)+10;b=Math.floor(Math.random()*(a-1))+1;ans=a-b;}
+        else if(op==='×'){a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;ans=a*b;}
+        else{b=Math.floor(Math.random()*10)+1;ans=Math.floor(Math.random()*10)+1;a=b*ans;}
+      }
       answer=ans;problemEl.textContent=`${a} ${op} ${b} = ?`;
     }
     function startGame(){score=0;streak=0;timeLeft=DURATION;running=true;[scoreEl,streakEl].forEach(el=>el.textContent=0);timeEl.textContent=DURATION;progressEl.style.width='100%';feedbackEl.textContent='';startTxt.textContent='Restart →';inputEl.disabled=false;submitBtn.disabled=false;inputEl.value='';genProblem();inputEl.focus();clearInterval(timer);timer=setInterval(()=>{timeLeft--;timeEl.textContent=timeLeft;progressEl.style.width=(timeLeft/DURATION*100)+'%';if(timeLeft<=0)endGame();},1000);}
@@ -788,6 +882,7 @@ window.showOtepToast=showToast;
     submitBtn?.addEventListener('click',checkAnswer);
     inputEl?.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer();});
     startBtn?.addEventListener('click',startGame);
+    if(window.otepBindDiff)window.otepBindDiff('math',()=>{clearInterval(timer);running=false;score=0;streak=0;timeLeft=DURATION;[scoreEl,streakEl].forEach(el=>el.textContent=0);timeEl.textContent=DURATION;progressEl.style.width='100%';problemEl.textContent='Difficulty changed — press Start.';feedbackEl.textContent='';startTxt.textContent='Start Sprint →';});
   })();
 
   /* ==== GAME 13: WORD SCRAMBLE ==== */
@@ -798,10 +893,12 @@ window.showOtepToast=showToast;
     const streakEl=document.getElementById('scrambleStreak'),skipsEl=document.getElementById('scrambleSkips');
     const submitBtn=document.getElementById('scrambleSubmit'),skipBtn=document.getElementById('scrambleSkip');
     const startBtn=document.getElementById('scrambleStart'),startTxt=document.getElementById('scrambleStartTxt');
-    const WORDS=[{w:'python',h:'Otep\'s strongest language'},{'w':'javascript',h:'Runs in the browser'},{'w':'database',h:'Structured data storage'},{'w':'network',h:'Connected computers'},{'w':'frontend',h:'What the user sees'},{'w':'backend',h:'The hidden machinery'},{'w':'function',h:'A named block of code'},{'w':'variable',h:'A named memory slot'},{'w':'boolean',h:'True or false only'},{'w':'algorithm',h:'Step-by-step solution'},{'w':'interface',h:'Contract between components'},{'w':'protocol',h:'Rules for communication'},{'w':'debugging',h:'Finding and fixing errors'},{'w':'compiler',h:'Code to machine translator'},{'w':'framework',h:'Structured development kit'},{'w':'recursive',h:'Calls itself'},{'w':'iteration',h:'Repeating a process'},{'w':'syntax',h:'Grammar of a language'},{'w':'runtime',h:'When code actually runs'},{'w':'library',h:'Reusable code collection'}];
+    const SHORT_WORDS=[{w:'code',h:'What Otep writes, mostly at night'},{w:'bug',h:'An undocumented feature'},{w:'git',h:'Version control'},{w:'java',h:'Coffee and code'},{w:'sql',h:'Ask the database nicely'},{w:'html',h:'The skeleton of every webpage'},{w:'api',h:'How programs talk'},{w:'css',h:'Makes it look good'},{w:'loop',h:'Round and round'},{w:'data',h:'The new oil, allegedly'}];
+    const LONG_WORDS=[{w:'javascript',h:'Runs in the browser, all ten letters of it'},{w:'microservice',h:'Small service, big architecture'},{w:'authentication',h:'Proving you are really you'},{w:'documentation',h:'The thing everyone promises to write'},{w:'containerization',h:'Shipping code in a box'},{w:'cryptography',h:'Secret writing, but make it math'},{w:'asynchronous',h:'Not waiting around for anyone'},{w:'virtualization',h:'One machine pretending to be many'},{w:'architecture',h:'Planning before the building falls over'},{w:'compilation',h:'Turning code into something a machine runs'}];
+    let WORDS=[{w:'python',h:'Otep\'s strongest language'},{'w':'javascript',h:'Runs in the browser'},{'w':'database',h:'Structured data storage'},{'w':'network',h:'Connected computers'},{'w':'frontend',h:'What the user sees'},{'w':'backend',h:'The hidden machinery'},{'w':'function',h:'A named block of code'},{'w':'variable',h:'A named memory slot'},{'w':'boolean',h:'True or false only'},{'w':'algorithm',h:'Step-by-step solution'},{'w':'interface',h:'Contract between components'},{'w':'protocol',h:'Rules for communication'},{'w':'debugging',h:'Finding and fixing errors'},{'w':'compiler',h:'Code to machine translator'},{'w':'framework',h:'Structured development kit'},{'w':'recursive',h:'Calls itself'},{'w':'iteration',h:'Repeating a process'},{'w':'syntax',h:'Grammar of a language'},{'w':'runtime',h:'When code actually runs'},{'w':'library',h:'Reusable code collection'}];
     let current,score,streak,skips,running=false;
     function scramble(w){const a=[...w];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.join('')===w?scramble(w):a.join('');}
-    function loadWord(){current=WORDS[Math.floor(Math.random()*WORDS.length)];wordEl.textContent=scramble(current.w).toUpperCase();hintEl.textContent='Hint: '+current.h;inputEl.value='';msgEl.textContent='';inputEl.focus();}
+    function loadWord(){const d=window.otepGetDiff?window.otepGetDiff('scramble'):'normal';const pool=(d==='chill'?SHORT_WORDS:d==='hard'?LONG_WORDS:WORDS);current=pool[Math.floor(Math.random()*pool.length)];wordEl.textContent=scramble(current.w).toUpperCase();hintEl.textContent='Hint: '+current.h;inputEl.value='';msgEl.textContent='';inputEl.focus();}
     function startGame(){score=0;streak=0;skips=3;running=true;[scoreEl,streakEl].forEach(el=>el.textContent=0);skipsEl.textContent=3;startTxt.textContent='Restart →';inputEl.disabled=false;submitBtn.disabled=false;loadWord();}
     function check(){if(!running)return;const val=inputEl.value.trim().toLowerCase();if(val===current.w){score++;streak++;scoreEl.textContent=score;streakEl.textContent=streak;msgEl.textContent=streak>=3?`🔥 ${streak} in a row!`:'✅ Correct!';msgEl.style.color='var(--green)';setTimeout(loadWord,800);}else{streak=0;streakEl.textContent=0;msgEl.textContent='✗ Not quite — try again!';msgEl.style.color='var(--red)';}}
     function skip(){if(!running||skips<=0)return;skips--;skipsEl.textContent=skips;msgEl.textContent=`The word was: ${current.w.toUpperCase()}`;msgEl.style.color='var(--text-faint)';streak=0;streakEl.textContent=0;setTimeout(loadWord,1000);}
@@ -809,6 +906,7 @@ window.showOtepToast=showToast;
     inputEl?.addEventListener('keydown',e=>{if(e.key==='Enter')check();});
     skipBtn?.addEventListener('click',skip);
     startBtn?.addEventListener('click',startGame);
+    if(window.otepBindDiff)window.otepBindDiff('scramble',()=>{running=false;score=0;streak=0;skips=3;[scoreEl,streakEl].forEach(el=>el.textContent=0);skipsEl.textContent=3;wordEl.textContent='—';hintEl.textContent='Hint: …';msgEl.textContent='Difficulty changed — press Start.';startTxt.textContent='Start →';});
   })();
 
   /* ==== GAME 14: REACTION TIME ==== */
@@ -1113,7 +1211,10 @@ window.showOtepToast=showToast;
     {key:'reaction',label:'Reaction Time',pun:"Reaction Time: blink and you'll miss it. Don't blink."},
     {key:'click',label:'Click Frenzy',pun:'Click Frenzy: ten seconds, one button, zero mercy for your mouse.'},
     {key:'odd',label:'Odd One Out',pun:'Odd One Out: one of these emojis is not like the others. It knows it.'},
-    {key:'dice',label:'Dice Duel',pun:'Dice Duel: roll the dice, blame the dice, love the dice.'}
+    {key:'dice',label:'Dice Duel',pun:'Dice Duel: roll the dice, blame the dice, love the dice.'},
+    {key:'aim',label:'Aim Trainer',pun:"Aim Trainer: click the target before it ghosts you — it's faster than your Wi-Fi."},
+    {key:'dodge',label:'Dodge Dash',pun:'Dodge Dash: the obstacles are falling, your dignity is optional.'},
+    {key:'catch',label:'Fruit Catcher',pun:'Fruit Catcher: five-a-day, but make it a high score.'}
   ];
   window.OTEP_GAMES = GAMES;
 
@@ -1192,8 +1293,23 @@ window.showOtepToast=showToast;
   function renderLb(list, note){
     const el = document.getElementById('lbList'); if(!el) return;
     const noteEl = document.getElementById('lbNote'); if(noteEl) noteEl.textContent = note;
+    const sel = document.getElementById('lbGame');
+    const gameKey = sel ? sel.value : 'snake';
+    const gameLabel = (GAMES.find(g=>g.key===gameKey) || {label:gameKey}).label;
+    const me = playerName();
+    const bestEl = document.getElementById('lbBest');
+    if(bestEl){
+      const mine = list.filter(r=>String(r.player).trim().toLowerCase()===me.trim().toLowerCase());
+      const best = mine.length ? Math.max.apply(null, mine.map(r=>Number(r.score)||0)) : null;
+      bestEl.textContent = (best===null) ? ('Your best in '+gameLabel+': no score yet — be the first.') : ('Your best in '+gameLabel+': '+best);
+    }
     if(!list.length){ el.innerHTML = '<li>No scores yet — be the first.</li>'; return; }
-    el.innerHTML = list.map((r,i)=>'<li><span class="lb-rank">'+(i+1)+'</span> <strong>'+escapeHtml(r.player)+'</strong> <span class="lb-score">'+escapeHtml(String(r.score))+'</span> <span class="lb-date">'+escapeHtml(String(r.created_at||'').slice(0,10))+'</span></li>').join('');
+    const medals = ['🥇','🥈','🥉'];
+    el.innerHTML = list.map((r,i)=>{
+      const isMe = String(r.player).trim().toLowerCase()===me.trim().toLowerCase();
+      const rank = medals[i] || (i+1);
+      return '<li'+(isMe?' class="lb-you"':'')+'><span class="lb-rank">'+rank+'</span> <strong>'+escapeHtml(r.player)+'</strong> <span class="lb-score">'+escapeHtml(String(r.score))+'</span> <span class="lb-date">'+escapeHtml(String(r.created_at||'').slice(0,10))+'</span></li>';
+    }).join('');
   }
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   window.otepEscapeHtml = escapeHtml;
@@ -1209,6 +1325,9 @@ window.showOtepToast=showToast;
   if(lbSel){
     lbSel.innerHTML = GAMES.map(g=>'<option value="'+g.key+'">'+escapeHtml(g.label)+'</option>').join('');
     lbSel.addEventListener('change', refreshLeaderboard);
+    const lbRefresh = document.getElementById('lbRefresh');
+    if(lbRefresh) lbRefresh.addEventListener('click', refreshLeaderboard);
+    if(playerInput) playerInput.addEventListener('input', refreshLeaderboard);
     refreshLeaderboard();
     // Keep the leaderboard in sync with the active game tab.
     document.querySelectorAll('.game-tab-btn').forEach(btn=>btn.addEventListener('click', ()=>{
@@ -1382,10 +1501,177 @@ window.showOtepToast=showToast;
       else { msg.textContent='Both rolled '+p+'. A tie — the dice refuse to choose.'; }
       render();
       if(ps>=5){ over=true; roll.disabled=true; msg.textContent='🏆 You win the duel, 5-'+as+'! The dice were on your side.'; save('dice', ps); }
-      else if(as>=5){ over=true; roll.disabled=true; msg.textContent='🤖 AI wins the duel, 5-'+ps+'. Rematch? The dice are already rolling.'; }
+      else if(as>=5){ over=true; roll.disabled=true; msg.textContent='🤖 AI wins the duel, 5-'+ps+'. Rematch? The dice are already rolling.'; if(window.otepRage)window.otepRage('rage-dice'); }
     });
     reset.addEventListener('click', resetGame);
     resetGame();
+  })();
+
+
+  /* ---- Aim Trainer: 30 seconds, one target at a time ---- */
+  (function(){
+    const arena=document.getElementById('aimArena'), target=document.getElementById('aimTarget'),
+          scoreEl=document.getElementById('aimScore'), timeEl=document.getElementById('aimTime'),
+          bestEl=document.getElementById('aimBest'), msgEl=document.getElementById('aimMsg'),
+          start=document.getElementById('aimStart'), startTxt=document.getElementById('aimStartTxt');
+    if(!arena||!target) return;
+    let hits=0, timeLeft=30, running=false, timer=null;
+    let best=+(localStorage.getItem('aim_best')||0); bestEl.textContent=best;
+    function spawn(){
+      target.style.left=(5+Math.random()*80)+'%';
+      target.style.top=(8+Math.random()*70)+'%';
+      target.style.display='block';
+    }
+    function end(){
+      running=false; clearInterval(timer); target.style.display='none';
+      if(hits>best){ best=hits; localStorage.setItem('aim_best',best); bestEl.textContent=best; }
+      msgEl.textContent=hits>=40?'🎯 '+hits+' hits! Aimbot accusations incoming.':hits>=25?'💪 '+hits+' hits — sharp shooting!':hits+' hits. Warm up and go again.';
+      startTxt.textContent='Play Again →'; save('aim', hits);
+    }
+    target.addEventListener('click', ()=>{ if(!running) return; hits++; scoreEl.textContent=hits; spawn(); });
+    start.addEventListener('click', ()=>{
+      hits=0; timeLeft=30; running=true;
+      scoreEl.textContent=0; timeEl.textContent=30;
+      msgEl.textContent='Go! Click the target!'; startTxt.textContent='Restart →';
+      clearInterval(timer); spawn();
+      timer=setInterval(()=>{ timeLeft--; timeEl.textContent=timeLeft; if(timeLeft<=0) end(); }, 1000);
+    });
+  })();
+
+  /* ---- Dodge Dash: dodge falling obstacles, score = seconds survived ---- */
+  (function(){
+    const canvas=document.getElementById('dodgeCanvas'); if(!canvas) return;
+    const ctx=canvas.getContext('2d'), W=canvas.width, H=canvas.height;
+    const scoreEl=document.getElementById('dodgeScore'), bestEl=document.getElementById('dodgeBest'),
+          msgEl=document.getElementById('dodgeMsg'), start=document.getElementById('dodgeStart'),
+          startTxt=document.getElementById('dodgeStartTxt');
+    let px, obstacles, running=false, raf=null, startTime=0, spawnTimer=null, keys={};
+    let best=+(localStorage.getItem('dodge_best')||0); bestEl.textContent=best;
+    const isDark=()=>document.documentElement.getAttribute('data-theme')!=='light';
+    function draw(){
+      ctx.fillStyle=isDark()?'#0d0e18':'#e6e9f5'; ctx.fillRect(0,0,W,H);
+      ctx.font='28px serif'; ctx.textAlign='center';
+      ctx.fillText('🏃', px, H-24);
+      obstacles.forEach(o=>{ ctx.fillText(o.e, o.x, o.y); });
+      ctx.textAlign='left';
+    }
+    function loop(){
+      if(!running) return;
+      const secs=Math.floor((Date.now()-startTime)/1000);
+      scoreEl.textContent=secs;
+      if(keys.left) px=Math.max(20, px-6);
+      if(keys.right) px=Math.min(W-20, px+6);
+      const speed=2+secs*0.12;
+      obstacles.forEach(o=>{ o.y+=speed; });
+      obstacles=obstacles.filter(o=>o.y<H+30);
+      const hit=obstacles.some(o=>Math.abs(o.x-px)<26 && Math.abs(o.y-(H-30))<26);
+      draw();
+      if(hit){ gameOver(secs); return; }
+      raf=requestAnimationFrame(loop);
+    }
+    function gameOver(secs){
+      running=false; cancelAnimationFrame(raf); clearInterval(spawnTimer);
+      if(secs>best){ best=secs; localStorage.setItem('dodge_best',best); bestEl.textContent=best; }
+      msgEl.textContent='💥 Hit! You survived '+secs+' seconds.';
+      if(window.otepRage) window.otepRage('rage-dodge');
+      startTxt.textContent='Play Again →'; save('dodge', secs);
+    }
+    function posFromEvent(e, isTouch){
+      const r=canvas.getBoundingClientRect();
+      const cx=isTouch?e.touches[0].clientX:e.clientX;
+      px=Math.max(20, Math.min(W-20, (cx-r.left)/r.width*W));
+    }
+    canvas.addEventListener('mousemove', e=>{ if(running) posFromEvent(e,false); });
+    canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(running) posFromEvent(e,true); }, {passive:false});
+    document.addEventListener('keydown', e=>{
+      if(!document.getElementById('game-dodge')?.classList.contains('active')) return;
+      const t=e.target; if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA')) return;
+      if(e.key==='ArrowLeft'){ keys.left=true; e.preventDefault(); }
+      if(e.key==='ArrowRight'){ keys.right=true; e.preventDefault(); }
+    });
+    document.addEventListener('keyup', e=>{
+      if(e.key==='ArrowLeft') keys.left=false;
+      if(e.key==='ArrowRight') keys.right=false;
+    });
+    start.addEventListener('click', ()=>{
+      px=W/2; obstacles=[]; running=true; keys={};
+      scoreEl.textContent=0; msgEl.textContent='Dodge!'; startTxt.textContent='Restart →';
+      const rageEl=document.getElementById('rage-dodge'); if(rageEl) rageEl.textContent='';
+      startTime=Date.now();
+      clearInterval(spawnTimer);
+      spawnTimer=setInterval(()=>{ if(!running) return; obstacles.push({x:20+Math.random()*(W-40), y:-10, e:['🪨','💣','🧱'][Math.floor(Math.random()*3)]}); }, 650);
+      cancelAnimationFrame(raf); raf=requestAnimationFrame(loop); draw();
+    });
+    draw();
+  })();
+
+  /* ---- Fruit Catcher: catch fruit, miss 3 and it's over ---- */
+  (function(){
+    const canvas=document.getElementById('catchCanvas'); if(!canvas) return;
+    const ctx=canvas.getContext('2d'), W=canvas.width, H=canvas.height;
+    const scoreEl=document.getElementById('catchScore'), missEl=document.getElementById('catchMisses'),
+          bestEl=document.getElementById('catchBest'), msgEl=document.getElementById('catchMsg'),
+          start=document.getElementById('catchStart'), startTxt=document.getElementById('catchStartTxt');
+    let bx, fruits, score, misses, running=false, raf=null, spawnTimer=null, keys={};
+    let best=+(localStorage.getItem('catch_best')||0); bestEl.textContent=best;
+    const isDark=()=>document.documentElement.getAttribute('data-theme')!=='light';
+    const FRUITS=['🍎','🍌','🍇','🍊','🍓'];
+    function draw(){
+      ctx.fillStyle=isDark()?'#0d0e18':'#e6e9f5'; ctx.fillRect(0,0,W,H);
+      ctx.font='30px serif'; ctx.textAlign='center';
+      ctx.fillText('🧺', bx, H-14);
+      fruits.forEach(f=>{ ctx.fillText(f.e, f.x, f.y); });
+      ctx.textAlign='left';
+    }
+    function loop(){
+      if(!running) return;
+      if(keys.left) bx=Math.max(30, bx-6);
+      if(keys.right) bx=Math.min(W-30, bx+6);
+      fruits.forEach(f=>{ f.y+=2.4; });
+      const kept=[];
+      fruits.forEach(f=>{
+        if(f.y>=H-34 && f.y<=H && Math.abs(f.x-bx)<42){ score++; scoreEl.textContent=score; }
+        else if(f.y>H){ misses++; missEl.textContent=misses+' / 3'; }
+        else kept.push(f);
+      });
+      fruits=kept;
+      draw();
+      if(misses>=3){ gameOver(); return; }
+      raf=requestAnimationFrame(loop);
+    }
+    function gameOver(){
+      running=false; cancelAnimationFrame(raf); clearInterval(spawnTimer);
+      if(score>best){ best=score; localStorage.setItem('catch_best',best); bestEl.textContent=best; }
+      msgEl.textContent='🍂 3 misses! You caught '+score+' fruits.';
+      if(window.otepRage) window.otepRage('rage-catch');
+      startTxt.textContent='Play Again →'; save('catch', score);
+    }
+    function posFromEvent(e, isTouch){
+      const r=canvas.getBoundingClientRect();
+      const cx=isTouch?e.touches[0].clientX:e.clientX;
+      bx=Math.max(30, Math.min(W-30, (cx-r.left)/r.width*W));
+    }
+    canvas.addEventListener('mousemove', e=>{ if(running) posFromEvent(e,false); });
+    canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(running) posFromEvent(e,true); }, {passive:false});
+    document.addEventListener('keydown', e=>{
+      if(!document.getElementById('game-catch')?.classList.contains('active')) return;
+      const t=e.target; if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA')) return;
+      if(e.key==='ArrowLeft'){ keys.left=true; e.preventDefault(); }
+      if(e.key==='ArrowRight'){ keys.right=true; e.preventDefault(); }
+    });
+    document.addEventListener('keyup', e=>{
+      if(e.key==='ArrowLeft') keys.left=false;
+      if(e.key==='ArrowRight') keys.right=false;
+    });
+    start.addEventListener('click', ()=>{
+      bx=W/2; fruits=[]; score=0; misses=0; running=true; keys={};
+      scoreEl.textContent=0; missEl.textContent='0 / 3'; msgEl.textContent='Catch!'; startTxt.textContent='Restart →';
+      const rageEl=document.getElementById('rage-catch'); if(rageEl) rageEl.textContent='';
+      clearInterval(spawnTimer);
+      spawnTimer=setInterval(()=>{ if(!running) return; fruits.push({x:20+Math.random()*(W-40), y:-10, e:FRUITS[Math.floor(Math.random()*FRUITS.length)]}); }, 900);
+      cancelAnimationFrame(raf); raf=requestAnimationFrame(loop); draw();
+    });
+    draw();
   })();
 
   /* ---- Word Scramble: save-score button (no natural end state) ---- */

@@ -12,8 +12,8 @@ function otep_db_path(): string {
 }
 
 function otep_games(): array {
-    // Must match the 17 game keys used on games.html (data-game values).
-    return ['snake','memory','typer','mole','guess','quiz','ttt','rps','hang','simon','pong','math','scramble','reaction','click','odd','dice'];
+    // Must match the 20 game keys used on games.html (data-game values).
+    return ['snake','memory','typer','mole','guess','quiz','ttt','rps','hang','simon','pong','math','scramble','reaction','click','odd','dice','aim','dodge','catch'];
 }
 
 function otep_db(): PDO {
