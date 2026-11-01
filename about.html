@@ -26,6 +26,13 @@
     .term-chip{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;padding:.4rem .8rem;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;border-radius:var(--radius)}
     .term-chip:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-glow)}
     .term-intro{text-align:center;color:var(--text-dim);margin:-1.5rem auto 2rem;max-width:620px}
+    /* Terminal panel inside the About right column (fills the space below the timeline) */
+    .about-terminal{margin-top:2.5rem}
+    .about-terminal .term-wrap{max-width:none}
+    .about-terminal .term-out{height:320px}
+    .about-terminal .term-intro{margin:0 0 1rem;text-align:left;max-width:none}
+    .about-terminal h3{font-family:var(--f-display);font-weight:300;font-size:1.4rem;margin-bottom:.6rem}
+    .about-terminal h3 em{font-style:italic;color:var(--gold)}
   </style>
 </head>
 <body>
@@ -125,6 +132,25 @@
           <p class="tl-desc">ICT / TVL Track · Certified in SQL, Networking, HTML+CSS</p>
         </div>
       </div>
+
+      <!-- TERMINAL — in the right column, filling the space below the timeline -->
+      <div class="about-terminal reveal">
+        <h3>Browse Me <em>Like a Shell</em></h3>
+        <p class="term-intro">The whole site as a command line. Type <strong>help</strong>, press <strong>Tab</strong> to autocomplete, <strong>↑/↓</strong> for history.</p>
+        <div class="term-wrap">
+          <div class="term-win" id="termWin">
+            <div class="term-bar">
+              <span class="terminal-dot dot-red"></span><span class="terminal-dot dot-yellow"></span><span class="terminal-dot dot-green"></span>
+              <span class="terminal-title">otep@PLV:~$ portfolio</span>
+            </div>
+            <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
+            <label class="term-line" for="termInput"><span>otep@plv:~$</span>
+              <input id="termInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal command"/>
+            </label>
+          </div>
+          <div class="term-chips" id="termChips" aria-label="Quick commands"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -209,29 +235,6 @@
   </div>
   <div style="display:flex;justify-content:center;margin-top:4rem;" class="reveal">
     <a href="contact.html" class="btn btn-primary"><span>Let's Work Together →</span></a>
-  </div>
-</section>
-
-<!-- INTERACTIVE TERMINAL -->
-<section id="terminal" style="background:var(--bg-2);">
-  <div class="section-header reveal">
-    <span class="section-num">05</span>
-    <h2 class="section-title">Browse Me <em>Like a Shell</em></h2>
-    <div class="section-line"></div>
-  </div>
-  <p class="term-intro reveal">Only on this portfolio: the whole site as a command line. Type <strong>help</strong>, press <strong>Tab</strong> to autocomplete, <strong>↑/↓</strong> for history.</p>
-  <div class="term-wrap reveal">
-    <div class="term-win" id="termWin">
-      <div class="term-bar">
-        <span class="terminal-dot dot-red"></span><span class="terminal-dot dot-yellow"></span><span class="terminal-dot dot-green"></span>
-        <span class="terminal-title">otep@PLV:~$ portfolio</span>
-      </div>
-      <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
-      <label class="term-line" for="termInput"><span>otep@plv:~$</span>
-        <input id="termInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal command"/>
-      </label>
-    </div>
-    <div class="term-chips" id="termChips" aria-label="Quick commands"></div>
   </div>
 </section>
 
