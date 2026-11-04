@@ -103,13 +103,29 @@ nav.scrolled{height:56px}
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
 
-/* Mobile nav */
-.mobile-nav{display:none;position:fixed;inset:0;background:var(--bg);z-index:700;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;transition:background .4s}
+/* Mobile nav — "Command Deck": a terminal-style bottom sheet, not a plain list.
+   The hamburger still toggles #mobileNav with the .open class, and
+   closeMobile() still closes it, so the existing JS keeps working. */
+.mobile-nav{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:700;flex-direction:column;align-items:stretch;justify-content:flex-end}
 .mobile-nav.open{display:flex}
-.mobile-nav a{font-family:var(--f-display);font-size:2.8rem;font-weight:300;text-decoration:none;color:var(--text);letter-spacing:.08em;transition:color .3s,transform .3s;display:block}
-.mobile-nav a:hover{color:var(--blue);transform:translateX(12px)}
-.mobile-nav .mob-divider{width:60px;height:1px;background:var(--border);margin:.5rem 0}
-.mobile-nav .mob-sub{font-family:var(--f-mono);font-size:.6rem;color:var(--blue);letter-spacing:.25em;text-transform:uppercase}
+.mob-sheet{width:100%;max-height:88vh;overflow-y:auto;background:var(--bg);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:1rem 5vw calc(2rem + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.45);animation:mobUp .3s var(--ease)}
+@keyframes mobUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mob-bar{display:flex;align-items:center;gap:.5rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.mob-bar .terminal-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.mob-title{flex:1;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;color:var(--text-faint);margin-left:.3rem}
+.mob-close{width:44px;height:44px;flex-shrink:0;background:transparent;border:1px solid var(--border);color:var(--text);font-size:1.1rem;cursor:pointer;border-radius:var(--radius)}
+.mob-close:hover{border-color:var(--blue);color:var(--blue)}
+.mob-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem}
+.mob-tile{display:flex;flex-direction:column;justify-content:center;gap:.15rem;min-height:76px;padding:.85rem .8rem;border:1px solid var(--border);background:var(--bg-card);border-radius:var(--radius);text-decoration:none;color:var(--text);transition:border-color .25s,color .25s,background .25s}
+.mob-tile:hover,.mob-tile.active{border-color:var(--blue);color:var(--blue);background:var(--blue-glow)}
+.mob-tile .mob-ico{font-size:1.35rem;line-height:1}
+.mob-tile .mob-label{font-family:var(--f-display);font-size:1.02rem;font-weight:300}
+.mob-tile .mob-num{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.2em;color:var(--text-faint);text-transform:uppercase}
+.mob-foot{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-top:1.1rem}
+.mob-theme{min-height:44px;padding:.6rem 1rem;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;border-radius:var(--radius)}
+.mob-theme:hover{border-color:var(--gold);color:var(--gold)}
+.mob-sub{font-family:var(--f-mono);font-size:.6rem;color:var(--blue);letter-spacing:.25em;text-transform:uppercase;margin-left:auto}
+@media (prefers-reduced-motion: reduce){.mob-sheet{animation:none}}
 
 /* ── FOOTER ───────────────────────────────────────────────────── */
 footer{border-top:1px solid var(--border-2);padding:2.5rem var(--pad-x);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;background:var(--bg-2);transition:background .4s}
@@ -2648,4 +2664,22 @@ footer::before {
 }
 @media (prefers-reduced-motion: reduce){
   .game-tab-btn,.diff-btn{transition:none}
+}
+
+/* ---- Mobile polish (2026-11-04): touch targets, no iOS input zoom, fluid canvases ---- */
+@media(max-width:767px){
+  /* 16px inputs stop iOS Safari zooming in on focus; 44px targets are thumb-friendly */
+  input,textarea,select{font-size:16px}
+  .btn,.game-tab-btn,.diff-btn,.rps-btn,.hang-key,.dpad-btn{min-height:44px}
+  .game-tab-btn{padding:.6rem 1rem}
+  .social-btn{width:44px;height:44px}
+  /* Canvases scale to the screen instead of overflowing it */
+  canvas{max-width:100%;height:auto}
+  #snakeCanvas,#pongCanvas{width:100%;height:auto}
+  #dodgeCanvas,#catchCanvas{width:100%}
+  .term-line input{font-size:16px}
+  .term-out{height:300px}
+  /* Terminal panel on About stacks cleanly under the timeline on mobile */
+  .about-terminal{margin-top:2rem}
+  .about-terminal .term-out{height:300px}
 }

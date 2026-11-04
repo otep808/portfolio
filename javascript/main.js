@@ -60,7 +60,7 @@ const nav = document.getElementById('nav');
 if (nav) window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
 
 /* ── ACTIVE NAV LINK ──────────────────────────────────────────── */
-(function(){const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.nav-links a').forEach(a=>{if(a.getAttribute('href')===p)a.classList.add('active');});})();
+(function(){const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.nav-links a, .mob-tile').forEach(a=>{if(a.getAttribute('href')===p)a.classList.add('active');});})();
 
 /* ── MOBILE NAV ───────────────────────────────────────────────── */
 const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
