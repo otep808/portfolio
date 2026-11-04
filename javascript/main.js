@@ -68,6 +68,11 @@ function toggleMobile(){if(!hamburger||!mobileNav)return;const o=mobileNav.class
 function closeMobile(){if(!hamburger||!mobileNav)return;mobileNav.classList.remove('open');hamburger.classList.remove('open');hamburger.setAttribute('aria-expanded','false');hamburger.setAttribute('aria-label','Open navigation');mobileNav.setAttribute('aria-hidden','true');document.body.style.overflow='';}
 if(hamburger)hamburger.addEventListener('click',toggleMobile);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobile();});
+/* Menu robustness: tapping the dimmed backdrop closes it, and resizing
+   back to desktop closes it too — otherwise the sheet can survive a
+   window/desktop resize with no visible button to close it. */
+if(mobileNav)mobileNav.addEventListener('click',e=>{if(e.target===mobileNav)closeMobile();});
+window.addEventListener('resize',()=>{if(window.innerWidth>767&&mobileNav&&mobileNav.classList.contains('open'))closeMobile();});
 
 /* ── PAGE TRANSITION ──────────────────────────────────────────── */
 const cover=document.getElementById('page-cover');

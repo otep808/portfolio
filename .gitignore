@@ -1,0 +1,8 @@
+# Local-only files — kept on your PC, never published to GitHub Pages.
+# admin.php only runs under PHP (XAMPP/localhost); on static hosting it
+# would just be downloadable source. The database is recreated
+# automatically by api/db.php on first use, so it must not be committed
+# (especially after you create an admin account — its password hash
+# would then be in the repo).
+admin.php
+data/portfolio.db

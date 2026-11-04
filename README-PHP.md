@@ -4,6 +4,31 @@ The site works as a plain static site, but the Admin area, the live project
 list and the leaderboards need PHP. Everything is vanilla PHP + SQLite
 (PDO) — no frameworks, no build step, no MySQL to configure.
 
+## Local-only files — not on GitHub Pages
+
+`admin.php` and `data/portfolio.db` are intentionally **not tracked** in
+git (see `.gitignore`). They stay on your own PC only:
+
+- On GitHub Pages, PHP does not run, so `admin.php` would just be a
+  downloadable file, and `data/portfolio.db` would be downloadable too
+  (Pages ignores the `data/.htaccess` deny rule, which only Apache/XAMPP
+  enforces). Keeping them out of the repo makes both URLs return 404
+  on the live site.
+- Locally, nothing breaks: `admin.php` is still on disk, so
+  `http://localhost/myportfolio/admin.php` still works, and
+  `api/db.php` recreates `data/portfolio.db` (and seeds the 17 projects
+  and 11 certificates) automatically if it is missing.
+- Note: `.gitignore` alone does not untrack files that are already
+  committed. To remove them from the repo without deleting your local
+  copies, run (once, from the repo root):
+  `git rm --cached admin.php data/portfolio.db`
+  then commit and push. Do **not** run plain `git rm` — that deletes
+  your local copies too.
+- This does not erase old commits: the files remain visible in git
+  history. That is acceptable here because the committed database has
+  no admin accounts and `admin.php` contains no password — but do not
+  push a database after creating an admin account.
+
 ## Run it locally
 
 From this folder (the site root), run:
