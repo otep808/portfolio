@@ -43,16 +43,16 @@
       <button class="mob-close" onclick="closeMobile()" aria-label="Close menu">✕</button>
     </div>
     <div class="mob-grid" role="navigation" aria-label="Mobile navigation">
-      <a class="mob-tile" href="index.html" onclick="closeMobile()"><span class="mob-ico">🏠</span><span class="mob-label">Home</span><span class="mob-num">01 · start here</span></a>
-      <a class="mob-tile" href="about.html" onclick="closeMobile()"><span class="mob-ico">👤</span><span class="mob-label">About</span><span class="mob-num">02 · who I am</span></a>
-      <a class="mob-tile" href="projects.html" onclick="closeMobile()"><span class="mob-ico">💼</span><span class="mob-label">Projects</span><span class="mob-num">03 · built things</span></a>
-      <a class="mob-tile" href="skills.html" onclick="closeMobile()"><span class="mob-ico">🛠️</span><span class="mob-label">Skills</span><span class="mob-num">04 · tools &amp; certs</span></a>
-      <a class="mob-tile" href="games.html" onclick="closeMobile()"><span class="mob-ico">🎮</span><span class="mob-label">Games</span><span class="mob-num">05 · 20 mini games</span></a>
-      <a class="mob-tile" href="contact.html" onclick="closeMobile()"><span class="mob-ico">✉️</span><span class="mob-label">Contact</span><span class="mob-num">06 · say hello</span></a>
-      <a class="mob-tile" href="terminal.html" onclick="closeMobile()" style="grid-column:1/-1"><span class="mob-ico">⌨️</span><span class="mob-label">Terminal</span><span class="mob-num">07 · browse me like a shell</span></a>
+      <a class="mob-tile" href="index.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/home.svg" alt=""></span><span class="mob-label">Home</span><span class="mob-num">01 · start here</span></a>
+      <a class="mob-tile" href="about.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/user.svg" alt=""></span><span class="mob-label">About</span><span class="mob-num">02 · who I am</span></a>
+      <a class="mob-tile" href="projects.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/briefcase.svg" alt=""></span><span class="mob-label">Projects</span><span class="mob-num">03 · built things</span></a>
+      <a class="mob-tile" href="skills.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/tools.svg" alt=""></span><span class="mob-label">Skills</span><span class="mob-num">04 · tools &amp; certs</span></a>
+      <a class="mob-tile" href="games.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/gamepad.svg" alt=""></span><span class="mob-label">Games</span><span class="mob-num">05 · 20 mini games</span></a>
+      <a class="mob-tile" href="contact.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/mail.svg" alt=""></span><span class="mob-label">Contact</span><span class="mob-num">06 · say hello</span></a>
+      <a class="mob-tile" href="terminal.html" onclick="closeMobile()" style="grid-column:1/-1"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/keyboard.svg" alt=""></span><span class="mob-label">Terminal</span><span class="mob-num">07 · browse me like a shell</span></a>
     </div>
     <div class="mob-foot">
-      <button class="mob-theme" onclick="document.getElementById('navLogoBtn') && document.getElementById('navLogoBtn').click()">🌗 Toggle theme</button>
+      <button class="mob-theme" onclick="document.getElementById('navLogoBtn') && document.getElementById('navLogoBtn').click()"><img class="mob-theme-img" src="images/icons/theme.svg" alt=""> Toggle theme</button>
       <span class="mob-sub">OtepCodes · PLV BSIT</span>
     </div>
   </div>
@@ -174,28 +174,28 @@
   </div>
   <div class="currently-grid">
     <div class="currently-card reveal rd1">
-      <span class="currently-icon">🏗️</span>
+      <span class="currently-icon"><img class="currently-ico-img" src="images/icons/building.svg" alt=""></span>
       <div>
         <p class="currently-label">Building</p>
         <p class="currently-value">Personal portfolio v3 &amp; web-based school projects</p>
       </div>
     </div>
     <div class="currently-card reveal rd2">
-      <span class="currently-icon">📚</span>
+      <span class="currently-icon"><img class="currently-ico-img" src="images/icons/book.svg" alt=""></span>
       <div>
         <p class="currently-label">Learning</p>
         <p class="currently-value">React, advanced CSS animations, and database design</p>
       </div>
     </div>
     <div class="currently-card reveal rd3">
-      <span class="currently-icon">🎓</span>
+      <span class="currently-icon"><img class="currently-ico-img" src="images/icons/graduation.svg" alt=""></span>
       <div>
         <p class="currently-label">Studying</p>
         <p class="currently-value">BS Information Technology — Year 3 @ PLV · Game, Software &amp; App Development</p>
       </div>
     </div>
     <div class="currently-card reveal rd4">
-      <span class="currently-icon">🤝</span>
+      <span class="currently-icon"><img class="currently-ico-img" src="images/icons/handshake.svg" alt=""></span>
       <div>
         <p class="currently-label">Open to</p>
         <p class="currently-value">Internships, collaborations &amp; freelance web projects</p>
@@ -215,20 +215,20 @@
   </div>
   <div class="widget-grid">
     <div class="widget-card widget-clock reveal rd1">
-      <p class="widget-label">🕐 Manila Time</p>
+      <p class="widget-label"><img class="widget-img" src="images/icons/clock.svg" alt=""> Manila Time</p>
       <p class="widget-time" id="homeClockTime">--:--</p>
       <p class="widget-date" id="homeClockDate">Loading…</p>
-      <p class="widget-note">Asia/Manila · updates every second, no fake weather here.</p>
+      <p class="widget-note">Asia/Manila · live, updated every second.</p>
     </div>
     <div class="widget-card reveal rd2">
-      <p class="widget-label">📊 By the Numbers</p>
+      <p class="widget-label"><img class="widget-img" src="images/icons/chart.svg" alt=""> By the Numbers</p>
       <p class="widget-stat"><strong id="widgetProjects">17</strong> projects</p>
       <p class="widget-stat"><strong id="widgetGames">20</strong> mini games</p>
       <p class="widget-stat">Best score so far: <strong id="widgetTopScore">—</strong></p>
-      <p class="widget-note">Best score is read from your own saved game scores in this browser.</p>
+      <p class="widget-note">Your best score, saved in this browser.</p>
     </div>
     <div class="widget-card reveal rd3">
-      <p class="widget-label">🎮 Game of the Day</p>
+      <p class="widget-label"><img class="widget-img" src="images/icons/gamepad.svg" alt=""> Game of the Day</p>
       <h3 class="widget-gotd" id="gotdName">—</h3>
       <p class="widget-note" id="gotdPun">—</p>
       <a class="btn btn-outline" id="gotdPlay" href="games.html">Play it →</a>
@@ -362,7 +362,7 @@
     <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">GH</a>
     <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn">in</a>
     <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook">fb</a>
-    <a href="mailto:callosjoseph818@gmail.com" class="social-btn" title="Email">✉</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn" title="Email"><img class="social-ico-img" src="images/icons/mail.svg" alt="Email"></a>
   </div>
 </footer>
 

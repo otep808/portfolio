@@ -141,7 +141,7 @@ window.showOtepToast=showToast;
     if(document.getElementById('konami-overlay'))return;
     const stars=Array.from({length:30},(_,i)=>{const s=document.createElement('div');s.className='konami-star';s.style.setProperty('--angle',(i/30*360)+'deg');s.style.setProperty('--dist',(80+Math.random()*180)+'px');s.style.setProperty('--delay',(Math.random()*.4)+'s');s.style.setProperty('--col',Math.random()>.5?'var(--blue)':'var(--gold)');return s.outerHTML;}).join('');
     const el=document.createElement('div');el.id='konami-overlay';
-    el.innerHTML=`<div class="konami-bg"></div><div class="konami-inner"><div class="konami-burst">${stars}</div><p class="konami-badge">🕹️ SECRET UNLOCKED</p><h2 class="konami-title">You Found <em>Otep's</em><br>Easter Egg!</h2><p class="konami-seq">⬆ ⬆ ⬇ ⬇ ⬅ ➡ ⬅ ➡ 🅱 🅰</p><p class="konami-quote"><em>"Wired for problems. Built for solutions.<br>Also: built for Konami codes. <strong>Respect.</strong>"</em></p><p class="konami-sig">— Joseph "Otep" Callos</p><div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;"><button class="btn btn-primary konami-close"><span>← Back to Portfolio</span></button><a href="games.html" class="btn btn-outline">🎮 Play Mini Games</a></div></div>`;
+    el.innerHTML=`<div class="konami-bg"></div><div class="konami-inner"><div class="konami-burst">${stars}</div><p class="konami-badge"><img class="konami-img" src="images/icons/gamepad.svg" alt=""> SECRET UNLOCKED</p><h2 class="konami-title">You Found <em>Otep's</em><br>Easter Egg!</h2><p class="konami-seq">⬆ ⬆ ⬇ ⬇ ⬅ ➡ ⬅ ➡ B A</p><p class="konami-quote"><em>"Wired for problems. Built for solutions.<br>Also: built for Konami codes. <strong>Respect.</strong>"</em></p><p class="konami-sig">— Joseph "Otep" Callos</p><div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;"><button class="btn btn-primary konami-close"><span>← Back to Portfolio</span></button><a href="games.html" class="btn btn-outline"><img class="konami-img" src="images/icons/gamepad.svg" alt=""> Play Mini Games</a></div></div>`;
     document.body.appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));
     el.querySelector('.konami-close').addEventListener('click',()=>{el.classList.remove('show');setTimeout(()=>el.remove(),500);});
     el.addEventListener('click',e=>{if(e.target===el){el.classList.remove('show');setTimeout(()=>el.remove(),500);}});
@@ -153,7 +153,7 @@ window.showOtepToast=showToast;
   let clicks=0,timer;
   document.getElementById('navLogoBtn')?.addEventListener('click',()=>{
     clicks++;clearTimeout(timer);timer=setTimeout(()=>{clicks=0;},2200);
-    if(clicks>=7){clicks=0;showToast('🎸  Otep\'s top 2: The Beatles & Jim Croce. Debugging goes smoother with good strings. 🎵',5000);}
+    if(clicks>=7){clicks=0;showToast('Otep\'s top 2: The Beatles & Jim Croce. Debugging goes smoother with good strings.',5000);}
   });
 })();
 
@@ -177,7 +177,7 @@ window.showOtepToast=showToast;
       document.body.appendChild(flash);
       requestAnimationFrame(()=>{flash.style.opacity='0';});
       setTimeout(()=>flash.remove(),700);
-      showToast('🎸  OTEP unlocked! Fun fact: the nickname came from nowhere and stuck everywhere. Like a memory leak, but the good kind.',5500);
+      showToast('OTEP unlocked! Fun fact: the nickname came from nowhere and stuck everywhere. Like a memory leak, but the good kind.',5500);
     }
   });
 })();
@@ -198,7 +198,7 @@ window.showOtepToast=showToast;
   function showDevNotes(){
     if(document.getElementById('dev-notes-overlay'))return;
     const el=document.createElement('div');el.id='dev-notes-overlay';
-    el.innerHTML=`<div class="dev-notes-bg"></div><div class="dev-notes-inner"><p class="dev-notes-label">// hidden dev notes</p><h3>Behind the <em>Build</em></h3><ul><li>Zero Bootstrap. Zero frameworks. Just HTML, CSS, vanilla JS, and mild sleep deprivation.</li><li>The particle canvas recalculates on every animation frame. It's an intentional infinite loop.</li><li>Dark mode uses CSS custom properties. The circular reveal is the View Transitions API.</li><li>There are 5 Easter eggs across this portfolio. You just found the sneakiest one.</li><li>Most commits were pushed after midnight. Night owl is not a label — it's a lifestyle.</li><li>The brand tagline "Wired for problems. Built for solutions." took approximately 47 rewrites. Worth it.</li></ul><button class="btn btn-primary" id="devNotesClose"><span>Close — back to snooping 🔍</span></button></div>`;
+    el.innerHTML=`<div class="dev-notes-bg"></div><div class="dev-notes-inner"><p class="dev-notes-label">// hidden dev notes</p><h3>Behind the <em>Build</em></h3><ul><li>Zero Bootstrap. Zero frameworks. Just HTML, CSS, and vanilla JavaScript — built to stay fast and readable.</li><li>The particle canvas redraws every animation frame, so the hero background is always alive and interactive.</li><li>Dark mode uses CSS custom properties. The circular reveal is the View Transitions API.</li><li>There are 5 Easter eggs across this portfolio. You just found the sneakiest one.</li><li>Every project here was built, tested, and refined by hand — no templates, no shortcuts.</li><li>The brand tagline "Wired for problems. Built for solutions." is the idea behind all of it: find the problem first, then build the fix.</li></ul><button class="btn btn-primary" id="devNotesClose"><span>Close</span></button></div>`;
     document.body.appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));
     el.querySelector('#devNotesClose').addEventListener('click',()=>{el.classList.remove('show');setTimeout(()=>el.remove(),500);});
     el.querySelector('.dev-notes-bg').addEventListener('click',()=>{el.classList.remove('show');setTimeout(()=>el.remove(),500);});
@@ -501,7 +501,7 @@ window.showOtepToast=showToast;
   window.otepRage = function(elId){
     const el = document.getElementById(elId); if(!el) return;
     let i; do { i = Math.floor(Math.random()*RAGE_QUOTES.length); } while (i===lastRage && RAGE_QUOTES.length>1);
-    lastRage = i; el.textContent = '😤 ' + RAGE_QUOTES[i];
+    lastRage = i; el.textContent = RAGE_QUOTES[i];
   };
 
   /* ==== GAME 1: SNAKE ==== */
@@ -564,14 +564,14 @@ window.showOtepToast=showToast;
       clearInterval(timer);let started=false;
       cards.forEach(card=>{
         const el=document.createElement('div');el.className='mem-card';el.dataset.label=card.label;el.dataset.icon=card.icon;
-        el.innerHTML=`<div class="mem-card-inner"><div class="mem-front">🂠</div><div class="mem-back"><img class="mem-icon-img" src="images/icons/${card.icon}" alt="${card.label}" onerror="this.style.display='none'"/><span class="mem-back-label">${card.label}</span></div></div>`;
+        el.innerHTML=`<div class="mem-card-inner"><div class="mem-front">?</div><div class="mem-back"><img class="mem-icon-img" src="images/${card.icon}" alt="${card.label}" onerror="this.style.display='none'"/><span class="mem-back-label">${card.label}</span></div></div>`;
         el.addEventListener('click',()=>{
           if(locked||el.classList.contains('flipped')||el.classList.contains('matched'))return;
           if(!started){started=true;timer=setInterval(()=>{seconds++;document.getElementById('memTime').textContent=seconds;},1000);}
           el.classList.add('flipped');flipped.push(el);
           if(flipped.length===2){moves++;document.getElementById('memMoves').textContent=moves;locked=true;
             if(flipped[0].dataset.label===flipped[1].dataset.label){flipped.forEach(c=>c.classList.add('matched'));flipped=[];locked=false;matched++;document.getElementById('memPairs').textContent=`${matched} / ${pairCount}`;
-              if(matched===pairCount){clearInterval(timer);document.getElementById('memWinMsg').textContent=`${moves} moves · ${seconds}s · All matched! Your RAM is clearly running fine. 🧠`;if(window.otepSaveScore)window.otepSaveScore('memory',Math.max(1,1000-moves*5-seconds));document.getElementById('memWin').classList.add('show');}}
+              if(matched===pairCount){clearInterval(timer);document.getElementById('memWinMsg').textContent=`${moves} moves · ${seconds}s · All matched! Your RAM is clearly running fine.`;if(window.otepSaveScore)window.otepSaveScore('memory',Math.max(1,1000-moves*5-seconds));document.getElementById('memWin').classList.add('show');}}
             else{setTimeout(()=>{flipped.forEach(c=>c.classList.remove('flipped'));flipped=[];locked=false;},900);}
           }
         });
@@ -616,7 +616,7 @@ window.showOtepToast=showToast;
         const ft=((Date.now()-startTime)/1000).toFixed(1),fw=Math.round((target.length/5)/(ft/60)),fa=Math.round((correctTyped/totalTyped)*100);
         if(window.otepSaveScore)window.otepSaveScore('typer',fw);document.getElementById('typerResultStats').innerHTML=`<div class="typer-result-stat"><div class="typer-result-num">${fw}</div><div class="typer-result-label">WPM</div></div><div class="typer-result-stat"><div class="typer-result-num">${fa}%</div><div class="typer-result-label">Accuracy</div></div><div class="typer-result-stat"><div class="typer-result-num">${ft}s</div><div class="typer-result-label">Time</div></div>`;
         document.getElementById('typerResult').classList.add('show');
-        if(fw>=60)showToast(`🔥 ${fw} WPM! That's not typing — that's debugging at the speed of thought.`,4000);
+        if(fw>=60)showToast(`${fw} WPM! That's not typing — that's debugging at the speed of thought.`,4000);
       }
     });
     function nextQuote(){quoteIdx=(quoteIdx+1)%POOL.length;loadQuote(quoteIdx);}
@@ -633,13 +633,13 @@ window.showOtepToast=showToast;
     const startBtn=document.getElementById('moleStart'),startTxt=document.getElementById('moleStartTxt');
     const DURATION=30;let HOLES=9,score=0,highScore=+localStorage.getItem('mole_hs')||0,timeLeft=DURATION,running=false,moleTimer,countdown,currentMole=-1;
     highEl.textContent=highScore;
-    function buildHoles(n){HOLES=n;grid.innerHTML='';for(let i=0;i<HOLES;i++){const h=document.createElement('div');h.className='mole-hole';h.dataset.idx=i;h.innerHTML='<div class="mole-creature">🐹</div>';h.addEventListener('click',()=>whack(i));grid.appendChild(h);}grid.style.gridTemplateColumns='repeat('+(HOLES===16?4:3)+', 1fr)';holes=grid.querySelectorAll('.mole-hole');}
+    function buildHoles(n){HOLES=n;grid.innerHTML='';for(let i=0;i<HOLES;i++){const h=document.createElement('div');h.className='mole-hole';h.dataset.idx=i;h.innerHTML='<div class="mole-creature"><img class="mole-img" src="images/icons/mole.svg" alt=""></div>';h.addEventListener('click',()=>whack(i));grid.appendChild(h);}grid.style.gridTemplateColumns='repeat('+(HOLES===16?4:3)+', 1fr)';holes=grid.querySelectorAll('.mole-hole');}
     let holes=[];buildHoles(9);
     function moleDelay(){const d=window.otepGetDiff?window.otepGetDiff('mole'):'normal';if(d==='chill')return Math.max(800,1600-(DURATION-timeLeft)*15);if(d==='hard')return Math.max(300,800-(DURATION-timeLeft)*20);return Math.max(450,1200-(DURATION-timeLeft)*25);}
     function showMole(){if(!running)return;if(currentMole>=0)holes[currentMole].classList.remove('has-mole');let next;do{next=Math.floor(Math.random()*HOLES);}while(next===currentMole);currentMole=next;holes[currentMole].classList.add('has-mole');moleTimer=setTimeout(showMole,moleDelay());}
     function whack(idx){if(!running||idx!==currentMole)return;holes[idx].classList.remove('has-mole');holes[idx].classList.add('whacked');setTimeout(()=>holes[idx].classList.remove('whacked'),350);score++;scoreEl.textContent=score;currentMole=-1;clearTimeout(moleTimer);showMole();}
     function startGame(){score=0;timeLeft=DURATION;scoreEl.textContent=0;timeEl.textContent=DURATION;holes.forEach(h=>h.classList.remove('has-mole','whacked'));msgEl.textContent='Whack those pesky hamsters!';startTxt.textContent='Restart →';running=true;currentMole=-1;clearTimeout(moleTimer);clearInterval(countdown);showMole();countdown=setInterval(()=>{timeLeft--;timeEl.textContent=timeLeft;if(timeLeft<=0)endGame();},1000);}
-    function endGame(){running=false;if(window.otepSaveScore)window.otepSaveScore('mole',score);clearTimeout(moleTimer);clearInterval(countdown);holes.forEach(h=>h.classList.remove('has-mole'));currentMole=-1;if(score>highScore){highScore=score;localStorage.setItem('mole_hs',highScore);highEl.textContent=highScore;}msgEl.innerHTML=`Time's up! Score: <strong style="color:var(--gold)">${score}</strong>${score>=15?' 🏆 Hamster hunter!':score>=8?' 🎉 Solid reflexes!':' — The hamsters send their regards.'}` ;}
+    function endGame(){running=false;if(window.otepSaveScore)window.otepSaveScore('mole',score);clearTimeout(moleTimer);clearInterval(countdown);holes.forEach(h=>h.classList.remove('has-mole'));currentMole=-1;if(score>highScore){highScore=score;localStorage.setItem('mole_hs',highScore);highEl.textContent=highScore;}msgEl.innerHTML=`Time's up! Score: <strong style="color:var(--gold)">${score}</strong>${score>=15?' Hamster hunter!':score>=8?' Solid reflexes!':' — The hamsters send their regards.'}` ;}
     startBtn.addEventListener('click',startGame);
     if(window.otepBindDiff)window.otepBindDiff('mole',()=>{running=false;clearTimeout(moleTimer);clearInterval(countdown);buildHoles(window.otepGetDiff('mole')==='hard'?16:9);score=0;timeLeft=DURATION;scoreEl.textContent=0;timeEl.textContent=DURATION;msgEl.textContent='Difficulty changed — press Start.';startTxt.textContent='Start Game →';});
   })();
@@ -650,7 +650,7 @@ window.showOtepToast=showToast;
     const btn=document.getElementById('guessBtn'),hint=document.getElementById('guessHint'),attemptsEl=document.getElementById('guessAttempts'),bestEl=document.getElementById('guessBest'),meterFill=document.getElementById('guessMeterFill'),historyEl=document.getElementById('guessHistory'),win=document.getElementById('guessWin'),winMsg=document.getElementById('guessWinMsg'),newGameBtn=document.getElementById('guessNewGame');
     let secret,attempts,maxNum=100,bestScore=+localStorage.getItem('guess_best')||0;if(bestScore)bestEl.textContent=bestScore;
     function newGame(){secret=Math.floor(Math.random()*maxNum)+1;attempts=0;attemptsEl.textContent=0;hint.textContent="I'm thinking of a number between 1 and "+maxNum+". No hints. Okay, one hint: it exists.";const rangeEl=document.querySelector('#game-guess .guess-range');if(rangeEl)rangeEl.innerHTML='Pick a number between <strong>1</strong> and <strong>'+maxNum+'</strong>';input.max=maxNum;hint.style.color='';meterFill.style.width='50%';meterFill.style.background='linear-gradient(90deg,var(--blue),var(--gold))';historyEl.innerHTML='';input.value='';input.disabled=false;btn.disabled=false;win.classList.remove('show');input.focus();}
-    function makeGuess(){const val=parseInt(input.value.trim());if(!input.value.trim()||isNaN(val)||val<1||val>maxNum){hint.textContent='⚠ A number between 1 and '+maxNum+'. Not a philosophy, an actual number.';hint.style.color='var(--red)';return;}attempts++;attemptsEl.textContent=attempts;const badge=document.createElement('span');badge.className='guess-badge';badge.textContent=val;if(val===secret){badge.classList.add('exact');historyEl.appendChild(badge);if(window.otepSaveScore)window.otepSaveScore('guess',Math.max(1,maxNum+1-attempts));input.disabled=true;btn.disabled=true;meterFill.style.width='100%';meterFill.style.background='var(--green)';if(!bestScore||attempts<bestScore){bestScore=attempts;localStorage.setItem('guess_best',bestScore);bestEl.textContent=bestScore;}winMsg.textContent=`Got it in ${attempts} attempt${attempts===1?'':'s'}! The number was ${secret}. ${attempts<=3?'🔥 Binary search energy!':attempts<=6?'💪 Solid!':'🎯 Persistence is a feature, not a bug.'}`;win.classList.add('show');return;}if(val<secret){badge.classList.add('low');hint.textContent='↑  Higher';hint.style.color='var(--blue-lt)';}else{badge.classList.add('high');hint.textContent='↓  Lower';hint.style.color='var(--gold-lt)';}meterFill.style.width=(val/maxNum*100)+'%';historyEl.appendChild(badge);input.value='';input.focus();}
+    function makeGuess(){const val=parseInt(input.value.trim());if(!input.value.trim()||isNaN(val)||val<1||val>maxNum){hint.textContent='⚠ A number between 1 and '+maxNum+'. Not a philosophy, an actual number.';hint.style.color='var(--red)';return;}attempts++;attemptsEl.textContent=attempts;const badge=document.createElement('span');badge.className='guess-badge';badge.textContent=val;if(val===secret){badge.classList.add('exact');historyEl.appendChild(badge);if(window.otepSaveScore)window.otepSaveScore('guess',Math.max(1,maxNum+1-attempts));input.disabled=true;btn.disabled=true;meterFill.style.width='100%';meterFill.style.background='var(--green)';if(!bestScore||attempts<bestScore){bestScore=attempts;localStorage.setItem('guess_best',bestScore);bestEl.textContent=bestScore;}winMsg.textContent=`Got it in ${attempts} attempt${attempts===1?'':'s'}! The number was ${secret}. ${attempts<=3?'Binary search energy!':attempts<=6?'Solid!':'Persistence is a feature, not a bug.'}`;win.classList.add('show');return;}if(val<secret){badge.classList.add('low');hint.textContent='↑  Higher';hint.style.color='var(--blue-lt)';}else{badge.classList.add('high');hint.textContent='↓  Lower';hint.style.color='var(--gold-lt)';}meterFill.style.width=(val/maxNum*100)+'%';historyEl.appendChild(badge);input.value='';input.focus();}
     btn.addEventListener('click',makeGuess);
     if(window.otepBindDiff)window.otepBindDiff('guess',()=>{const d=window.otepGetDiff('guess');maxNum=(d==='chill'?50:d==='hard'?200:100);newGame();});input.addEventListener('keydown',e=>{if(e.key==='Enter')makeGuess();});newGameBtn.addEventListener('click',newGame);newGame();
   })();
@@ -690,11 +690,11 @@ window.showOtepToast=showToast;
     function answer(chosen,btn,correct){
       document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
       document.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
-      if(chosen===correct){score++;feedbackEl.textContent=['✅ Correct!','✅ Nailed it!','✅ You know your stuff!','✅ Solid!'][Math.floor(Math.random()*4)];feedbackEl.style.color='var(--green)';}
-      else{btn.classList.add('wrong');feedbackEl.textContent='❌ Not quite. Correct answer is highlighted.';feedbackEl.style.color='var(--red)';}
+      if(chosen===correct){score++;feedbackEl.textContent=['✓ Correct!','✓ Nailed it!','✓ You know your stuff!','✓ Solid!'][Math.floor(Math.random()*4)];feedbackEl.style.color='var(--green)';}
+      else{btn.classList.add('wrong');feedbackEl.textContent='✗ Not quite. Correct answer is highlighted.';feedbackEl.style.color='var(--red)';}
       nextBtn.style.display='inline-flex';
     }
-    nextBtn?.addEventListener('click',()=>{current++;if(current<ACTIVE.length){loadQ();}else{progressFill.style.width='100%';if(window.otepSaveScore)window.otepSaveScore('quiz',score);scoreBoard.classList.add('show');finalScore.textContent=`${score}/${ACTIVE.length}`;statScore.textContent=score;statTotal.textContent=ACTIVE.length;nextBtn.style.display='none';if(score===QS.length)showToast('🏆 Perfect score! Did you write the quiz? ...wait.',4500);else if(score>=7)showToast('🎉 Great score! You\'ve clearly been paying attention.',3500);}});
+    nextBtn?.addEventListener('click',()=>{current++;if(current<ACTIVE.length){loadQ();}else{progressFill.style.width='100%';if(window.otepSaveScore)window.otepSaveScore('quiz',score);scoreBoard.classList.add('show');finalScore.textContent=`${score}/${ACTIVE.length}`;statScore.textContent=score;statTotal.textContent=ACTIVE.length;nextBtn.style.display='none';if(score===QS.length)showToast('Perfect score! Did you write the quiz? ...wait.',4500);else if(score>=7)showToast('Great score! You\'ve clearly been paying attention.',3500);}});
     restartBtn?.addEventListener('click',()=>{current=0;score=0;scoreBoard.classList.remove('show');ACTIVE=[...QS].sort(()=>Math.random()-.5);loadQ();});
     if(window.otepBindDiff)window.otepBindDiff('quiz',()=>{const d=window.otepGetDiff('quiz');const n=(d==='chill'?5:d==='hard'?15:10);ACTIVE=[...QS].sort(()=>Math.random()-.5).slice(0,n);current=0;score=0;scoreBoard.classList.remove('show');statScore.textContent=0;statTotal.textContent=n;loadQ();});
     ACTIVE=[...QS].sort(()=>Math.random()-.5).slice(0,10);loadQ();
@@ -743,23 +743,23 @@ window.showOtepToast=showToast;
   (function(){
     const pChoice=document.getElementById('rpsPlayerChoice'),aChoice=document.getElementById('rpsAiChoice');if(!pChoice)return;
     const resultEl=document.getElementById('rpsResult'),pScoreEl=document.getElementById('rpsPScore'),aScoreEl=document.getElementById('rpsAScore'),roundEl=document.getElementById('rpsRound');
-    const EMOJIS=['✊','✋','✌️'],NAMES=['Rock','Paper','Scissors'],BEATS={0:2,1:0,2:1};
+    const RPS_ICONS=['hand-rock','hand-paper','hand-scissors'],NAMES=['Rock','Paper','Scissors'],BEATS={0:2,1:0,2:1};
     let pS=0,aS=0,round=0;
     document.querySelectorAll('.rps-btn').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const p=+btn.dataset.choice;const d=window.otepGetDiff?window.otepGetDiff('rps'):'normal';let a;if(d==='hard'){a=(p+1)%3;}else if(d==='chill'){a=(Math.random()<0.7)?BEATS[p]:Math.floor(Math.random()*3);}else{a=Math.floor(Math.random()*3);}
-        pChoice.textContent=EMOJIS[p];aChoice.textContent=EMOJIS[a];
+        pChoice.innerHTML=`<img class="rps-choice-img" src="images/icons/${RPS_ICONS[p]}.svg" alt="${NAMES[p]}">`;aChoice.innerHTML=`<img class="rps-choice-img" src="images/icons/${RPS_ICONS[a]}.svg" alt="${NAMES[a]}">`;
         [pChoice,aChoice].forEach(el=>{el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),400);});
         round++;roundEl.textContent=round;
         if(p===a){resultEl.textContent="Tie! Even randomness couldn't decide.";}
         else if(BEATS[p]===a){pS++;pScoreEl.textContent=pS;resultEl.textContent=`${NAMES[p]} beats ${NAMES[a]}. Point yours!`+(d==='hard'?' The AI peeked. It admits nothing.':'');}
         else{aS++;aScoreEl.textContent=aS;resultEl.textContent=`${NAMES[a]} beats ${NAMES[p]}. The AI is not sorry.`+(d==='hard'?' The AI peeked. It admits nothing.':'');}
-        if(pS===3){if(window.otepSaveScore)window.otepSaveScore('rps',pS);resultEl.textContent='You win the set! 🏆';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
-        else if(aS===3){resultEl.textContent=(d==='hard'?'AI wins the set. 🤖 The AI peeked. It admits nothing.':'AI wins the set. 🤖');if(window.otepRage)window.otepRage('rage-rps');document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
+        if(pS===3){if(window.otepSaveScore)window.otepSaveScore('rps',pS);resultEl.textContent='You win the set!';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
+        else if(aS===3){resultEl.textContent=(d==='hard'?'AI wins the set. The AI peeked. It admits nothing.':'AI wins the set.');if(window.otepRage)window.otepRage('rage-rps');document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=true);}
       });
     });
     if(window.otepBindDiff)window.otepBindDiff('rps',()=>{document.getElementById('rpsReset')?.click();});
-    document.getElementById('rpsReset')?.addEventListener('click',()=>{pS=0;aS=0;round=0;[pScoreEl,aScoreEl,roundEl].forEach(el=>el.textContent=0);pChoice.textContent='❓';aChoice.textContent='❓';resultEl.textContent='Pick your weapon. No pressure.';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=false);});
+    document.getElementById('rpsReset')?.addEventListener('click',()=>{pS=0;aS=0;round=0;[pScoreEl,aScoreEl,roundEl].forEach(el=>el.textContent=0);pChoice.textContent='?';aChoice.textContent='?';resultEl.textContent='Pick your weapon. No pressure.';document.querySelectorAll('.rps-btn').forEach(b=>b.disabled=false);});
   })();
 
   /* ==== GAME 9: HANGMAN ==== */
@@ -769,10 +769,10 @@ window.showOtepToast=showToast;
     const SHORT_WORDS=[{w:'code',h:'What Otep writes, mostly at night'},{w:'bug',h:'An undocumented feature'},{w:'git',h:'Version control, not a insult'},{w:'java',h:'Coffee and code, in one word'},{w:'sql',h:'Ask the database nicely'},{w:'html',h:'The skeleton of every webpage'},{w:'css',h:'Makes the skeleton look good'},{w:'api',h:'How programs talk to each other'},{w:'loop',h:'Round and round it goes'},{w:'data',h:'The new oil, allegedly'}];
     const LONG_WORDS=[{w:'microservice',h:'Small service, big architecture'},{w:'containerization',h:'Shipping code in a box'},{w:'authentication',h:'Proving you are really you'},{w:'documentation',h:'The thing everyone promises to write'},{w:'asynchronous',h:'Not waiting around for anyone'},{w:'cryptography',h:'Secret writing, but make it math'},{w:'virtualization',h:'One machine pretending to be many'},{w:'architecture',h:'Planning before the building falls over'}];
     let WORDS=[{w:'javascript',h:'Language of the web (and of regrets)'},{w:'python',h:'Named after Monty Python, not the snake'},{w:'algorithm',h:'A recipe that never tastes the same twice'},{w:'debugging',h:'Removing bugs you added yesterday'},{w:'recursion',h:'See: recursion'},{w:'repository',h:'Where code lives and PRs go to die'},{w:'frontend',h:'The part users see and complain about'},{w:'iteration',h:'Doing the same thing, but better. Allegedly.'},{w:'boolean',h:'True or false. No "maybe" in prod.'},{w:'otepcode',h:"Otep's personal brand. You should know this."},{w:'variable',h:'A box you forget to name properly'},{w:'function',h:'Reusable logic. Or 200 lines of chaos.'},{w:'framework',h:'Something Otep deliberately did NOT use'},{w:'database',h:'Where the data lives and sometimes dies'},{w:'network',h:'Very important tubes'}];
-    const STAGES=['😃','😅','😬','😰','😱','😵','💀'];
+    const STAGES=['All good','Getting warm','Uh oh','In trouble','Almost there','Last chance','Game over'];
     let word,guessed,wrong,running;
     function newGame(){const d=window.otepGetDiff?window.otepGetDiff('hang'):'normal';const pool=(d==='chill'?SHORT_WORDS:d==='hard'?LONG_WORDS:WORDS);const pick=pool[Math.floor(Math.random()*pool.length)];word=pick.w;guessed=new Set();wrong=0;running=true;figEl.textContent=STAGES[0];hintEl.textContent='Hint: '+pick.h;msgEl.textContent='';render();buildKeys();}
-    function render(){wordEl.innerHTML=word.split('').map(l=>`<div class="hang-letter">${guessed.has(l)?l:''}</div>`).join('');livesEl.textContent='❤️'.repeat(6-wrong)+'🖤'.repeat(wrong);figEl.textContent=STAGES[Math.min(wrong,6)];}
+    function render(){wordEl.innerHTML=word.split('').map(l=>`<div class="hang-letter">${guessed.has(l)?l:''}</div>`).join('');livesEl.textContent='Lives: '+(6-wrong);figEl.textContent=STAGES[Math.min(wrong,6)];}
     function buildKeys(){keysEl.innerHTML='';'abcdefghijklmnopqrstuvwxyz'.split('').forEach(l=>{const b=document.createElement('button');b.className='hang-key';b.textContent=l;b.addEventListener('click',()=>guess(l,b));keysEl.appendChild(b);});}
     function guess(l,btn){if(!running||guessed.has(l))return;guessed.add(l);if(word.includes(l)){btn.classList.add('used-right');}else{wrong++;btn.classList.add('used-wrong');}btn.disabled=true;render();if(word.split('').every(c=>guessed.has(c))){running=false;if(window.otepSaveScore)window.otepSaveScore('hang',(6-wrong)*100);msgEl.textContent=`"${word.toUpperCase()}" — nailed it! Your inner dev is showing.`;}else if(wrong>=6){running=false;if(window.otepRage)window.otepRage('rage-hang');msgEl.textContent=`It was "${word.toUpperCase()}". The bugs win today.`;wordEl.querySelectorAll('.hang-letter').forEach((el,i)=>{el.textContent=word[i];el.classList.add('wrong');});}}
     document.getElementById('hangStart')?.addEventListener('click',newGame);
@@ -796,7 +796,7 @@ window.showOtepToast=showToast;
     async function playSeq(){accepting=false;msgEl.textContent='Watch the pattern…';const d=window.otepGetDiff?window.otepGetDiff('simon'):'normal';const dur=(d==='chill'?Math.max(400,650-level*10):d==='hard'?Math.max(180,320-level*15):Math.max(250,450-level*15));for(const c of sequence){await flash(c,dur);await new Promise(r=>setTimeout(r,80));}accepting=true;playerIdx=0;msgEl.textContent='Your turn — repeat it!';}
     function startGame(){sequence=[];level=0;running=true;nextRound();}
     function nextRound(){level++;levelEl.textContent=level;sequence.push(COLORS[Math.floor(Math.random()*4)]);setTimeout(playSeq,600);}
-    COLORS_ALL.forEach(c=>{btns[c]?.addEventListener('click',()=>{if(!running||!accepting)return;if(!COLORS.includes(c))return;btns[c].classList.add('lit');setTimeout(()=>btns[c].classList.remove('lit'),150);if(c===sequence[playerIdx]){playerIdx++;if(playerIdx===sequence.length){if(level>highScore){highScore=level;localStorage.setItem('simon_hs',highScore);highEl.textContent=highScore;}msgEl.textContent=`Level ${level} done! ${level>=10?'RAM chip energy! 🔥':level>=5?'Great memory!':'Keep going!'}`;setTimeout(nextRound,1100);}}else{accepting=false;running=false;if(window.otepSaveScore)window.otepSaveScore('simon',level);msgEl.textContent=`Wrong at level ${level}! ${level>=10?'Elite run 🏆':level>=5?'Not bad!':'The colors were buffering.'}`;if(window.otepRage)window.otepRage('rage-simon');}});});
+    COLORS_ALL.forEach(c=>{btns[c]?.addEventListener('click',()=>{if(!running||!accepting)return;if(!COLORS.includes(c))return;btns[c].classList.add('lit');setTimeout(()=>btns[c].classList.remove('lit'),150);if(c===sequence[playerIdx]){playerIdx++;if(playerIdx===sequence.length){if(level>highScore){highScore=level;localStorage.setItem('simon_hs',highScore);highEl.textContent=highScore;}msgEl.textContent=`Level ${level} done! ${level>=10?'RAM chip energy!':level>=5?'Great memory!':'Keep going!'}`;setTimeout(nextRound,1100);}}else{accepting=false;running=false;if(window.otepSaveScore)window.otepSaveScore('simon',level);msgEl.textContent=`Wrong at level ${level}! ${level>=10?'Elite run':level>=5?'Not bad!':'The colors were buffering.'}`;if(window.otepRage)window.otepRage('rage-simon');}});});
     document.getElementById('simonStart')?.addEventListener('click',startGame);
     if(window.otepBindDiff)window.otepBindDiff('simon',()=>{applySimonTiles();running=false;accepting=false;sequence=[];level=0;levelEl.textContent=0;msgEl.textContent='Difficulty changed — press Start.';});
   })();
@@ -882,8 +882,8 @@ window.showOtepToast=showToast;
       answer=ans;problemEl.textContent=`${a} ${op} ${b} = ?`;
     }
     function startGame(){score=0;streak=0;timeLeft=DURATION;running=true;[scoreEl,streakEl].forEach(el=>el.textContent=0);timeEl.textContent=DURATION;progressEl.style.width='100%';feedbackEl.textContent='';startTxt.textContent='Restart →';inputEl.disabled=false;submitBtn.disabled=false;inputEl.value='';genProblem();inputEl.focus();clearInterval(timer);timer=setInterval(()=>{timeLeft--;timeEl.textContent=timeLeft;progressEl.style.width=(timeLeft/DURATION*100)+'%';if(timeLeft<=0)endGame();},1000);}
-    function endGame(){running=false;clearInterval(timer);if(window.otepSaveScore)window.otepSaveScore('math',score);inputEl.disabled=true;submitBtn.disabled=true;if(score>best){best=score;localStorage.setItem('math_best',best);bestEl.textContent=best;}problemEl.textContent=`Time's up! Score: ${score}`;feedbackEl.textContent=score>=20?'🏆 Math genius!':score>=10?'💪 Solid!':'🔢 Keep practicing!';feedbackEl.style.color='var(--gold-lt)';}
-    function checkAnswer(){if(!running)return;const val=parseInt(inputEl.value.trim());if(isNaN(val)){feedbackEl.textContent='Enter a number!';feedbackEl.style.color='var(--red)';return;}if(val===answer){score++;streak++;scoreEl.textContent=score;streakEl.textContent=streak;feedbackEl.textContent=streak>=3?`🔥 ${streak} streak! `:'✅ Correct!';feedbackEl.style.color='var(--green)';}else{feedbackEl.textContent=`✗ Was ${answer}`;feedbackEl.style.color='var(--red)';streak=0;streakEl.textContent=0;}inputEl.value='';genProblem();inputEl.focus();}
+    function endGame(){running=false;clearInterval(timer);if(window.otepSaveScore)window.otepSaveScore('math',score);inputEl.disabled=true;submitBtn.disabled=true;if(score>best){best=score;localStorage.setItem('math_best',best);bestEl.textContent=best;}problemEl.textContent=`Time's up! Score: ${score}`;feedbackEl.textContent=score>=20?'Math genius!':score>=10?'Solid!':'Keep practicing!';feedbackEl.style.color='var(--gold-lt)';}
+    function checkAnswer(){if(!running)return;const val=parseInt(inputEl.value.trim());if(isNaN(val)){feedbackEl.textContent='Enter a number!';feedbackEl.style.color='var(--red)';return;}if(val===answer){score++;streak++;scoreEl.textContent=score;streakEl.textContent=streak;feedbackEl.textContent=streak>=3?`${streak} streak! `:'✓ Correct!';feedbackEl.style.color='var(--green)';}else{feedbackEl.textContent=`✗ Was ${answer}`;feedbackEl.style.color='var(--red)';streak=0;streakEl.textContent=0;}inputEl.value='';genProblem();inputEl.focus();}
     submitBtn?.addEventListener('click',checkAnswer);
     inputEl?.addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer();});
     startBtn?.addEventListener('click',startGame);
@@ -905,7 +905,7 @@ window.showOtepToast=showToast;
     function scramble(w){const a=[...w];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.join('')===w?scramble(w):a.join('');}
     function loadWord(){const d=window.otepGetDiff?window.otepGetDiff('scramble'):'normal';const pool=(d==='chill'?SHORT_WORDS:d==='hard'?LONG_WORDS:WORDS);current=pool[Math.floor(Math.random()*pool.length)];wordEl.textContent=scramble(current.w).toUpperCase();hintEl.textContent='Hint: '+current.h;inputEl.value='';msgEl.textContent='';inputEl.focus();}
     function startGame(){score=0;streak=0;skips=3;running=true;[scoreEl,streakEl].forEach(el=>el.textContent=0);skipsEl.textContent=3;startTxt.textContent='Restart →';inputEl.disabled=false;submitBtn.disabled=false;loadWord();}
-    function check(){if(!running)return;const val=inputEl.value.trim().toLowerCase();if(val===current.w){score++;streak++;scoreEl.textContent=score;streakEl.textContent=streak;msgEl.textContent=streak>=3?`🔥 ${streak} in a row!`:'✅ Correct!';msgEl.style.color='var(--green)';setTimeout(loadWord,800);}else{streak=0;streakEl.textContent=0;msgEl.textContent='✗ Not quite — try again!';msgEl.style.color='var(--red)';}}
+    function check(){if(!running)return;const val=inputEl.value.trim().toLowerCase();if(val===current.w){score++;streak++;scoreEl.textContent=score;streakEl.textContent=streak;msgEl.textContent=streak>=3?`${streak} in a row!`:'✓ Correct!';msgEl.style.color='var(--green)';setTimeout(loadWord,800);}else{streak=0;streakEl.textContent=0;msgEl.textContent='✗ Not quite — try again!';msgEl.style.color='var(--red)';}}
     function skip(){if(!running||skips<=0)return;skips--;skipsEl.textContent=skips;msgEl.textContent=`The word was: ${current.w.toUpperCase()}`;msgEl.style.color='var(--text-faint)';streak=0;streakEl.textContent=0;setTimeout(loadWord,1000);}
     submitBtn?.addEventListener('click',check);
     inputEl?.addEventListener('keydown',e=>{if(e.key==='Enter')check();});
@@ -920,7 +920,7 @@ window.showOtepToast=showToast;
     const labelEl=document.getElementById('reactionLabel'),lastEl=document.getElementById('reactionLast');
     const bestEl=document.getElementById('reactionBest'),avgEl=document.getElementById('reactionAvg'),roundEl=document.getElementById('reactionRound');
     const startBtn=document.getElementById('reactionStart'),startTxt=document.getElementById('reactionStartTxt');
-    const ROUNDS=5,MSGS_FAST=['⚡ Superhuman!','🔥 Blazing!','💻 GPU-level!'],MSGS_MED=['💪 Sharp!','✅ Solid!','👍 Good reflexes!'],MSGS_SLOW=['🐢 A bit slow...','☕ Maybe need coffee?','🧠 Still loading?'];
+    const ROUNDS=5,MSGS_FAST=['Superhuman!','Blazing!','GPU-level!'],MSGS_MED=['Sharp!','Solid!','Good reflexes!'],MSGS_SLOW=['A bit slow...','Maybe need coffee?','Still loading?'];
     let waiting=false,startTime=null,round=0,times=[],best=+localStorage.getItem('reaction_best')||Infinity,timeout;
     if(best<Infinity)bestEl.textContent=best;
     function reset(){waiting=false;startTime=null;round=0;times=[];targetEl.className='reaction-target wait';labelEl.textContent='Click Start below';roundEl.textContent='0/'+ROUNDS;lastEl.textContent='—';avgEl.textContent='—';}
@@ -1006,7 +1006,7 @@ window.showOtepToast=showToast;
       { type: 'cmd',    prompt: '>', text: 'skills --top' },
       { type: 'out',    text: '<span class="t-bl">HTML/CSS</span>  <span class="t-bl">JavaScript</span>  <span class="t-bl">Python</span>  <span class="t-bl">Java</span>  <span class="t-bl">Figma</span>' },
       { type: 'cmd',    prompt: '>', text: 'status --current' },
-      { type: 'out',    text: '✅ <span class="t-hl">Open to internships</span> &amp; collaborations' },
+      { type: 'out',    text: '✓ <span class="t-hl">Open to internships</span> &amp; collaborations' },
       { type: 'cmd',    prompt: '>', text: 'motto --print' },
       { type: 'out',    text: '<span class="t-hl">"Time is Gold."</span>  — Choose your loops wisely.' },
     ];
@@ -1309,7 +1309,7 @@ window.showOtepToast=showToast;
       bestEl.textContent = (best===null) ? ('Your best in '+gameLabel+': no score yet — be the first.') : ('Your best in '+gameLabel+': '+best);
     }
     if(!list.length){ el.innerHTML = '<li>No scores yet — be the first.</li>'; return; }
-    const medals = ['🥇','🥈','🥉'];
+    const medals = ['1','2','3'];
     el.innerHTML = list.map((r,i)=>{
       const isMe = String(r.player).trim().toLowerCase()===me.trim().toLowerCase();
       const rank = medals[i] || (i+1);
@@ -1364,7 +1364,7 @@ window.showOtepToast=showToast;
         const tags = String(p.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
         const links = [];
         if(p.link) links.push('<a href="'+escapeHtml(p.link)+'" target="_blank" rel="noopener noreferrer" class="project-link">↗ '+escapeHtml(p.link_label||'View')+'</a>');
-        if(p.link2) links.push('<a href="'+escapeHtml(p.link2)+'" target="_blank" rel="noopener noreferrer" class="project-link">📄 '+escapeHtml(p.link2_label||'View')+'</a>');
+        if(p.link2) links.push('<a href="'+escapeHtml(p.link2)+'" target="_blank" rel="noopener noreferrer" class="project-link"><img class="link-img" src="images/icons/document.svg" alt=""> '+escapeHtml(p.link2_label||'View')+'</a>');
         const img = p.image ? '<span class="thumb-label"><img src="'+escapeHtml(p.image)+'" alt="'+escapeHtml(p.title)+'" loading="lazy" decoding="async"/></span>' : '';
         return '<div class="project-card reveal visible" data-cat="'+escapeHtml(p.filter)+'">'
           + '<div class="project-thumb '+thumbClass(p.filter)+'"><div class="thumb-overlay"></div>'+img+'</div>'
@@ -1398,10 +1398,6 @@ window.showOtepToast=showToast;
       tabs.forEach(tab=>tab.addEventListener('click', ()=>{ active = tab.dataset.filter || 'all'; apply(); }));
       search && search.addEventListener('input', apply);
       clearBtn && clearBtn.addEventListener('click', ()=>{ if(search) search.value=''; apply(); });
-      const note = document.createElement('p');
-      note.className = 'widget-note'; note.style.marginBottom = '1rem';
-      note.textContent = 'Live project data — edit these in admin.php. If the API is unavailable, the original cards below are kept instead.';
-      grid.parentNode.insertBefore(note, grid);
       apply();
     }).catch(()=>{ /* keep the hard-coded cards: static hosting fallback */ });
   })();
@@ -1426,7 +1422,7 @@ window.showOtepToast=showToast;
     function end(){
       running=false; clearInterval(timer); btn.disabled=true;
       if(score>best){ best=score; localStorage.setItem('click_best',best); bestEl.textContent=best; }
-      msgEl.textContent = score>=60 ? '🔥 '+score+' clicks! Your mouse is filing a complaint.' : score>=35 ? '💪 '+score+' clicks — solid frenzy!' : score+' clicks. Warm up those fingers and go again.';
+      msgEl.textContent = score>=60 ? score+' clicks! Your mouse is filing a complaint.' : score>=35 ? score+' clicks — solid frenzy!' : score+' clicks. Warm up those fingers and go again.';
       startTxt.textContent='Play Again →'; save('click', score);
     }
     start.addEventListener('click', ()=>{
@@ -1460,7 +1456,7 @@ window.showOtepToast=showToast;
         b.textContent = (i===oddIdx) ? pair[1] : pair[0];
         b.addEventListener('click', ()=>{
           if(!running) return;
-          if(i===oddIdx){ score+=10; scoreEl.textContent=score; msgEl.textContent='✅ Found it! Round '+(round+1)+'…'; setTimeout(nextRound, 450); }
+          if(i===oddIdx){ score+=10; scoreEl.textContent=score; msgEl.textContent='Found it! Round '+(round+1)+'…'; setTimeout(nextRound, 450); }
           else { msgEl.textContent='✗ Not that one — look closer!'; }
         });
         grid.appendChild(b);
@@ -1476,7 +1472,7 @@ window.showOtepToast=showToast;
     grid.addEventListener('click', ()=>{ if(score>best){ best=score; localStorage.setItem('odd_best',best); bestEl.textContent=best; } });
     const saveBtn = document.createElement('button');
     saveBtn.className='btn btn-outline'; saveBtn.type='button'; saveBtn.style.cssText='margin-top:1rem;font-size:.62rem;';
-    saveBtn.textContent='💾 Save my Odd One Out score';
+    saveBtn.textContent='Save my Odd One Out score';
     saveBtn.addEventListener('click', ()=>{
       const v = parseInt((document.getElementById('oddScore')||{}).textContent||'0',10) || 0;
       save('odd', v);
@@ -1492,21 +1488,20 @@ window.showOtepToast=showToast;
           msg=document.getElementById('diceMsg'), roll=document.getElementById('diceRoll'),
           reset=document.getElementById('diceReset');
     if(!roll) return;
-    const FACES=['⚀','⚁','⚂','⚃','⚄','⚅'];
-    let ps=0, as=0, over=false;
+        let ps=0, as=0, over=false;
     function render(){ pS.textContent=ps; aS.textContent=as; }
-    function resetGame(){ ps=0; as=0; over=false; pEl.textContent='🎲'; aEl.textContent='🎲'; msg.textContent='Roll against the AI. Higher roll wins the round. First to 5 wins the duel.'; roll.disabled=false; render(); }
+    function resetGame(){ ps=0; as=0; over=false; pEl.innerHTML='<img class="dice-img" src="images/icons/die.svg" alt="Die">'; aEl.innerHTML='<img class="dice-img" src="images/icons/die.svg" alt="Die">'; msg.textContent='Roll against the AI. Higher roll wins the round. First to 5 wins the duel.'; roll.disabled=false; render(); }
     roll.addEventListener('click', ()=>{
       if(over) return;
       const p=Math.floor(Math.random()*6)+1, a=Math.floor(Math.random()*6)+1;
-      pEl.textContent=FACES[p-1]; aEl.textContent=FACES[a-1];
+      pEl.textContent=p; aEl.textContent=a;
       [pEl,aEl].forEach(el=>{ el.classList.add('pop'); setTimeout(()=>el.classList.remove('pop'),400); });
       if(p>a){ ps++; msg.textContent='You rolled '+p+', AI rolled '+a+'. Point yours!'; }
       else if(a>p){ as++; msg.textContent='AI rolled '+a+', you rolled '+p+'. The dice betrayed you.'; }
       else { msg.textContent='Both rolled '+p+'. A tie — the dice refuse to choose.'; }
       render();
-      if(ps>=5){ over=true; roll.disabled=true; msg.textContent='🏆 You win the duel, 5-'+as+'! The dice were on your side.'; save('dice', ps); }
-      else if(as>=5){ over=true; roll.disabled=true; msg.textContent='🤖 AI wins the duel, 5-'+ps+'. Rematch? The dice are already rolling.'; if(window.otepRage)window.otepRage('rage-dice'); }
+      if(ps>=5){ over=true; roll.disabled=true; msg.textContent='You win the duel, 5-'+as+'! The dice were on your side.'; save('dice', ps); }
+      else if(as>=5){ over=true; roll.disabled=true; msg.textContent='AI wins the duel, 5-'+ps+'. Rematch? The dice are already rolling.'; if(window.otepRage)window.otepRage('rage-dice'); }
     });
     reset.addEventListener('click', resetGame);
     resetGame();
@@ -1530,7 +1525,7 @@ window.showOtepToast=showToast;
     function end(){
       running=false; clearInterval(timer); target.style.display='none';
       if(hits>best){ best=hits; localStorage.setItem('aim_best',best); bestEl.textContent=best; }
-      msgEl.textContent=hits>=40?'🎯 '+hits+' hits! Aimbot accusations incoming.':hits>=25?'💪 '+hits+' hits — sharp shooting!':hits+' hits. Warm up and go again.';
+      msgEl.textContent=hits>=40?hits+' hits! Aimbot accusations incoming.':hits>=25?hits+' hits — sharp shooting!':hits+' hits. Warm up and go again.';
       startTxt.textContent='Play Again →'; save('aim', hits);
     }
     target.addEventListener('click', ()=>{ if(!running) return; hits++; scoreEl.textContent=hits; spawn(); });
@@ -1577,7 +1572,7 @@ window.showOtepToast=showToast;
     function gameOver(secs){
       running=false; cancelAnimationFrame(raf); clearInterval(spawnTimer);
       if(secs>best){ best=secs; localStorage.setItem('dodge_best',best); bestEl.textContent=best; }
-      msgEl.textContent='💥 Hit! You survived '+secs+' seconds.';
+      msgEl.textContent='Hit! You survived '+secs+' seconds.';
       if(window.otepRage) window.otepRage('rage-dodge');
       startTxt.textContent='Play Again →'; save('dodge', secs);
     }
@@ -1647,7 +1642,7 @@ window.showOtepToast=showToast;
     function gameOver(){
       running=false; cancelAnimationFrame(raf); clearInterval(spawnTimer);
       if(score>best){ best=score; localStorage.setItem('catch_best',best); bestEl.textContent=best; }
-      msgEl.textContent='🍂 3 misses! You caught '+score+' fruits.';
+      msgEl.textContent='3 misses! You caught '+score+' fruits.';
       if(window.otepRage) window.otepRage('rage-catch');
       startTxt.textContent='Play Again →'; save('catch', score);
     }
@@ -1684,7 +1679,7 @@ window.showOtepToast=showToast;
     const startBtn = document.getElementById('scrambleStart'); if(!startBtn) return;
     const btn = document.createElement('button');
     btn.className='btn btn-outline'; btn.type='button'; btn.style.cssText='margin-top:1rem;font-size:.62rem;';
-    btn.textContent='💾 Save my scramble score';
+    btn.textContent='Save my scramble score';
     btn.addEventListener('click', ()=>{
       const v = parseInt((document.getElementById('scrambleScore')||{}).textContent||'0',10) || 0;
       save('scramble', v);

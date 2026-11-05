@@ -62,7 +62,7 @@
         '  motto            life motto',
         '  neofetch         system info, portfolio style',
         '  history | clear  history of commands / clear screen',
-        '', '  Hint: there are a couple of hidden commands. 🤫'
+        '', '  Hint: there are a couple of hidden commands.'
       ]);
     },
     about() {
@@ -125,7 +125,7 @@
     },
     sudo(a) {
       if ((a.join(' ')).toLowerCase() === 'hire otep') {
-        lines(['[sudo] permission granted. Excellent decision. 🎉', 'Opening the contact page…'], 't-ok'); setTimeout(() => { location.href = 'contact.html'; }, 1400);
+        lines(['[sudo] permission granted. Excellent decision.', 'Opening the contact page…'], 't-ok'); setTimeout(() => { location.href = 'contact.html'; }, 1400);
       } else line('otep is not in the sudoers file. This incident will be reported. (to nobody)', 't-err');
     },
     konami() { line('⬆ ⬆ ⬇ ⬇ ⬅ ➡ ⬅ ➡ B A — try it on any page.', 't-dim'); },

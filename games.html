@@ -23,16 +23,16 @@
       <button class="mob-close" onclick="closeMobile()" aria-label="Close menu">✕</button>
     </div>
     <div class="mob-grid" role="navigation" aria-label="Mobile navigation">
-      <a class="mob-tile" href="index.html" onclick="closeMobile()"><span class="mob-ico">🏠</span><span class="mob-label">Home</span><span class="mob-num">01 · start here</span></a>
-      <a class="mob-tile" href="about.html" onclick="closeMobile()"><span class="mob-ico">👤</span><span class="mob-label">About</span><span class="mob-num">02 · who I am</span></a>
-      <a class="mob-tile" href="projects.html" onclick="closeMobile()"><span class="mob-ico">💼</span><span class="mob-label">Projects</span><span class="mob-num">03 · built things</span></a>
-      <a class="mob-tile" href="skills.html" onclick="closeMobile()"><span class="mob-ico">🛠️</span><span class="mob-label">Skills</span><span class="mob-num">04 · tools &amp; certs</span></a>
-      <a class="mob-tile" href="games.html" onclick="closeMobile()"><span class="mob-ico">🎮</span><span class="mob-label">Games</span><span class="mob-num">05 · 20 mini games</span></a>
-      <a class="mob-tile" href="contact.html" onclick="closeMobile()"><span class="mob-ico">✉️</span><span class="mob-label">Contact</span><span class="mob-num">06 · say hello</span></a>
-      <a class="mob-tile" href="terminal.html" onclick="closeMobile()" style="grid-column:1/-1"><span class="mob-ico">⌨️</span><span class="mob-label">Terminal</span><span class="mob-num">07 · browse me like a shell</span></a>
+      <a class="mob-tile" href="index.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/home.svg" alt=""></span><span class="mob-label">Home</span><span class="mob-num">01 · start here</span></a>
+      <a class="mob-tile" href="about.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/user.svg" alt=""></span><span class="mob-label">About</span><span class="mob-num">02 · who I am</span></a>
+      <a class="mob-tile" href="projects.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/briefcase.svg" alt=""></span><span class="mob-label">Projects</span><span class="mob-num">03 · built things</span></a>
+      <a class="mob-tile" href="skills.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/tools.svg" alt=""></span><span class="mob-label">Skills</span><span class="mob-num">04 · tools &amp; certs</span></a>
+      <a class="mob-tile" href="games.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/gamepad.svg" alt=""></span><span class="mob-label">Games</span><span class="mob-num">05 · 20 mini games</span></a>
+      <a class="mob-tile" href="contact.html" onclick="closeMobile()"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/mail.svg" alt=""></span><span class="mob-label">Contact</span><span class="mob-num">06 · say hello</span></a>
+      <a class="mob-tile" href="terminal.html" onclick="closeMobile()" style="grid-column:1/-1"><span class="mob-ico"><img class="mob-ico-img" src="images/icons/keyboard.svg" alt=""></span><span class="mob-label">Terminal</span><span class="mob-num">07 · browse me like a shell</span></a>
     </div>
     <div class="mob-foot">
-      <button class="mob-theme" onclick="document.getElementById('navLogoBtn') && document.getElementById('navLogoBtn').click()">🌗 Toggle theme</button>
+      <button class="mob-theme" onclick="document.getElementById('navLogoBtn') && document.getElementById('navLogoBtn').click()"><img class="mob-theme-img" src="images/icons/theme.svg" alt=""> Toggle theme</button>
       <span class="mob-sub">OtepCodes · PLV BSIT</span>
     </div>
   </div>
@@ -58,36 +58,36 @@
 <section id="games" style="background:var(--bg);">
 
   <div class="game-tabs" id="gameTabs">
-    <button class="game-tab-btn active" data-game="snake">🐍 Snake</button>
-    <button class="game-tab-btn" data-game="memory">🃏 Memory</button>
-    <button class="game-tab-btn" data-game="typer">⌨️ Type Sprint</button>
-    <button class="game-tab-btn" data-game="mole">🔨 Whack-a-Mole</button>
-    <button class="game-tab-btn" data-game="guess">🔢 Guesser</button>
-    <button class="game-tab-btn" data-game="quiz">🧠 Dev Trivia</button>
-    <button class="game-tab-btn" data-game="ttt">❌ Tic-Tac-Toe</button>
-    <button class="game-tab-btn" data-game="rps">✊ Rock Paper Scissors</button>
-    <button class="game-tab-btn" data-game="hang">💀 Hangman</button>
-    <button class="game-tab-btn" data-game="simon">🎵 Simon Says</button>
-    <button class="game-tab-btn" data-game="pong">🏓 Pong</button>
-    <button class="game-tab-btn" data-game="math">🧮 Math Sprint</button>
-    <button class="game-tab-btn" data-game="scramble">🔤 Word Scramble</button>
-    <button class="game-tab-btn" data-game="reaction">⚡ Reaction Time</button>
-    <button class="game-tab-btn" data-game="click">🖱️ Click Frenzy</button>
-    <button class="game-tab-btn" data-game="odd">👀 Odd One Out</button>
-    <button class="game-tab-btn" data-game="dice">🎲 Dice Duel</button>
-    <button class="game-tab-btn" data-game="aim">🎯 Aim Trainer</button>
-    <button class="game-tab-btn" data-game="dodge">🏃 Dodge Dash</button>
-    <button class="game-tab-btn" data-game="catch">🍎 Fruit Catcher</button>
+    <button class="game-tab-btn active" data-game="snake"><img class="game-tab-img" src="images/icons/snake.svg" alt=""> Snake</button>
+    <button class="game-tab-btn" data-game="memory"><img class="game-tab-img" src="images/icons/memory.svg" alt=""> Memory</button>
+    <button class="game-tab-btn" data-game="typer"><img class="game-tab-img" src="images/icons/keyboard.svg" alt=""> Type Sprint</button>
+    <button class="game-tab-btn" data-game="mole"><img class="game-tab-img" src="images/icons/hammer.svg" alt=""> Whack-a-Mole</button>
+    <button class="game-tab-btn" data-game="guess"><img class="game-tab-img" src="images/icons/numbers.svg" alt=""> Guesser</button>
+    <button class="game-tab-btn" data-game="quiz"><img class="game-tab-img" src="images/icons/brain.svg" alt=""> Dev Trivia</button>
+    <button class="game-tab-btn" data-game="ttt"><img class="game-tab-img" src="images/icons/grid-xo.svg" alt=""> Tic-Tac-Toe</button>
+    <button class="game-tab-btn" data-game="rps"><img class="game-tab-img" src="images/icons/hand-rock.svg" alt=""> Rock Paper Scissors</button>
+    <button class="game-tab-btn" data-game="hang"><img class="game-tab-img" src="images/icons/skull.svg" alt=""> Hangman</button>
+    <button class="game-tab-btn" data-game="simon"><img class="game-tab-img" src="images/icons/music.svg" alt=""> Simon Says</button>
+    <button class="game-tab-btn" data-game="pong"><img class="game-tab-img" src="images/icons/paddle.svg" alt=""> Pong</button>
+    <button class="game-tab-btn" data-game="math"><img class="game-tab-img" src="images/icons/calculator.svg" alt=""> Math Sprint</button>
+    <button class="game-tab-btn" data-game="scramble"><img class="game-tab-img" src="images/icons/letters.svg" alt=""> Word Scramble</button>
+    <button class="game-tab-btn" data-game="reaction"><img class="game-tab-img" src="images/icons/bolt.svg" alt=""> Reaction Time</button>
+    <button class="game-tab-btn" data-game="click"><img class="game-tab-img" src="images/icons/mouse.svg" alt=""> Click Frenzy</button>
+    <button class="game-tab-btn" data-game="odd"><img class="game-tab-img" src="images/icons/eye.svg" alt=""> Odd One Out</button>
+    <button class="game-tab-btn" data-game="dice"><img class="game-tab-img" src="images/icons/die.svg" alt=""> Dice Duel</button>
+    <button class="game-tab-btn" data-game="aim"><img class="game-tab-img" src="images/icons/target.svg" alt=""> Aim Trainer</button>
+    <button class="game-tab-btn" data-game="dodge"><img class="game-tab-img" src="images/icons/dodge.svg" alt=""> Dodge Dash</button>
+    <button class="game-tab-btn" data-game="catch"><img class="game-tab-img" src="images/icons/basket.svg" alt=""> Fruit Catcher</button>
   </div>
 
   <section class="games-widgets" aria-label="Player and leaderboards">
     <div class="widget-card lb-card">
-      <p class="widget-label">🏆 Leaderboards — Top 10</p>
+      <p class="widget-label"><img class="widget-img" src="images/icons/trophy.svg" alt=""> Leaderboards — Top 10</p>
       <div class="lb-row">
         <label class="lb-label" for="playerName">Player name</label>
         <input id="playerName" type="text" maxlength="30" placeholder="Anonymous" autocomplete="off"/>
       </div>
-      <p class="widget-note">Your scores save to the server leaderboard when PHP is running; otherwise they stay in this browser (top 10 per game).</p>
+      <p class="widget-note">Scores save to the leaderboard — top 10 per game.</p>
       <div class="lb-row">
         <label class="lb-label" for="lbGame">Game</label>
         <select id="lbGame" aria-label="Choose a game leaderboard"></select>
@@ -98,7 +98,7 @@
       <p class="widget-note" id="lbNote"></p>
     </div>
     <div class="widget-card gotd-card">
-      <p class="widget-label">🎮 Game of the Day</p>
+      <p class="widget-label"><img class="widget-img" src="images/icons/gamepad.svg" alt=""> Game of the Day</p>
       <h3 class="widget-gotd" id="gamesGotdName">—</h3>
       <p class="widget-note" id="gamesGotdPun">—</p>
       <button class="btn btn-outline" id="gamesGotdPlay" type="button">Play it →</button>
@@ -124,7 +124,7 @@
       <div class="dpad" id="dpad">
         <div></div><button class="dpad-btn" id="dUp">▲</button><div></div>
         <button class="dpad-btn" id="dLeft">◀</button>
-        <div class="dpad-btn dpad-center" style="font-size:.5rem;color:var(--text-faint);">🐍</div>
+        <div class="dpad-btn dpad-center"><img class="dpad-img" src="images/icons/snake.svg" alt=""></div>
         <button class="dpad-btn" id="dRight">▶</button>
         <div></div><button class="dpad-btn" id="dDown">▼</button><div></div>
       </div>
@@ -145,7 +145,7 @@
     </div>
     <div class="memory-grid" id="memGrid"></div>
     <div class="memory-win" id="memWin">
-      <h3>🎉 Matched!</h3>
+      <h3>Matched!</h3>
       <p id="memWinMsg">All pairs found!</p>
       <button class="btn btn-primary" id="memWinBtn"><span>Play Again →</span></button>
     </div>
@@ -168,7 +168,7 @@
         <div class="typer-stat"><div class="typer-stat-num" id="typerTime">0s</div><div class="typer-stat-label">Time</div></div>
       </div>
       <div class="typer-result" id="typerResult">
-        <div><p class="typer-result-title">Done! 🎉</p><p style="font-size:.78rem;color:var(--text-faint);">Here's the breakdown:</p></div>
+        <div><p class="typer-result-title">Done!</p><p style="font-size:.78rem;color:var(--text-faint);">Here's the breakdown:</p></div>
         <div class="typer-result-stats" id="typerResultStats"></div>
         <button class="btn btn-primary" id="typerNext"><span>Next →</span></button>
       </div>
@@ -211,7 +211,7 @@
       </div>
       <div class="guess-history" id="guessHistory"></div>
       <div class="guess-win" id="guessWin">
-        <h3>🎯 Got it!</h3>
+        <h3><img class="game-tab-img" src="images/icons/target.svg" alt=""> Got it!</h3>
         <p id="guessWinMsg">You found it!</p>
         <button class="btn btn-primary" id="guessNewGame"><span>New Game →</span></button>
       </div>
@@ -271,16 +271,16 @@
       </div>
       <p style="font-family:var(--f-mono);font-size:.6rem;letter-spacing:.18em;color:var(--text-faint);text-transform:uppercase;text-align:center;">Round <span id="rpsRound">0</span></p>
       <div class="rps-arena">
-        <div class="rps-choice" id="rpsPlayerChoice">❓</div>
+        <div class="rps-choice" id="rpsPlayerChoice">?</div>
         <div class="rps-vs">VS</div>
-        <div class="rps-choice" id="rpsAiChoice">❓</div>
+        <div class="rps-choice" id="rpsAiChoice">?</div>
       </div>
       <p class="rps-result" id="rpsResult">Pick your weapon. No pressure. (There's pressure.)</p>
       <p class="rage-quote" id="rage-rps" aria-live="polite"></p>
       <div class="rps-btns">
-        <button class="rps-btn" data-choice="0" title="Rock">✊</button>
-        <button class="rps-btn" data-choice="1" title="Paper">✋</button>
-        <button class="rps-btn" data-choice="2" title="Scissors">✌️</button>
+        <button class="rps-btn" data-choice="0" title="Rock"><img class="rps-btn-img" src="images/icons/hand-rock.svg" alt="Rock"></button>
+        <button class="rps-btn" data-choice="1" title="Paper"><img class="rps-btn-img" src="images/icons/hand-paper.svg" alt="Paper"></button>
+        <button class="rps-btn" data-choice="2" title="Scissors"><img class="rps-btn-img" src="images/icons/hand-scissors.svg" alt="Scissors"></button>
       </div>
       <button class="btn btn-outline" id="rpsReset" style="margin-top:1rem;font-size:.62rem;">↺ Reset</button>
     </div>
@@ -291,9 +291,9 @@
     <p class="game-pun">Hangman: guess the word before your vocabulary hangs by a thread.</p>
     <div class="diff-row" data-diff="hang" role="group" aria-label="Difficulty for this game"><span class="diff-label">Difficulty</span><button class="diff-btn" type="button" data-diff-btn="chill">Chill Pill</button><button class="diff-btn active" type="button" data-diff-btn="normal" aria-pressed="true">Middle Child</button><button class="diff-btn" type="button" data-diff-btn="hard">Boss Level</button></div>
     <div class="hang-wrap">
-      <div class="hang-figure" id="hangFigure">😃</div>
+      <div class="hang-figure" id="hangFigure">All good</div>
       <p class="hang-hint" id="hangHint">Hint: loading…</p>
-      <div class="hang-lives" id="hangLives">❤️❤️❤️❤️❤️❤️</div>
+      <div class="hang-lives" id="hangLives">Lives: 6</div>
       <div class="hang-word" id="hangWord"></div>
       <div class="hang-keys" id="hangKeys"></div>
       <p class="hang-msg" id="hangMsg"></p>
@@ -457,9 +457,9 @@
         <div><span class="dice-score-num gold" id="diceAScore">0</span>AI</div>
       </div>
       <div class="dice-arena">
-        <div class="dice-die" id="dicePlayer">🎲</div>
+        <div class="dice-die" id="dicePlayer"><img class="dice-img" src="images/icons/die.svg" alt="Die"></div>
         <div class="dice-vs">VS</div>
-        <div class="dice-die" id="diceAi">🎲</div>
+        <div class="dice-die" id="diceAi"><img class="dice-img" src="images/icons/die.svg" alt="Die"></div>
       </div>
       <p class="dice-msg" id="diceMsg">Roll against the AI. Higher roll wins the round. First to 5 wins the duel.</p>
       <p class="rage-quote" id="rage-dice" aria-live="polite"></p>
@@ -479,7 +479,7 @@
         <div class="aim-stat"><div class="aim-stat-num" id="aimTime">30</div><div class="aim-stat-label">Seconds</div></div>
         <div class="aim-stat"><div class="aim-stat-num" id="aimBest">0</div><div class="aim-stat-label">Best</div></div>
       </div>
-      <div class="aim-arena" id="aimArena"><button class="aim-target" id="aimTarget" type="button" aria-label="Target">🎯</button></div>
+      <div class="aim-arena" id="aimArena"><button class="aim-target" id="aimTarget" type="button" aria-label="Target"><img class="aim-img" src="images/icons/target.svg" alt="Target"></button></div>
       <p class="aim-msg" id="aimMsg">Press Start, then click the target as fast as you can for 30 seconds.</p>
       <button class="btn btn-primary" id="aimStart" type="button"><span id="aimStartTxt">Start →</span></button>
     </div>
@@ -520,7 +520,7 @@
 
 <div style="background:var(--bg-2);border-top:1px solid var(--border);padding:1.2rem var(--pad-x);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
   <span style="font-family:var(--f-mono);font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;">20 Games</span>
-  <p style="font-size:.78rem;color:var(--text-faint);">Snake · Memory · Type Sprint · Whack-a-Mole · Number Guesser · Dev Trivia · Tic-Tac-Toe · Rock Paper Scissors · Hangman · Simon Says · Pong · Math Sprint · Word Scramble · Reaction Time · Click Frenzy · Odd One Out · Dice Duel · Aim Trainer · Dodge Dash · Fruit Catcher &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere 🕹️</p>
+  <p style="font-size:.78rem;color:var(--text-faint);">Snake · Memory · Type Sprint · Whack-a-Mole · Number Guesser · Dev Trivia · Tic-Tac-Toe · Rock Paper Scissors · Hangman · Simon Says · Pong · Math Sprint · Word Scramble · Reaction Time · Click Frenzy · Odd One Out · Dice Duel · Aim Trainer · Dodge Dash · Fruit Catcher &nbsp;·&nbsp; Try the <strong style="color:var(--blue)">Konami code</strong> anywhere</p>
 </div>
 
 <footer>
@@ -533,7 +533,7 @@
     <a href="https://github.com/otep808" target="_blank" rel="noopener noreferrer" class="social-btn">GH</a>
     <a href="https://www.linkedin.com/in/joseph-callos-329b153b8" target="_blank" rel="noopener noreferrer" class="social-btn">in</a>
     <a href="https://www.facebook.com/joseph.callos.8" target="_blank" rel="noopener noreferrer" class="social-btn">fb</a>
-    <a href="mailto:callosjoseph818@gmail.com" class="social-btn">✉</a>
+    <a href="mailto:callosjoseph818@gmail.com" class="social-btn"><img class="social-ico-img" src="images/icons/mail.svg" alt="Email"></a>
   </div>
 </footer>
 <script src="javascript/main.js"></script>

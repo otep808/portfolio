@@ -210,7 +210,7 @@ section{padding:var(--pad-y) var(--pad-x);position:relative}
 .tw-cursor{display:inline-block;width:2px;height:1em;background:var(--blue);margin-left:2px;animation:blink .75s step-end infinite;vertical-align:text-bottom}
 @keyframes blink{50%{opacity:0}}
 .hero-motto{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--f-mono);font-size:.61rem;letter-spacing:.18em;color:var(--gold);border:1px solid var(--gold-dim);padding:.38rem .9rem;margin-bottom:1.4rem;text-transform:uppercase}
-.hero-motto::before{content:'⏱';font-size:.75rem}
+.hero-motto::before{content:'';display:inline-block;width:.85rem;height:.85rem;background:url("images/icons/clock.svg") center/contain no-repeat}
 .hero-desc{font-size:.93rem;color:var(--text-dim);max-width:40ch;line-height:1.85;margin-bottom:2.2rem}
 .hero-stats{display:flex;gap:2.5rem;margin-bottom:2.4rem;flex-wrap:wrap}
 .stat-num{font-family:var(--f-display);font-size:2.4rem;font-weight:300;color:var(--blue-lt);line-height:1;display:flex;align-items:baseline;gap:.1em}
@@ -2108,7 +2108,7 @@ footer::before {
   padding: .35rem .9rem;
   margin-bottom: 1rem;
 }
-.hero-tagline::before { content: '⚡'; font-size: .75rem; }
+.hero-tagline::before { content:'';display:inline-block;width:.85rem;height:.85rem;background:url("images/icons/bolt.svg") center/contain no-repeat; }
 
 /* Floating animation on the photo */
 .hero-photo-wrap {
@@ -2695,3 +2695,22 @@ footer::before {
   /* Popup starts below the (58px) mobile header, never under/over it */
   .mobile-nav{top:58px}
 }
+
+/* ---- Theme SVG icon set (images/icons/) — line icons, currentColor ---- */
+.mob-ico-img{width:28px;height:28px;display:block}
+.mob-ico{display:flex;align-items:center}
+.mob-theme-img{width:18px;height:18px;vertical-align:-3px;margin-right:.4rem}
+.game-tab-img{width:18px;height:18px;vertical-align:-3px;margin-right:.35rem}
+.widget-img{width:14px;height:14px;vertical-align:-2px;margin-right:.35rem}
+.currently-ico-img{width:28px;height:28px;display:block}
+.cert-view-img{width:15px;height:15px;vertical-align:-2px;margin-right:.35rem}
+.link-img{width:15px;height:15px;vertical-align:-2px;margin-right:.3rem}
+.social-ico-img{width:16px;height:16px;display:block}
+.rps-btn-img{width:36px;height:36px;display:block}
+.rps-choice-img{width:44px;height:44px;display:block;margin:0 auto}
+.dice-img{width:56px;height:56px;display:block;margin:0 auto}
+.mole-img{width:38px;height:38px;display:block;margin:0 auto}
+.dpad-img{width:22px;height:22px;display:block;margin:0 auto}
+.aim-img{width:36px;height:36px;display:block}
+.mole-creature{display:flex;align-items:flex-end;justify-content:center}
+.konami-img{width:26px;height:26px;vertical-align:-6px;margin-right:.4rem}

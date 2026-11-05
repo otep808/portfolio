@@ -49,15 +49,11 @@
       if (c.file) {
         var btn = document.createElement('button');
         btn.className = 'cert-view-btn';
-        btn.textContent = (String(c.file).split('.').pop().toLowerCase() === 'pdf' ? '📄 View Certificate' : '🔍 View Certificate');
+        btn.innerHTML = (String(c.file).split('.').pop().toLowerCase() === 'pdf' ? '<img class="cert-view-img" src="images/icons/document.svg" alt=""> View Certificate' : '<img class="cert-view-img" src="images/icons/magnifier.svg" alt=""> View Certificate');
         btn.addEventListener('click', function (e) { e.stopPropagation(); viewFile(c.file); });
         card.appendChild(btn);
       }
       grid.appendChild(card);
     });
-    var note = document.createElement('p');
-    note.className = 'widget-note'; note.style.marginTop = '1rem';
-    note.textContent = 'Live certificate data — edit these in admin.php. If the API is unavailable, the original cards are kept instead.';
-    grid.parentNode.insertBefore(note, grid.nextSibling);
   }).catch(function () { /* keep the hard-coded cards: static hosting fallback */ });
 })();
