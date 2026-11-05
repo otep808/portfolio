@@ -2696,21 +2696,30 @@ footer::before {
   .mobile-nav{top:58px}
 }
 
-/* ---- Theme SVG icon set (images/icons/) — line icons, currentColor ---- */
-.mob-ico-img{width:28px;height:28px;display:block}
+/* ---- Theme SVG icon set (images/icons/) — line icons, explicit blue #4d7fe6 ----
+   NOTE (2026-11-05 fix): the SVGs must NOT rely on stroke="currentColor".
+   Loaded through <img>, an SVG is an isolated document, so currentColor
+   resolves to black, not the button's text colour — that is why the icons
+   rendered black. The SVGs now also carry width="24" height="24", so each
+   icon is 24px even if this stylesheet is stale/cached; the rules below
+   shrink them to their slot sizes. flex:none stops flex parents stretching
+   them, and the guard caps any icon inside a tab button / widget label. */
+.mob-ico-img{width:28px;height:28px;display:block;flex:none}
 .mob-ico{display:flex;align-items:center}
-.mob-theme-img{width:18px;height:18px;vertical-align:-3px;margin-right:.4rem}
-.game-tab-img{width:18px;height:18px;vertical-align:-3px;margin-right:.35rem}
-.widget-img{width:14px;height:14px;vertical-align:-2px;margin-right:.35rem}
-.currently-ico-img{width:28px;height:28px;display:block}
-.cert-view-img{width:15px;height:15px;vertical-align:-2px;margin-right:.35rem}
-.link-img{width:15px;height:15px;vertical-align:-2px;margin-right:.3rem}
-.social-ico-img{width:16px;height:16px;display:block}
-.rps-btn-img{width:36px;height:36px;display:block}
-.rps-choice-img{width:44px;height:44px;display:block;margin:0 auto}
-.dice-img{width:56px;height:56px;display:block;margin:0 auto}
-.mole-img{width:38px;height:38px;display:block;margin:0 auto}
-.dpad-img{width:22px;height:22px;display:block;margin:0 auto}
-.aim-img{width:36px;height:36px;display:block}
+.mob-theme-img{width:18px;height:18px;vertical-align:-3px;margin-right:.4rem;flex:none}
+.game-tab-img{width:18px;height:18px;max-width:18px;max-height:18px;vertical-align:-3px;margin-right:.35rem;flex:none}
+.widget-img{width:14px;height:14px;max-width:14px;max-height:14px;vertical-align:-2px;margin-right:.35rem;flex:none}
+/* Guard: an icon inside a game tab or widget label can never outgrow its slot. */
+.game-tab-btn img,.widget-label img{flex:none;max-width:20px;max-height:20px}
+.currently-ico-img{width:28px;height:28px;display:block;flex:none}
+.cert-view-img{width:15px;height:15px;vertical-align:-2px;margin-right:.35rem;flex:none}
+.link-img{width:15px;height:15px;vertical-align:-2px;margin-right:.3rem;flex:none}
+.social-ico-img{width:16px;height:16px;display:block;flex:none}
+.rps-btn-img{width:36px;height:36px;display:block;flex:none}
+.rps-choice-img{width:44px;height:44px;display:block;margin:0 auto;flex:none}
+.dice-img{width:56px;height:56px;display:block;margin:0 auto;flex:none}
+.mole-img{width:38px;height:38px;display:block;margin:0 auto;flex:none}
+.dpad-img{width:22px;height:22px;display:block;margin:0 auto;flex:none}
+.aim-img{width:36px;height:36px;display:block;flex:none}
 .mole-creature{display:flex;align-items:flex-end;justify-content:center}
 .konami-img{width:26px;height:26px;vertical-align:-6px;margin-right:.4rem}
