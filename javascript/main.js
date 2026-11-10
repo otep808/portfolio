@@ -564,7 +564,7 @@ window.showOtepToast=showToast;
       clearInterval(timer);let started=false;
       cards.forEach(card=>{
         const el=document.createElement('div');el.className='mem-card';el.dataset.label=card.label;el.dataset.icon=card.icon;
-        el.innerHTML=`<div class="mem-card-inner"><div class="mem-front">?</div><div class="mem-back"><img class="mem-icon-img" src="images/${card.icon}" alt="${card.label}" onerror="this.style.display='none'"/><span class="mem-back-label">${card.label}</span></div></div>`;
+        el.innerHTML=`<div class="mem-card-inner"><div class="mem-front">?</div><div class="mem-back"><img class="mem-icon-img" src="images/skills/${card.icon}" alt="${card.label}" onerror="this.style.display='none'"/><span class="mem-back-label">${card.label}</span></div></div>`;
         el.addEventListener('click',()=>{
           if(locked||el.classList.contains('flipped')||el.classList.contains('matched'))return;
           if(!started){started=true;timer=setInterval(()=>{seconds++;document.getElementById('memTime').textContent=seconds;},1000);}
