@@ -108,7 +108,7 @@
       lines(['Email    : callosjoseph818@gmail.com', 'GitHub   : github.com/otep808', 'LinkedIn : linkedin.com/in/joseph-callos-329b153b8',
         'Facebook : facebook.com/joseph.callos.8', 'Status   : open to internships & collaborations'], 't-blue');
     },
-    motto() { line('"Time is Gold." — Choose your infinite loops wisely.', 't-gold'); },
+    motto() { line('"Every second spent on something should bring value — to yourself or to others. Choose your infinite loops wisely."', 't-gold'); },
     retro() {
       lines(['Switching to the plain old-style version of this site…',
         'One long page, no theme, no animations — just scroll up and down.',

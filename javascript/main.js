@@ -667,7 +667,7 @@ window.showOtepToast=showToast;
       {q:"Which of these is a Python GUI toolkit?",a:2,opts:["Bootstrap","Swing","Tkinter","React"]},
       {q:"What data structure operates on FIFO (First In, First Out)?",a:0,opts:["Queue","Stack","Heap","Binary Tree"]},
       {q:"What does CSS stand for?",a:3,opts:["Computer Style Sheets","Creative Styling System","Coded Style Script","Cascading Style Sheets"]},
-      {q:"What is Otep's brand tagline?",a:1,opts:["Code first, ask later","Wired for problems. Built for solutions.","No Bootstrap, no problem.","Time is Gold"]},
+      {q:"What is Otep's brand tagline?",a:1,opts:["Code first, ask later","Wired for problems. Built for solutions.","No Bootstrap, no problem.","Move fast, break things"]},
       {q:"Which tool does Otep use for UI/UX design?",a:2,opts:["Sketch","Adobe XD","Figma","InVision"]},
       {q:"What does JSON stand for?",a:0,opts:["JavaScript Object Notation","Java Syntax Object Node","Just Simple Object Naming","JavaScript Organized Nodes"]},
       {q:"A Stack data structure follows which order?",a:3,opts:["FIFO","LILO","FILO","LIFO"]},
@@ -1008,7 +1008,7 @@ window.showOtepToast=showToast;
       { type: 'cmd',    prompt: '>', text: 'status --current' },
       { type: 'out',    text: '✓ <span class="t-hl">Open to internships</span> &amp; collaborations' },
       { type: 'cmd',    prompt: '>', text: 'motto --print' },
-      { type: 'out',    text: '<span class="t-hl">"Time is Gold."</span>  — Choose your loops wisely.' },
+      { type: 'out',    text: '<span class="t-hl">"Every second spent on something should bring value — to yourself or to others. Choose your infinite loops wisely."</span>' },
     ];
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1245,6 +1245,7 @@ window.showOtepToast=showToast;
     return GAMES[day % GAMES.length];
   }
   const gotd = gameOfDay();
+  window.__gotd = gotd; /* shared with the Featured Today trio */
   function activateGame(key){
     const btn = document.querySelector('.game-tab-btn[data-game="'+key+'"]');
     if(btn) btn.click();
@@ -1366,7 +1367,7 @@ window.showOtepToast=showToast;
         if(p.link) links.push('<a href="'+escapeHtml(p.link)+'" target="_blank" rel="noopener noreferrer" class="project-link">↗ '+escapeHtml(p.link_label||'View')+'</a>');
         if(p.link2) links.push('<a href="'+escapeHtml(p.link2)+'" target="_blank" rel="noopener noreferrer" class="project-link"><img class="link-img" src="images/icons/document.svg" alt=""> '+escapeHtml(p.link2_label||'View')+'</a>');
         const img = p.image ? '<span class="thumb-label"><img src="'+escapeHtml(p.image)+'" alt="'+escapeHtml(p.title)+'" loading="lazy" decoding="async"/></span>' : '';
-        return '<div class="project-card reveal visible" data-cat="'+escapeHtml(p.filter)+'">'
+        return '<div class="project-card pressable reveal visible" data-cat="'+escapeHtml(p.filter)+'">'
           + '<div class="project-thumb '+thumbClass(p.filter)+'"><div class="thumb-overlay"></div>'+img+'</div>'
           + '<div class="project-body"><p class="project-cat">'+escapeHtml(p.category)+'</p>'
           + '<h3 class="project-title">'+escapeHtml(p.title)+'</h3>'
@@ -1687,4 +1688,183 @@ window.showOtepToast=showToast;
     });
     startBtn.parentNode.insertBefore(btn, startBtn.nextSibling);
   })();
+
+
+})();
+
+/* ── SITE-WIDE DYNAMIC BACKGROUND ─────────────────────────────
+   Fixed aurora + starfield canvas behind every page (pv1.2's
+   background, restyled to pv1.1's palette). Injected by JS so no
+   page needs an HTML edit; the CSS puts html's background behind it. */
+(function initSiteBackground(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var canvas = document.createElement('canvas');
+  canvas.id = 'site-bg';
+  document.body.prepend(canvas);
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, dpr = 1, stars = [], running = true;
+  var dark = function(){ return document.documentElement.getAttribute('data-theme') !== 'light'; };
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.max(40, Math.min(90, Math.floor(W * H / 22000)));
+    stars = Array.from({length: n}, function(){ return { x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.4 + .4, p: Math.random()*Math.PI*2, s: .4 + Math.random()*1.2 }; });
+  }
+  var blobs = [
+    { x:.15, y:.12, r:.42, vx:.00012, vy:.00009, hue:222, a:.16 },
+    { x:.85, y:.25, r:.38, vx:-.00010, vy:.00013, hue:265, a:.13 },
+    { x:.65, y:.8,  r:.45, vx:.00008, vy:-.00011, hue:190, a:.11 },
+    { x:.25, y:.75, r:.32, vx:-.00009, vy:-.00008, hue:43,  a:.12 }
+  ];
+  function frame(t){
+    if (!running) return;
+    ctx.clearRect(0, 0, W, H);
+    var scrollY = window.scrollY || 0;
+    var max = Math.max(1, document.documentElement.scrollHeight - H);
+    var shift = (scrollY / max) * 90; /* hue drifts with scroll depth */
+    var dk = dark();
+    ctx.globalCompositeOperation = 'lighter';
+    blobs.forEach(function(b){
+      b.x += b.vx; b.y += b.vy;
+      if (b.x < -.1 || b.x > 1.1) b.vx *= -1;
+      if (b.y < -.1 || b.y > 1.1) b.vy *= -1;
+      var cx = b.x * W, cy = b.y * H, r = b.r * Math.max(W, H);
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      var a = dk ? b.a : b.a * .55;
+      g.addColorStop(0, 'hsla(' + ((b.hue + shift) % 360) + ',85%,60%,' + a + ')');
+      g.addColorStop(1, 'hsla(' + ((b.hue + shift) % 360) + ',85%,60%,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    });
+    ctx.globalCompositeOperation = 'source-over';
+    stars.forEach(function(st){
+      var tw = .35 + .65 * Math.abs(Math.sin(t * .001 * st.s + st.p));
+      ctx.globalAlpha = (dk ? .5 : .3) * tw;
+      ctx.fillStyle = '#cdd8ff';
+      ctx.beginPath();
+      ctx.arc(st.x, (st.y + scrollY * .12) % H, st.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange', function(){
+    running = !document.hidden;
+    if (running) requestAnimationFrame(frame);
+  });
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+
+/* ── CLICK ANIMATION: press + gold ripple ─────────────────────
+   Delegated, so it covers JS-rendered cards (projects page) too. */
+document.addEventListener('pointerdown', function(e){
+  var card = e.target.closest('.pressable');
+  if (!card) return;
+  card.classList.remove('clicked');
+  void card.offsetWidth; /* restart the animation */
+  card.classList.add('clicked');
+  var r = card.getBoundingClientRect();
+  var rip = document.createElement('span');
+  rip.className = 'ripple';
+  var size = Math.max(r.width, r.height) * 1.1;
+  rip.style.width = rip.style.height = size + 'px';
+  rip.style.left = (e.clientX - r.left) + 'px';
+  rip.style.top = (e.clientY - r.top) + 'px';
+  card.appendChild(rip);
+  setTimeout(function(){ rip.remove(); }, 650);
+  setTimeout(function(){ card.classList.remove('clicked'); }, 400);
+});
+/* Game tabs are the clickable cards of the games page. */
+document.querySelectorAll('.game-tab-btn').forEach(function(b){ b.classList.add('pressable'); });
+
+/* ── FEATURED TODAY: project / game / certificate of the day ── */
+(function featuredToday(){
+  var trio = document.querySelector('.featured-trio');
+  if (!trio) return;
+  try {
+    var label = new Intl.DateTimeFormat('en-PH', { timeZone: 'Asia/Manila', weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
+    var dEl = document.getElementById('featDate');
+    if (dEl) dEl.textContent = '\u2605 Today is ' + label + ' \u2014';
+  } catch (e) { /* the date is decorative */ }
+  function dayOfYear(d){ var s = new Date(d.getFullYear(), 0, 0); return Math.floor((d - s) / 864e5); }
+  var doy = dayOfYear(new Date());
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  /* How-it-works lines, written from the pv1.2 featured copy. */
+  var HOW = {
+    'EkSpyRy \u2014 Food Expiration Monitor': 'You log each item with its expiry date, and the app keeps the list saved on your computer. It checks the dates every time you open it and flags what\u2019s about to expire \u2014 no account, no cloud, just your fridge, digitised.',
+    'C.L.E.A.R. Aqua \u2014 Portable Water Purifier': 'The study tested filtration methods against cost and effectiveness \u2014 how clean the water comes out versus what the system costs to build and run \u2014 and the findings are written up in the full research paper.',
+    'IT Helpdesk Ticketing System': 'A user submits an issue and it becomes a ticket with a status and a priority. The system assigns a technician, watches the resolution time against its SLA, and keeps an inventory of the hardware involved \u2014 all from one dashboard.',
+    'Personal Portfolio Website': 'No Bootstrap, no templates: dark and light mode with a circular reveal, a particle canvas, scroll animations, and twenty mini-games, all hand-written.',
+    'Scrapbook \u2014 Personal Portfolio in Figma': 'Each page is laid out by hand in Figma, mixing photos, notes and keepsakes to tell the story of who he is, what he likes, and where he\u2019s headed \u2014 layout and typography doing the talking instead of paragraphs.',
+    'Mubii \u2014 Free Movie Streaming App': 'Browse the catalogue, open a title for details, and save films to a watchlist. The design focuses on a clean browse experience, clear hierarchy, and layouts that stay readable on a phone screen.',
+    'Online Newsletter, Blog & Magazine': 'Articles are published through the Wix CMS, with the design built around readability: clear headlines, generous spacing, and layouts that make long reads easy on the eyes.',
+    'Astro Cafe \u2014 Logo & Brand Identity': 'The logo sets the tone, the palette and typography pairing carry it across cups and packaging, and the mockups show how the brand would actually look in a customer\u2019s hands.',
+    'Clothing Store \u2014 Ordering System': 'You pick from 60+ items across categories, and the cart is backed by a linked list \u2014 add, remove, and the total updates. At checkout it prints an itemised receipt, like a real point-of-sale till.',
+    'Bank Queue Management System': 'A customer takes a ticket and the system routes them to Deposit, Withdraw, or Loan \u2014 Priority customers jump the line, as they should. The dashboard updates in real time so you always see who\u2019s being served and who\u2019s next.',
+    'Valenzuela Utility Finder': 'Pick your barangay and it ranks the nearest utility offices using the Haversine formula \u2014 the same maths that measures distances on a sphere \u2014 with colour-coded markers and routing lines on the map.',
+    'School Supplies Inventory & Checkout': 'Each shelf is a stack: Restock pushes items on, Take pops them off, and Undo reverses your last move. Status alerts turn colour when stock runs low, and every checkout prints a timestamped receipt.',
+    'Shoe Material Stack Viewer': 'Pick one of 50+ sneakers from major brands and peel through its layers \u2014 each layer is a push onto the stack, and pop takes it back off. Search finds any shoe, and reset rebuilds the stack from scratch.',
+    'PLV Learning Management System': 'Students open their dashboard to see courses, modules, and deadlines; submissions go through the portal, and grades are tracked in one place. Every screen was designed in Figma as a clickable prototype.',
+    'CineReel \u2014 Movie Short-Form App': 'Swipe up for the next clip, tap into a film for its trailer and reviews, and keep scrolling \u2014 the feed never ends. The dark cinematic UI is built for watching, not reading.',
+    'The Future Times \u2014 Privacy & Social Media': 'Built in plain HTML and CSS, the site reads like a newspaper \u2014 articles, headlines, and sidebars \u2014 each one walking through a privacy risk and what you can actually do about it.',
+    'Antukin \u2014 Cover Music Video': 'Cut in CapCut, the video matches every beat and lyric to the visuals, so the song and the story land at the same moment. The group handled everything from concept to final export.'
+  };
+  var GAME_ICONS = { snake:'snake.svg', memory:'memory.svg', typer:'keyboard.svg', mole:'hammer.svg', guess:'numbers.svg', quiz:'brain.svg', ttt:'grid-xo.svg', rps:'hand-rock.svg', hang:'skull.svg', simon:'music.svg', pong:'paddle.svg', math:'calculator.svg', scramble:'letters.svg', reaction:'bolt.svg', click:'mouse.svg', odd:'eye.svg', dice:'die.svg', aim:'target.svg', dodge:'dodge.svg', catch:'basket.svg' };
+
+  /* Project of the day — from the live projects API. */
+  fetch('api/projects.php').then(function(r){ return r.json(); }).then(function(j){
+    var list = j.projects || [];
+    if (!list.length) return;
+    var p = list[doy % list.length];
+    if ($('featProjImg') && p.image) { $('featProjImg').src = p.image; $('featProjImg').alt = p.title; }
+    if ($('featProjKind')) $('featProjKind').textContent = p.category || '';
+    if ($('featProjTitle')) $('featProjTitle').textContent = p.title;
+    if ($('featProjTitleB')) $('featProjTitleB').textContent = p.title;
+    if ($('featProjWhat')) $('featProjWhat').textContent = p.description || '';
+    if ($('featProjHow')) $('featProjHow').textContent = HOW[p.title] || '';
+    if ($('featProjTags')) $('featProjTags').innerHTML = String(p.tags || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean).map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+    if ($('featProjLink') && p.link) { $('featProjLink').href = p.link; $('featProjLink').textContent = (p.link_label || 'Open') + ' \u2197'; }
+  }).catch(function(){ /* keep the hardcoded EkSpyRy default */ });
+
+  /* Certificate of the day — from the live certificates API. */
+  fetch('api/certificates.php').then(function(r){ return r.json(); }).then(function(j){
+    var list = j.certificates || [];
+    if (!list.length) return;
+    var c = list[doy % list.length];
+    /* Four certs are PDFs, not images — show the cert's icon instead. */
+    var isImg = /\.(jpe?g|png|webp|gif)$/i.test(c.file || '');
+    if ($('featCertImg')) { $('featCertImg').src = isImg ? c.file : (c.icon || 'images/certs/cert1.jpg'); $('featCertImg').alt = c.title; }
+    if ($('featCertKind')) $('featCertKind').textContent = c.label || '';
+    if ($('featCertTitle')) $('featCertTitle').textContent = c.title;
+    if ($('featCertTitleB')) $('featCertTitleB').textContent = c.title;
+    if ($('featCertWhat')) $('featCertWhat').textContent = c.description || '';
+    if ($('featCertView') && c.file) $('featCertView').href = c.file;
+  }).catch(function(){ /* keep the hardcoded Cloud Computing default */ });
+
+  /* Game of the day — the same deterministic pick as the GOTD widget. */
+  var g = window.__gotd || { key: 'snake', label: 'Snake', pun: "Sss-litherin' through the grid \u2014 this snake never skips leg day, mostly because it has no legs." };
+  if ($('featGameIcon')) $('featGameIcon').src = 'images/icons/' + (GAME_ICONS[g.key] || 'gamepad.svg');
+  if ($('featGameName')) $('featGameName').textContent = g.label;
+  if ($('featGameNameB')) $('featGameNameB').textContent = g.label;
+  if ($('featGamePun')) $('featGamePun').textContent = g.pun;
+  if ($('featGamePlay')) $('featGamePlay').href = 'games.html#game-' + g.key;
+
+  /* Flip a featured card on click (not on its links) or keyboard. */
+  document.querySelectorAll('.featured-card').forEach(function(card){
+    function flip(){ card.classList.toggle('is-flipped'); }
+    card.addEventListener('click', function(e){
+      if (e.target.closest('a')) return;
+      flip();
+    });
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+    });
+  });
 })();
